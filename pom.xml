@@ -5,15 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.17-RC</version>
+    <version>1.0.18-RC</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
-
-    <!--<parent>
-        <groupId>com.abavilla</groupId>
-        <artifactId>maven-simple</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>-->
 
     <modules>
         <module>fpi-framework-bom</module>
@@ -36,19 +30,5 @@
             <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
         </repository>
     </distributionManagement>
-
-    <!--<dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>${spring-core.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <properties>
-        <spring-core.version>5.3.16</spring-core.version>
-    </properties>-->
 
 </project>
