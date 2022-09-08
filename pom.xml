@@ -57,7 +57,7 @@
     <repository>
       <id>github</id>
       <name>GitHub FPI Framework BOM Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/vincejv/fpi-framework-bom</url>
+      <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
     </repository>
   </distributionManagement>
 
