@@ -32,6 +32,6 @@ public abstract class FPIApplication {
   MapperUtil mapperUtil;
   void onStart(@Observes StartupEvent ev) {
     mapperUtil.init();
-    Log.info("The application is starting...");
+    Log.info("FPI application is starting...");
   }
 }

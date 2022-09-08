@@ -27,8 +27,7 @@ import java.time.format.DateTimeFormatter;
 public abstract class DateUtil {
 
   public static final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSz";
-
-  public static final String M360_TIMESTAMP_FORMAT = "yyyyMMddHHmmss";
+  public static final String DEFAULT_TIMEZONE = "Asia/Shanghai";
 
   public static String nowAsStr() {
     return LocalDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(DEFAULT_TIMESTAMP_FORMAT));
@@ -50,7 +49,7 @@ public abstract class DateUtil {
   }
 
   public static LocalDateTime convertLdtUTC8ToUtc(LocalDateTime ldt) {
-    var zdt = ZonedDateTime.of(ldt, ZoneId.of("Asia/Shanghai"));
+    var zdt = ZonedDateTime.of(ldt, ZoneId.of(DEFAULT_TIMEZONE));
     return zdt.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
   }
 
