@@ -1,4 +1,4 @@
-# Abavilla FPI Framework
+# Abavilla FPI Framework Core
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
