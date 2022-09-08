@@ -23,5 +23,5 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection(targets = {
 
 })
-public class ReflectionConfig {
+public class BaseReflectionConfig {
 }

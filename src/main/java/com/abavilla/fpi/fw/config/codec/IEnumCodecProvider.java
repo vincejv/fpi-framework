@@ -24,12 +24,15 @@ import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 
-public class EnumCodecProvider implements CodecProvider {
+public interface IEnumCodecProvider extends CodecProvider {
   @Override
-  public <T> Codec<T> get(Class<T> clazz, CodecRegistry registry) {
+  default <T> Codec<T> get(Class<T> clazz, CodecRegistry registry) {
     if (clazz == BaseEnum.class) {
       return (Codec<T>) new BaseCodec();
     }
-    return null; // Don't throw here, this tells Mongo this provider doesn't provide a decoder for the requested clazz
+    return getCodecProvider(clazz);
+    //return null; // Don't throw here, this tells Mongo this provider doesn't provide a decoder for the requested clazz
   }
+
+  <T> Codec<T> getCodecProvider(Class<T> tClass);
 }
