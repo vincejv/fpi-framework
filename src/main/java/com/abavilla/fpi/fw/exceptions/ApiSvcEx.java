@@ -38,6 +38,11 @@ public class ApiSvcEx extends RuntimeException {
     super(message);
   }
 
+  public ApiSvcEx(String message, int httpStatus) {
+    super(message);
+    this.httpResponseStatus = HttpResponseStatus.valueOf(httpStatus);
+  }
+
   public <T> T getJsonResponse(Class<T> clazz) {
     return MapperUtil.convert(jsonResponse, clazz);
   }
