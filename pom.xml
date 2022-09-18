@@ -16,7 +16,7 @@
     </modules>
 
     <properties>
-        <revision>1.0.21-RC</revision>
+        <revision>1.0.22-RC</revision>
     </properties>
 
     <repositories>
