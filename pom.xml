@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.20-RC</version>
+    <version>${revision}</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
@@ -14,6 +14,10 @@
         <module>fpi-framework-core</module>
         <module>fpi-framework-pom</module>
     </modules>
+
+    <properties>
+        <revision>1.0.21-RC</revision>
+    </properties>
 
     <repositories>
         <repository>
@@ -30,5 +34,35 @@
             <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
         </repository>
     </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <configuration>
+                </configuration>
+                <executions>
+                    <!-- enable flattening -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- ensure proper cleanup -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
