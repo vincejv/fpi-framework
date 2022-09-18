@@ -20,10 +20,11 @@ package com.abavilla.fpi.fw.util;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ApplicationScoped
+@Singleton
 public class MapperUtil {
 
   private static ObjectMapper mapper;
