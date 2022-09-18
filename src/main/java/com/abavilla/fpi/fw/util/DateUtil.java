@@ -30,7 +30,7 @@ public abstract class DateUtil {
   public static final String DEFAULT_TIMEZONE = "Asia/Shanghai";
 
   public static String nowAsStr() {
-    return LocalDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(DEFAULT_TIMESTAMP_FORMAT));
+    return ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(DEFAULT_TIMESTAMP_FORMAT));
   }
 
   public static LocalDateTime now() {
