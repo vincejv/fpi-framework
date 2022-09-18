@@ -26,7 +26,6 @@ import com.abavilla.fpi.fw.util.MapperUtil;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
 
-@ApplicationScoped
 public abstract class FPIApplication {
   @Inject
   MapperUtil mapperUtil;
