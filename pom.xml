@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.26-RC</version>
+    <version>1.0.27-RC</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
