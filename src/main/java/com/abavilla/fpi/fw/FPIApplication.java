@@ -29,7 +29,7 @@ import io.quarkus.runtime.StartupEvent;
 public abstract class FPIApplication {
   @Inject
   MapperUtil mapperUtil;
-  void onStart(@Observes StartupEvent ev) {
+  public void onStart(@Observes StartupEvent ev) {
     mapperUtil.init();
     Log.info("FPI application is starting...");
   }
