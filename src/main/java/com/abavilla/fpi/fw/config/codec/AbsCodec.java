@@ -20,6 +20,7 @@ package com.abavilla.fpi.fw.config.codec;
 
 import java.lang.reflect.Method;
 
+import lombok.SneakyThrows;
 import org.bson.BsonReader;
 import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
@@ -30,29 +31,24 @@ public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
   public AbsCodec() {
   }
 
+  @SneakyThrows
   @Override
   final public void encode(final BsonWriter writer, final T value, final EncoderContext encoderContext) {
-    String val = ((Enum) value).toString();
-    writer.writeString(val);
+    Method getId = getEncoderClass().getDeclaredMethod("getId");
+    writer.writeStartDocument();
+    writer.writeString("value", value.toString());
+    writer.writeInt32("ord", (Integer) getId.invoke(value));
+    writer.writeEndDocument();
   }
 
+  @SneakyThrows
   @Override
   final public T decode(final BsonReader reader, final DecoderContext decoderContext) {
-    try {
-      String value = reader.readString();
-      Method method = getEncoderClass().getDeclaredMethod("fromValue", String.class);
-      return (T) method.invoke(null, value);
-    }catch(Exception e) {
-      try {
-        String value = reader.readString();
-        Method method = getEncoderClass().getDeclaredMethod("getDefaultValue");
-        return (T) method.invoke(null, value);
-      } catch (Exception e1) {
-        e1.printStackTrace();
-      }
-      e.printStackTrace();
-    }
-    return null;
+    reader.readStartDocument();
+    String value = reader.readString("value");
+    reader.readEndDocument();
+    Method method = getEncoderClass().getDeclaredMethod("fromValue", String.class);
+    return (T) method.invoke(null, value);
   }
 
   public abstract Class<T> getEncoderClass();
