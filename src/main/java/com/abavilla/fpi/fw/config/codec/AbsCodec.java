@@ -35,18 +35,14 @@ public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
   @Override
   final public void encode(final BsonWriter writer, final T value, final EncoderContext encoderContext) {
     Method getId = getEncoderClass().getDeclaredMethod("getId");
-    writer.writeStartDocument();
     writer.writeString("value", value.toString());
     writer.writeInt32("ord", (Integer) getId.invoke(value));
-    writer.writeEndDocument();
   }
 
   @SneakyThrows
   @Override
   final public T decode(final BsonReader reader, final DecoderContext decoderContext) {
-    reader.readStartDocument();
     String value = reader.readString("value");
-    reader.readEndDocument();
     Method method = getEncoderClass().getDeclaredMethod("fromValue", String.class);
     return (T) method.invoke(null, value);
   }
