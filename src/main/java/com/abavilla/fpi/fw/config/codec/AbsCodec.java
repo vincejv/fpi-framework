@@ -21,13 +21,19 @@ package com.abavilla.fpi.fw.config.codec;
 import java.lang.reflect.Method;
 
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.BsonReader;
+import org.bson.BsonType;
 import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 
 public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
+
+  public static final String VALUE_KEY_NODE_NAME = "value";
+  public static final String ORD_KEY_NODE_NAME = "ord";
+
   public AbsCodec() {
   }
 
@@ -35,14 +41,26 @@ public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
   @Override
   final public void encode(final BsonWriter writer, final T value, final EncoderContext encoderContext) {
     Method getId = getEncoderClass().getDeclaredMethod("getId");
-    writer.writeString("value", value.toString());
-    writer.writeInt32("ord", (Integer) getId.invoke(value));
+    writer.writeStartDocument();
+    writer.writeString(VALUE_KEY_NODE_NAME, value.toString());
+    writer.writeInt32(ORD_KEY_NODE_NAME, (Integer) getId.invoke(value));
+    writer.writeEndDocument();
   }
 
   @SneakyThrows
   @Override
   final public T decode(final BsonReader reader, final DecoderContext decoderContext) {
-    String value = reader.readString("value");
+    reader.readStartDocument();
+    String value = StringUtils.EMPTY;
+    while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
+      // decode only value type, ignore ord
+      if (StringUtils.equals(reader.readName(), VALUE_KEY_NODE_NAME)) {
+        value = reader.readString();
+      } else {
+        reader.skipValue();
+      }
+    }
+    reader.readEndDocument();
     Method method = getEncoderClass().getDeclaredMethod("fromValue", String.class);
     return (T) method.invoke(null, value);
   }
