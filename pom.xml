@@ -26,7 +26,7 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.36-RC</version>
+    <version>1.0.37-RC</version>
   </parent>
 
   <properties>
@@ -157,6 +157,11 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-config-yaml</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
     </dependency>
 
   </dependencies>
