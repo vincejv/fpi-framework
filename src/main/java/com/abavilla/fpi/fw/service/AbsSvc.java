@@ -21,10 +21,10 @@ package com.abavilla.fpi.fw.service;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
-import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -45,14 +45,14 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * @return {@link I} Item retrieved
    */
   public Uni<D> get(String id) {
-    Uni<Optional<I>> byId = repo.findByIdOptional(id);
+    Uni<Optional<I>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         return Uni.createFrom()
             .item(this.mapToDto(opt.get()));
       }
       return Uni.createFrom()
-          .failure(new ApiSvcEx("Cannot find " + id));
+          .failure(new NotFoundException("Cannot find " + id));
     });
   }
 
@@ -75,14 +75,14 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * @return {@link I} Item after saving to db
    */
   public Uni<D> update(String id, D item) {
-    Uni<Optional<I>> byId = repo.findByIdOptional(id);
+    Uni<Optional<I>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         var updatedItem = mapToEntity(item);
         updatedItem.setId(new ObjectId(id));
         return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
       }
-      return Uni.createFrom().failure(new ApiSvcEx("Cannot find " + id));
+      return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
     });
   }
 
@@ -104,13 +104,13 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * @return {@link D}
    */
   public Uni<D> delete(String id) {
-    Uni<Optional<I>> byId = repo.findByIdOptional(id);
+    Uni<Optional<I>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         opt.get().setIsArchived(true);
         return repo.persistOrUpdate(opt.get()).map(this::mapToDto);
       }
-      return Uni.createFrom().failure(new ApiSvcEx("Cannot find " + id));
+      return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
     });
   }
 

@@ -18,10 +18,14 @@
 
 package com.abavilla.fpi.fw.repo;
 
+import java.util.Optional;
+
 import com.abavilla.fpi.fw.entity.IItem;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoRepository;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheQuery;
 import io.quarkus.panache.common.Sort;
+import io.smallrye.mutiny.Uni;
+import org.bson.types.ObjectId;
 
 public interface IMongoRepo<I extends IItem> extends ReactivePanacheMongoRepository<I> {
 
@@ -34,5 +38,9 @@ public interface IMongoRepo<I extends IItem> extends ReactivePanacheMongoReposit
    */
   default ReactivePanacheQuery<I> byPage(int index, int itemPerPage) {
     return findAll(Sort.by("dateUpdated")).page(index, itemPerPage);
+  }
+
+  default Uni<Optional<I>> byId(String id) {
+    return findByIdOptional(new ObjectId(id));
   }
 }

@@ -31,6 +31,8 @@ import lombok.Data;
 @RegisterForReflection
 public abstract class AbsDto implements IDto {
 
+  protected String id;
+
   protected LocalDateTime dateCreated;
 
   protected LocalDateTime dateUpdated;

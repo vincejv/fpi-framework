@@ -20,8 +20,29 @@ package com.abavilla.fpi.fw.mapper;
 
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.IItem;
+import org.bson.types.ObjectId;
 
 public interface IMapper<DTO extends IDto, ENTITY extends IItem> {
   DTO mapToDto(ENTITY entity);
   ENTITY mapToEntity(DTO dto);
+
+  /**
+   * Parses the hex formatted object id string to {@link ObjectId}
+   *
+   * @param id Hex Formatted String
+   * @return {@link ObjectId} id
+   */
+  default ObjectId strToObjId(String id) {
+    return new ObjectId(id);
+  }
+
+  /**
+   * Gets the hex formatted string from {@link ObjectId}
+   *
+   * @param id {@link ObjectId} id
+   * @return Hex formatted id
+   */
+  default String objIdToStr(ObjectId id) {
+    return id.toHexString();
+  }
 }
