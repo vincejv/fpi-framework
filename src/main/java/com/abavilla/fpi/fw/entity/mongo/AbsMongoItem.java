@@ -31,6 +31,20 @@ import org.bson.types.ObjectId;
 @RegisterForReflection
 @BsonDiscriminator
 public abstract class AbsMongoItem extends AbsItem {
+
+  /**
+   * Invokes {@link AbsItem#setId(Object)} and set the primary key
+   */
   @BsonId
-  protected ObjectId id;
+  public void setMongoId(ObjectId objectId) {
+    id = objectId;
+  }
+
+  /**
+   * Invokes {@link AbsItem#getId()} and gets the primary key
+   */
+  @BsonId
+  public ObjectId getMongoId() {
+    return (ObjectId) id;
+  }
 }

@@ -18,8 +18,52 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 
-public interface IResource<I extends AbsItem> {
-  I save();
+public interface IResource<E extends IDto, I extends AbsItem> {
+
+   /**
+   * Retrieves by page, if page number and size are not given, returns the entire list.
+   *
+   * @param pageNo Page number
+   * @param size Items per page
+   * @return List of {@link I} items
+   */
+  Multi<E> getByPage(Integer pageNo, Integer size);
+
+  /**
+   * Retrieve item given by id
+   *
+   * @param id Item id
+   * @return {@link E} Object retrieved
+   */
+  Uni<E> getById(String id);
+
+  /**
+   * Update the item given by id
+   *
+   * @param id Item id
+   * @param body Updated item
+   * @return {@link E} Object retrieved
+   */
+  Uni<E> updateItem(String id, E body);
+
+  /**
+   * Save a new item in database
+   *
+   * @param body Item to be saved in db
+   * @return {@link E} Item after saved in db
+   */
+  Uni<E> saveItem(E body);
+
+  /**
+   * Deletes an item given an id.
+   *
+   * @param id Item id
+   * @return {@link E} Deleted item
+   */
+  Uni<E> deleteItem(String id);
 }

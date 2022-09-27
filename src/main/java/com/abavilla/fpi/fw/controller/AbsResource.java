@@ -18,30 +18,79 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.service.AbsSvc;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<E extends IDto, I extends AbsItem, S extends AbsSvc<E,I>> implements IResource<I> {
+public abstract class AbsResource<E extends IDto, I extends AbsItem,
+    S extends AbsSvc<E,I>> implements IResource<E, I> {
+
   @Inject
   protected S service;
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   @GET
-  public Multi<E> getAll() {
-    return service.list();
+  public Multi<E> getByPage(@QueryParam("page") Integer pageNo,
+                            @QueryParam("size") Integer size) {
+    if (size == null && pageNo == null) {
+      return service.list();
+    }
+    return service.getByPage(pageNo,
+        Objects.requireNonNullElse(size, 50));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public I save() {
-    return null;
+  @POST
+  public Uni<E> getById(@QueryParam("id") String id) {
+    return service.get(id);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @POST
+  public Uni<E> updateItem(@QueryParam("id") String id,
+                           E body) {
+    return service.update(id, body);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @POST
+  public Uni<E> saveItem(E body) {
+    return service.save(body);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @DELETE
+  public Uni<E> deleteItem(@QueryParam("id") String id) {
+    return service.delete(id);
   }
 }

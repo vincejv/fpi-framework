@@ -20,7 +20,19 @@ package com.abavilla.fpi.fw.repo;
 
 import com.abavilla.fpi.fw.entity.IItem;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoRepository;
+import io.quarkus.mongodb.panache.reactive.ReactivePanacheQuery;
+import io.quarkus.panache.common.Sort;
 
 public interface IMongoRepo<I extends IItem> extends ReactivePanacheMongoRepository<I> {
 
+  /**
+   * Retrieves items from db by page
+   *
+   * @param index Page number (zero based)
+   * @param itemPerPage Items per page
+   * @return Paged query
+   */
+  default ReactivePanacheQuery<I> byPage(int index, int itemPerPage) {
+    return findAll(Sort.by("dateUpdated")).page(index, itemPerPage);
+  }
 }

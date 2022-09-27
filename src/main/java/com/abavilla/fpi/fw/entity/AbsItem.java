@@ -31,6 +31,10 @@ import lombok.Data;
 @RegisterForReflection
 public abstract class AbsItem implements IItem {
 
+  protected Object id;
+
+  protected Boolean isArchived;
+
   protected LocalDateTime dateCreated;
 
   protected LocalDateTime dateUpdated;

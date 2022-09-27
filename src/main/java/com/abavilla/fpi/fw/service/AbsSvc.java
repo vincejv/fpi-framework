@@ -18,20 +18,107 @@
 
 package com.abavilla.fpi.fw.service;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
+import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import org.bson.types.ObjectId;
 
 public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<D, I> {
+
+  /**
+   * The repository to manage {@link I}
+   */
   @Inject
   protected IMongoRepo<I> repo;
 
-  public Multi<D > list() {
+  /**
+   * Retrieves an item by id.
+   *
+   * @param id {@link String} Id
+   * @return {@link I} Item retrieved
+   */
+  public Uni<D> get(String id) {
+    Uni<Optional<I>> byId = repo.findByIdOptional(id);
+    return byId.chain(opt -> {
+      if (opt.isPresent()) {
+        return Uni.createFrom()
+            .item(this.mapToDto(opt.get()));
+      }
+      return Uni.createFrom()
+          .failure(new ApiSvcEx("Cannot find " + id));
+    });
+  }
+
+  /**
+   * Retrieves items by page
+   *
+   * @param ndx Page number (zero based)
+   * @param size Items per page
+   * @return Paged query
+   */
+  public Multi<D> getByPage(int ndx, int size) {
+    return repo.byPage(ndx, size).stream().map(this::mapToDto);
+  }
+
+  /**
+   * Updates an item to database.
+   *
+   * @param id {@link String} Id
+   * @param item {@link D} Item to save
+   * @return {@link I} Item after saving to db
+   */
+  public Uni<D> update(String id, D item) {
+    Uni<Optional<I>> byId = repo.findByIdOptional(id);
+    return byId.chain(opt -> {
+      if (opt.isPresent()) {
+        var updatedItem = mapToEntity(item);
+        updatedItem.setId(new ObjectId(id));
+        return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
+      }
+      return Uni.createFrom().failure(new ApiSvcEx("Cannot find " + id));
+    });
+  }
+
+  /**
+   * Saves a new item to database.
+   *
+   * @param item {@link D} Item to save
+   * @return {@link I} Item after saving to db
+   */
+  public Uni<D> save(D item) {
+    Uni<I> persistedItem = repo.persist(mapToEntity(item));
+    return persistedItem.map(this::mapToDto);
+  }
+
+  /**
+   * Deletes an item from the database given by id.
+   *
+   * @param id Database id
+   * @return {@link D}
+   */
+  public Uni<D> delete(String id) {
+    Uni<Optional<I>> byId = repo.findByIdOptional(id);
+    return byId.chain(opt -> {
+      if (opt.isPresent()) {
+        opt.get().setIsArchived(true);
+        return repo.persistOrUpdate(opt.get()).map(this::mapToDto);
+      }
+      return Uni.createFrom().failure(new ApiSvcEx("Cannot find " + id));
+    });
+  }
+
+  public Multi<D> list() {
     return repo.streamAll().map(this::mapToDto);
   }
+
   public abstract D mapToDto(I entity);
+
   public abstract I mapToEntity(D dto);
 }
