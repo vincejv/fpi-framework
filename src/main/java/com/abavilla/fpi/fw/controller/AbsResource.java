@@ -25,6 +25,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -61,8 +63,9 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
    * {@inheritDoc}
    */
   @Override
-  @POST
-  public Uni<E> getById(@QueryParam("id") String id) {
+  @Path("{id}")
+  @GET
+  public Uni<E> getById(@PathParam("id") String id) {
     return service.get(id);
   }
 
@@ -70,9 +73,9 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
    * {@inheritDoc}
    */
   @Override
+  @Path("{id}")
   @POST
-  public Uni<E> updateItem(@QueryParam("id") String id,
-                           E body) {
+  public Uni<E> updateItem(@PathParam("id") String id, E body) {
     return service.update(id, body);
   }
 
@@ -89,8 +92,9 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
    * {@inheritDoc}
    */
   @Override
+  @Path("{id}")
   @DELETE
-  public Uni<E> deleteItem(@QueryParam("id") String id) {
+  public Uni<E> deleteItem(@PathParam("id") String id) {
     return service.delete(id);
   }
 }
