@@ -26,7 +26,7 @@ import com.abavilla.fpi.fw.entity.AbsItem;
  *
  * @param <E> DTO Type
  * @param <I> Entity Type
- *  @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 public interface IResource<E extends IDto, I extends AbsItem> {
 
