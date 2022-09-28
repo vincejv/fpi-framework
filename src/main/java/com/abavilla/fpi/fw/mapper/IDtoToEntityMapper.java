@@ -19,44 +19,33 @@
 package com.abavilla.fpi.fw.mapper;
 
 import com.abavilla.fpi.fw.dto.AbsDto;
+import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.entity.IItem;
 import com.abavilla.fpi.fw.entity.mongo.AbsMongoItem;
-import org.bson.types.ObjectId;
 import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Mappings;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 /**
- * Mapper used for conversion and mapping fields between {@link AbsDto} and {@link AbsMongoItem} database item.
+ * Mapper used for conversion and mapping fields between {@link IDto} and {@link IItem} database item.
  * @param <DTO> DTO Type
  * @param <ENTITY> Entity Type
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoItem>
-    extends IDtoToEntityMapper<DTO, ENTITY> {
+public interface IDtoToEntityMapper<DTO extends IDto, ENTITY extends IItem> extends IMapper {
 
-  @Override
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
   DTO mapToDto(ENTITY entity);
 
-  @Override
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
   ENTITY mapToEntity(DTO dto);
 
   /**
-   * {@inheritDoc}
+   * Partially patch entity, skip updating null values and only update the target entity with filled values
+   * from source DTO.
+   *
+   * @param entity Target entity
+   * @param dto Source DTO
    */
-  @Override
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void patchEntity(@MappingTarget ENTITY entity, DTO dto);
-
 }
