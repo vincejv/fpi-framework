@@ -33,18 +33,9 @@ import org.bson.types.ObjectId;
 public abstract class AbsMongoItem extends AbsItem {
 
   /**
-   * Invokes {@link AbsItem#setId(Object)} and set the primary key
+   * Mongo document primary key, `_id` field
    */
   @BsonId
-  public void setMongoId(ObjectId objectId) {
-    id = objectId;
-  }
+  private ObjectId id;
 
-  /**
-   * Invokes {@link AbsItem#getId()} and gets the primary key
-   */
-  @BsonId
-  public ObjectId getMongoId() {
-    return (ObjectId) id;
-  }
 }

@@ -64,7 +64,7 @@ public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoIte
    */
   @BeforeMapping
   default void mapMongoIdToDto(@MappingTarget DTO dto, ENTITY entity) {
-    dto.setId(entity.getMongoId().toHexString());
+    dto.setId(entity.getId().toHexString());
   }
 
 }
