@@ -25,10 +25,12 @@ import com.abavilla.fpi.fw.entity.IItem;
 import com.abavilla.fpi.fw.entity.mongo.AbsMongoItem;
 import org.bson.types.ObjectId;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoItem> extends IMapper<DTO, ENTITY> {
 
@@ -43,6 +45,16 @@ public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoIte
       @Mapping(target = "id", ignore = true)
   })
   ENTITY mapToEntity(DTO dto);
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @Mappings(value = {
+      @Mapping(target = "id", ignore = true)
+  })
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void patchEntity(@MappingTarget ENTITY entity, DTO dto);
 
   /**
    * Converts mongo db {@link ObjectId} to hex string for {@link DTO}.

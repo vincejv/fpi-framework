@@ -41,9 +41,6 @@ public interface IMapper<DTO extends IDto, ENTITY extends IItem> {
    * @param entity Target entity
    * @param dto Source DTO
    */
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void patchEntity(@MappingTarget ENTITY entity, DTO dto);
 }
