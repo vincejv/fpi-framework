@@ -28,6 +28,7 @@ import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import org.apache.commons.lang3.NotImplementedException;
 import org.bson.types.ObjectId;
 
 public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<D, I> {
@@ -69,6 +70,7 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
 
   /**
    * Updates an item to database.
+   * It does not update the existing item's id.
    *
    * @param id {@link String} Id
    * @param item {@link D} Item to save
@@ -79,6 +81,27 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         var updatedItem = mapToEntity(item);
+        updatedItem.setId(new ObjectId(id));
+        return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
+      }
+      return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
+    });
+  }
+
+  /**
+   * Partially updates an item in database.
+   * It does not update the existing item's id.
+   *
+   * @param id {@link String} Id
+   * @param item {@link D} Item to save
+   * @return {@link I} Item after saving to db
+   */
+  public Uni<D> patch(String id, D item) {
+    Uni<Optional<I>> byId = repo.byId(id);
+    return byId.chain(opt -> {
+      if (opt.isPresent()) {
+        var updatedItem = opt.get();
+        patchEntityFromDto(updatedItem, item);
         updatedItem.setId(new ObjectId(id));
         return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
       }
@@ -118,7 +141,22 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
     return repo.streamAll().map(this::mapToDto);
   }
 
-  public abstract D mapToDto(I entity);
+  public D mapToDto(I entity) {
+    throw new NotImplementedException("Mapping to DTO not implemented");
+  }
 
-  public abstract I mapToEntity(D dto);
+  public I mapToEntity(D dto) {
+    throw new NotImplementedException("Mapping to Entity not implemented");
+  }
+
+  /**
+   * Partially patch entity, skip updating null values and only update the target entity with filled values
+   * from source DTO.
+   *
+   * @param entity Target entity
+   * @param dto Source DTO
+   */
+  public void patchEntityFromDto(I entity, D dto) {
+    throw new NotImplementedException("Patching to Entity not implemented");
+  }
 }

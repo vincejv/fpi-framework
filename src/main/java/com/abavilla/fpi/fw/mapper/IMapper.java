@@ -21,8 +21,29 @@ package com.abavilla.fpi.fw.mapper;
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.IItem;
 import org.bson.types.ObjectId;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 public interface IMapper<DTO extends IDto, ENTITY extends IItem> {
+
   DTO mapToDto(ENTITY entity);
+
   ENTITY mapToEntity(DTO dto);
+
+  /**
+   * Partially patch entity, skip updating null values and only update the target entity with filled values
+   * from source DTO.
+   *
+   * @param entity Target entity
+   * @param dto Source DTO
+   */
+  @Mappings(value = {
+      @Mapping(target = "id", ignore = true)
+  })
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void patchEntity(@MappingTarget ENTITY entity, DTO dto);
 }
