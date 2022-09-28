@@ -18,11 +18,52 @@
 
 package com.abavilla.fpi.fw.mapper;
 
+import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.entity.IItem;
+import com.abavilla.fpi.fw.entity.mongo.AbsMongoItem;
 import org.bson.types.ObjectId;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.BeforeMapping;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
 
-public interface IMapper<DTO extends IDto, ENTITY extends IItem> {
+public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoItem> extends IMapper<DTO, ENTITY> {
+
+  @Override
+  @Mappings(value = {
+      @Mapping(target = "id", ignore = true)
+  })
   DTO mapToDto(ENTITY entity);
+
+  @Override
+  @Mappings(value = {
+      @Mapping(target = "id", ignore = true)
+  })
   ENTITY mapToEntity(DTO dto);
+
+  /**
+   * Converts mongo db {@link ObjectId} to hex string for {@link DTO}.
+   *
+   * @param entity Source entity
+   * @param dto Target dto
+   */
+  @BeforeMapping
+  default void mapMongoIdToDto(ENTITY entity, @MappingTarget DTO dto) {
+    dto.setId(entity.getMongoId().toHexString());
+  }
+
+  /**
+   * Converts hex string to mongo db {@link ObjectId} to hex string for {@link ENTITY}
+   *
+   * @param dto Source dto
+   * @param entity Target entity
+   */
+  @BeforeMapping
+  default void mapMongoIdToEntity(DTO dto, @MappingTarget ENTITY entity) {
+    entity.setId(new ObjectId(dto.getId()));
+  }
+
 }
