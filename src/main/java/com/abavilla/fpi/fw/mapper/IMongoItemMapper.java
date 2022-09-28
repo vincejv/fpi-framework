@@ -37,26 +37,4 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoItem>
     extends IDtoToEntityMapper<DTO, ENTITY> {
 
-  @Override
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
-  DTO mapToDto(ENTITY entity);
-
-  @Override
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
-  ENTITY mapToEntity(DTO dto);
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Mappings(value = {
-      @Mapping(target = "id", ignore = true)
-  })
-  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  void patchEntity(@MappingTarget ENTITY entity, DTO dto);
-
 }
