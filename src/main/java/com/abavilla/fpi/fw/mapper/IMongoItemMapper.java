@@ -55,15 +55,4 @@ public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoIte
     dto.setId(entity.getMongoId().toHexString());
   }
 
-  /**
-   * Converts hex string to mongo db {@link ObjectId} to hex string for {@link ENTITY}
-   *
-   * @param dto Source dto
-   * @param entity Target entity
-   */
-  @BeforeMapping
-  default void mapMongoIdToEntity(DTO dto, @MappingTarget ENTITY entity) {
-    entity.setId(new ObjectId(dto.getId()));
-  }
-
 }
