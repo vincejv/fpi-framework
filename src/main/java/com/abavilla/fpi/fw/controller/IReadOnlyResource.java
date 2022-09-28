@@ -18,70 +18,46 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
-import com.abavilla.fpi.fw.service.AbsSvc;
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
 /**
- * REST API resource with built-in CRUD operations.
+ * REST API resource capable of reading only
  *
  * @param <E> DTO Type
  * @param <I> Entity Type
- * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+*  @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> extends AbsReadOnlyResource<E, I, S>
-    implements ICRUDResource<E, I>, IReadOnlyResource<E, I> {
+public interface IReadOnlyResource<E extends IDto, I extends AbsItem> extends IResource<E, I> {
+
+   /**
+   * Retrieves by page, if page number and size are not given, returns the entire list.
+   *
+   * @param pageNo Page number
+   * @param size Items per page
+   * @return List of {@link E} items
+   */
+  Uni<PageDto<E>> getByPage(Integer pageNo, Integer size);
 
   /**
-   * {@inheritDoc}
+   * Retrieves all items from the database
+   *
+   * @return List of {@link E} items
    */
-  @Override
-  @Path("{id}")
-  @PUT
-  public Uni<E> updateItem(@PathParam("id") String id, E body) {
-    return service.update(id, body);
-  }
+  Multi<E> getAll();
 
   /**
-   * {@inheritDoc}
+   * Retrieve item given by id
+   *
+   * @param id Item id
+   * @return {@link E} Object retrieved
    */
-  @Override
-  @Path("{id}")
-  @PATCH
-  public Uni<E> patchItem(@PathParam("id") String id, E body) {
-    return service.patch(id, body);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @POST
-  public Uni<E> saveItem(E body) {
-    return service.save(body);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Path("{id}")
-  @DELETE
-  public Uni<E> deleteItem(@PathParam("id") String id) {
-    return service.delete(id);
-  }
+  Uni<E> getById(String id);
 }

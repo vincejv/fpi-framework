@@ -18,70 +18,61 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
-import com.abavilla.fpi.fw.service.AbsSvc;
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
 /**
- * REST API resource with built-in CRUD operations.
+ * REST API resource capable of both reading and writing.
  *
  * @param <E> DTO Type
  * @param <I> Entity Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> extends AbsReadOnlyResource<E, I, S>
-    implements ICRUDResource<E, I>, IReadOnlyResource<E, I> {
+public interface ICRUDResource<E extends IDto, I extends AbsItem>
+    extends IReadOnlyResource<E,I>, IResource<E, I> {
 
   /**
-   * {@inheritDoc}
+   * Update the item given by id.
+   * It does not update the existing item's id.
+   *
+   * @param id Item id
+   * @param body Updated item
+   * @return {@link E} Object retrieved
    */
-  @Override
-  @Path("{id}")
-  @PUT
-  public Uni<E> updateItem(@PathParam("id") String id, E body) {
-    return service.update(id, body);
-  }
+  Uni<E> updateItem(String id, E body);
 
   /**
-   * {@inheritDoc}
+   * Patches the item given by id.
+   * It does not update the existing item's id.
+   *
+   * @param id Item id
+   * @param body Updated item
+   * @return {@link E} Object retrieved
    */
-  @Override
   @Path("{id}")
   @PATCH
-  public Uni<E> patchItem(@PathParam("id") String id, E body) {
-    return service.patch(id, body);
-  }
+  Uni<E> patchItem(@PathParam("id") String id, E body);
 
   /**
-   * {@inheritDoc}
+   * Save a new item in database
+   *
+   * @param body Item to be saved in db
+   * @return {@link E} Item after saved in db
    */
-  @Override
-  @POST
-  public Uni<E> saveItem(E body) {
-    return service.save(body);
-  }
+  Uni<E> saveItem(E body);
 
   /**
-   * {@inheritDoc}
+   * Deletes an item given an id.
+   *
+   * @param id Item id
+   * @return {@link E} Deleted item
    */
-  @Override
-  @Path("{id}")
-  @DELETE
-  public Uni<E> deleteItem(@PathParam("id") String id) {
-    return service.delete(id);
-  }
+  Uni<E> deleteItem(String id);
 }

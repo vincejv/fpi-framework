@@ -18,23 +18,17 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.service.AbsSvc;
-import io.smallrye.mutiny.Uni;
 
 /**
- * REST API resource with built-in CRUD operations.
+ * REST API resource with no built-in CRUD operations.
  *
  * @param <E> DTO Type
  * @param <I> Entity Type
@@ -42,46 +36,13 @@ import io.smallrye.mutiny.Uni;
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> extends AbsReadOnlyResource<E, I, S>
-    implements ICRUDResource<E, I>, IReadOnlyResource<E, I> {
+public abstract class AbsBaseResource<E extends IDto, I extends AbsItem,
+    S extends AbsSvc<E, I>> implements IResource<E, I> {
 
   /**
-   * {@inheritDoc}
+   * Service layer to operate on {@link I} item
    */
-  @Override
-  @Path("{id}")
-  @PUT
-  public Uni<E> updateItem(@PathParam("id") String id, E body) {
-    return service.update(id, body);
-  }
+  @Inject
+  protected S service;
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Path("{id}")
-  @PATCH
-  public Uni<E> patchItem(@PathParam("id") String id, E body) {
-    return service.patch(id, body);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @POST
-  public Uni<E> saveItem(E body) {
-    return service.save(body);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Path("{id}")
-  @DELETE
-  public Uni<E> deleteItem(@PathParam("id") String id) {
-    return service.delete(id);
-  }
 }

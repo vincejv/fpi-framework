@@ -18,23 +18,26 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import java.util.Objects;
+
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.service.AbsSvc;
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
 /**
- * REST API resource with built-in CRUD operations.
+ * REST API resource that's only capable or READ operations.
  *
  * @param <E> DTO Type
  * @param <I> Entity Type
@@ -42,18 +45,29 @@ import io.smallrye.mutiny.Uni;
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> extends AbsReadOnlyResource<E, I, S>
-    implements ICRUDResource<E, I>, IReadOnlyResource<E, I> {
+public abstract class AbsReadOnlyResource<E extends IDto, I extends AbsItem,
+    S extends AbsSvc<E, I>> extends AbsBaseResource<E, I, S>
+    implements IReadOnlyResource<E, I>, IResource<E, I> {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  @Path("{id}")
-  @PUT
-  public Uni<E> updateItem(@PathParam("id") String id, E body) {
-    return service.update(id, body);
+  @GET
+  public Multi<E> getAll() {
+    return service.list();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @Path("page")
+  @GET
+  public Uni<PageDto<E>> getByPage(@QueryParam("no") Integer pageNo,
+                                   @QueryParam("size") Integer size) {
+    return service.getByPage(pageNo,
+        Objects.requireNonNullElse(size, 50));
   }
 
   /**
@@ -61,27 +75,9 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
    */
   @Override
   @Path("{id}")
-  @PATCH
-  public Uni<E> patchItem(@PathParam("id") String id, E body) {
-    return service.patch(id, body);
+  @GET
+  public Uni<E> getById(@PathParam("id") String id) {
+    return service.get(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @POST
-  public Uni<E> saveItem(E body) {
-    return service.save(body);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Path("{id}")
-  @DELETE
-  public Uni<E> deleteItem(@PathParam("id") String id) {
-    return service.delete(id);
-  }
 }

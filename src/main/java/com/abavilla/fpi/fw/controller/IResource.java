@@ -18,78 +18,16 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
 import com.abavilla.fpi.fw.dto.IDto;
-import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
-import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 
+/**
+ * Interface for REST API resources
+ *
+ * @param <E> DTO Type
+ * @param <I> Entity Type
+ *  @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 public interface IResource<E extends IDto, I extends AbsItem> {
 
-   /**
-   * Retrieves by page, if page number and size are not given, returns the entire list.
-   *
-   * @param pageNo Page number
-   * @param size Items per page
-   * @return List of {@link E} items
-   */
-  Uni<PageDto<E>> getByPage(Integer pageNo, Integer size);
-
-  /**
-   * Retrieves all items from the database
-   *
-   * @return List of {@link E} items
-   */
-  Multi<E> getAll();
-
-  /**
-   * Retrieve item given by id
-   *
-   * @param id Item id
-   * @return {@link E} Object retrieved
-   */
-  Uni<E> getById(String id);
-
-  /**
-   * Update the item given by id.
-   * It does not update the existing item's id.
-   *
-   * @param id Item id
-   * @param body Updated item
-   * @return {@link E} Object retrieved
-   */
-  Uni<E> updateItem(String id, E body);
-
-  /**
-   * Patches the item given by id.
-   * It does not update the existing item's id.
-   *
-   * @param id Item id
-   * @param body Updated item
-   * @return {@link E} Object retrieved
-   */
-  @Path("{id}")
-  @PATCH
-  Uni<E> patchItem(@PathParam("id") String id, E body);
-
-  /**
-   * Save a new item in database
-   *
-   * @param body Item to be saved in db
-   * @return {@link E} Item after saved in db
-   */
-  Uni<E> saveItem(E body);
-
-  /**
-   * Deletes an item given an id.
-   *
-   * @param id Item id
-   * @return {@link E} Deleted item
-   */
-  Uni<E> deleteItem(String id);
 }
