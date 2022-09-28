@@ -1,5 +1,6 @@
 package com.abavilla.fpi.fw.mapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
 /**
@@ -16,7 +17,12 @@ public interface IMapper {
    * @return {@link ObjectId} object
    */
   default ObjectId strToMongoId(String id) {
-    return new ObjectId(id);
+    if (StringUtils.isNotBlank(id) &&
+        ObjectId.isValid(id)) {
+      return new ObjectId(id);
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -26,6 +32,10 @@ public interface IMapper {
    * @return Hex encoded id
    */
   default String mongoIdToStr(ObjectId id) {
-    return id.toHexString();
+    if (id != null) {
+      return id.toHexString();
+    } else {
+      return null;
+    }
   }
 }
