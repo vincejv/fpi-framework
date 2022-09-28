@@ -18,12 +18,15 @@
 
 package com.abavilla.fpi.fw.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 
+import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
 import io.smallrye.mutiny.Multi;
@@ -62,10 +65,21 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    *
    * @param ndx Page number (zero based)
    * @param size Items per page
-   * @return Paged query
+   * @return {@link PageDto} page
    */
-  public Multi<D> getByPage(int ndx, int size) {
-    return repo.byPage(ndx, size).stream().map(this::mapToDto);
+  public Uni<PageDto<D>> getByPage(int ndx, int size) {
+    var determineNextPage = repo.byPage(ndx, size)
+        .hasNextPage();
+
+    return repo.byPage(ndx, size)
+        .stream().map(this::mapToDto) // map entity to dto
+        .collect().asList()
+        .chain(dtoList ->
+            determineNextPage.map(flag ->
+                PageDto.of(dtoList, flag,
+                    ndx, dtoList.size(), size)
+            )
+        );
   }
 
   /**

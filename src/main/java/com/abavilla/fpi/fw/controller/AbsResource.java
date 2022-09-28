@@ -34,6 +34,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.service.AbsSvc;
 import io.smallrye.mutiny.Multi;
@@ -44,6 +45,9 @@ import io.smallrye.mutiny.Uni;
 public abstract class AbsResource<E extends IDto, I extends AbsItem,
     S extends AbsSvc<E,I>> implements IResource<E, I> {
 
+  /**
+   * Service layer to operate on {@link I} item
+   */
   @Inject
   protected S service;
 
@@ -52,11 +56,18 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
    */
   @Override
   @GET
-  public Multi<E> getByPage(@QueryParam("page") Integer pageNo,
-                            @QueryParam("size") Integer size) {
-    if (size == null && pageNo == null) {
-      return service.list();
-    }
+  public Multi<E> getAll() {
+    return service.list();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @Path("page")
+  @GET
+  public Uni<PageDto<E>> getByPage(@QueryParam("no") Integer pageNo,
+                               @QueryParam("size") Integer size) {
     return service.getByPage(pageNo,
         Objects.requireNonNullElse(size, 50));
   }

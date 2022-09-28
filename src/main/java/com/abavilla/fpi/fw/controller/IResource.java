@@ -18,11 +18,13 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -34,9 +36,16 @@ public interface IResource<E extends IDto, I extends AbsItem> {
    *
    * @param pageNo Page number
    * @param size Items per page
-   * @return List of {@link I} items
+   * @return List of {@link E} items
    */
-  Multi<E> getByPage(Integer pageNo, Integer size);
+  Uni<PageDto<E>> getByPage(Integer pageNo, Integer size);
+
+  /**
+   * Retrieves all items from the database
+   *
+   * @return List of {@link E} items
+   */
+  Multi<E> getAll();
 
   /**
    * Retrieve item given by id
