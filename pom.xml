@@ -26,7 +26,7 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.45-RC</version>
+    <version>1.0.46-RC</version>
   </parent>
 
   <properties>
