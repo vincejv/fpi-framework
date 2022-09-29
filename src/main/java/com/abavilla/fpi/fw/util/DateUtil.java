@@ -62,12 +62,13 @@ public abstract class DateUtil {
 
   /**
    * Converts UNIX Epoch millisecond time to {@link LocalDateTime} object
-   * @param epoch Unix Epoch millisecond, retains the epoch timezone
+   * retains the epoch timezone
    *
+   * @param epochMs Unix Epoch in milliseconds
    * @return {@link LocalDateTime} object
    */
-  public static LocalDateTime fromEpoch(long epoch) {
-    return LocalDateTime.ofInstant(Instant.ofEpochMilli(epoch), ZoneOffset.UTC);
+  public static LocalDateTime fromEpoch(long epochMs) {
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMs), ZoneOffset.UTC);
   }
 
   /**
