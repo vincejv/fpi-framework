@@ -33,9 +33,9 @@ import java.time.format.DateTimeFormatter;
 public abstract class DateUtil {
 
   /**
-   * Default timestamp format
+   * Default timestamp format with timezone specified
    */
-  public static final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSz";
+  public static final String DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSz";
 
   /**
    * Default time zone for front end purposes, UTC will always be used when saving to database.
@@ -45,10 +45,10 @@ public abstract class DateUtil {
   /**
    * Get the current date time in string format in UTC timezone
    *
-   * @return Date and time in {@link #DEFAULT_TIMESTAMP_FORMAT} format
+   * @return Date and time in {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE} format
    */
   public static String nowAsStr() {
-    return ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(DEFAULT_TIMESTAMP_FORMAT));
+    return ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE));
   }
 
   /**
@@ -67,8 +67,7 @@ public abstract class DateUtil {
    * @return {@link LocalDateTime} object
    */
   public static LocalDateTime fromEpoch(long epoch) {
-    return LocalDateTime.ofInstant(Instant.ofEpochMilli(epoch),
-        ZoneOffset.UTC);
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(epoch), ZoneOffset.UTC);
   }
 
   /**
@@ -109,7 +108,8 @@ public abstract class DateUtil {
   }
 
   /**
-   * Converts {@code ldt} to timestamp string, outputs using the format specified in {@link #DEFAULT_TIMESTAMP_FORMAT}
+   * Converts {@code ldt} to timestamp string, outputs using the format specified in
+   * {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE}
    * and using UTC Timezone
    *
    * @param ldt {@link LocalDateTime} Date and time to convert
@@ -117,7 +117,7 @@ public abstract class DateUtil {
    * @return Formatted date time
    */
   public static String convertLdtToUTCStr(LocalDateTime ldt, ZoneId zoneId) {
-    return convertLdtToUTCStr(ldt, zoneId, DEFAULT_TIMESTAMP_FORMAT);
+    return convertLdtToUTCStr(ldt, zoneId, DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE);
   }
 
   /**
@@ -130,31 +130,57 @@ public abstract class DateUtil {
    * @return Formatted date time
    */
   public static String convertLdtToUTCStr(LocalDateTime ldt, ZoneId zoneId, String outFormat) {
-    LocalDateTime ldtInUtc = ldt.atZone(zoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+    ZonedDateTime zdtInUtc = ZonedDateTime.of(ldt, zoneId).withZoneSameInstant(ZoneOffset.UTC);
     var outFormatter = DateTimeFormatter.ofPattern(outFormat);
-    return ldtInUtc.format(outFormatter);
+    return zdtInUtc.format(outFormatter);
   }
 
   /**
-   * Converts {@code ldt} to timestamp string, retaining the time and date values of {@code ldt}, outputs using the
-   * format specified in {@link #DEFAULT_TIMESTAMP_FORMAT}
+   * Converts {@code ldt} to timestamp string, retaining the time and values of {@code ldt}, outputs using
+   * the format specified in {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE}, assumes time zone of {@code ldt} is UTC
    *
    * @param ldt {@link LocalDateTime} Date and time to convert
    * @return Formatted date time
    */
   public static String convertLdtToStr(LocalDateTime ldt) {
-    return convertLdtToStr(ldt, DEFAULT_TIMESTAMP_FORMAT);
+    return convertLdtToStr(ldt, ZoneOffset.UTC, ZoneOffset.UTC, DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE);
+  }
+
+  /**
+   * Converts {@code ldt} to timestamp string, retaining the time, date and zone values of {@code ldt}, outputs using
+   * the format specified in {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE}
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param inTz {@link ZoneId} Timezone of {@code ldt}
+   * @return Formatted date time
+   */
+  public static String convertLdtToStr(LocalDateTime ldt, ZoneId inTz) {
+    return convertLdtToStr(ldt, inTz, inTz, DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE);
+  }
+
+  /**
+   * Converts {@code ldt} to timestamp string, and places a specific timezone on the {@code ldt}, outputs using
+   * the format specified in {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE}
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param inTz {@link ZoneId} Timezone of {@code ldt}
+   * @return Formatted date time
+   */
+  public static String convertLdtToStr(LocalDateTime ldt, ZoneId inTz, ZoneId outTz) {
+    return convertLdtToStr(ldt, inTz, outTz, DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE);
   }
 
   /**
    * Converts {@code ldt} to timestamp string, retaining the time and date values of {@code ldt}
    *
    * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param inTz {@link ZoneId} Time zone of {@code ldt}
+   * @param outTz {@link ZoneId} Time zone of output
    * @param outFormat {@link String} Date time format used for the output
    * @return Formatted date time
    */
-  public static String convertLdtToStr(LocalDateTime ldt, String outFormat) {
+  public static String convertLdtToStr(LocalDateTime ldt, ZoneId inTz, ZoneId outTz, String outFormat) {
     var outFormatter = DateTimeFormatter.ofPattern(outFormat);
-    return ldt.format(outFormatter);
+    return ZonedDateTime.of(ldt, inTz).withZoneSameInstant(outTz).format(outFormatter);
   }
 }
