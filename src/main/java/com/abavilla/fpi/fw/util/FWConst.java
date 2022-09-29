@@ -18,8 +18,24 @@
 
 package com.abavilla.fpi.fw.util;
 
+/**
+ * FPI Framework constants.
+ */
 public abstract class FWConst {
 
+  /**
+   * Comma separator
+   */
   public static final String COMMA_SEP = ", ";
+
+  /**
+   * Success message used for API response
+   */
+  public static final String SUCCESS = "Success";
+
+  /**
+   * Failed message used for API response
+   */
+  public static final String FAILED = "Failed";
 
 }

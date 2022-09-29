@@ -18,14 +18,10 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import javax.ws.rs.PATCH;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 import com.abavilla.fpi.fw.dto.IDto;
-import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
-import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
 /**
@@ -56,8 +52,6 @@ public interface ICRUDResource<E extends IDto, I extends AbsItem>
    * @param body Updated item
    * @return {@link E} Object retrieved
    */
-  @Path("{id}")
-  @PATCH
   Uni<E> patchItem(@PathParam("id") String id, E body);
 
   /**
