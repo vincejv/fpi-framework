@@ -62,7 +62,7 @@ public abstract class DateUtil {
 
   /**
    * Converts UNIX Epoch millisecond time to {@link LocalDateTime} object
-   * @param epoch Unix Epoch millisecond
+   * @param epoch Unix Epoch millisecond, retains the epoch timezone
    *
    * @return {@link LocalDateTime} object
    */
@@ -108,4 +108,53 @@ public abstract class DateUtil {
     return zdt.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
   }
 
+  /**
+   * Converts {@code ldt} to timestamp string, outputs using the format specified in {@link #DEFAULT_TIMESTAMP_FORMAT}
+   * and using UTC Timezone
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param zoneId {@link ZoneId} Time zone of {@code ldt}
+   * @return Formatted date time
+   */
+  public static String convertLdtToUTCStr(LocalDateTime ldt, ZoneId zoneId) {
+    return convertLdtToUTCStr(ldt, zoneId, DEFAULT_TIMESTAMP_FORMAT);
+  }
+
+  /**
+   * Converts {@code ldt} to timestamp string, outputs using the format specified in {@code outFormat}
+   * and using UTC Timezone
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param zoneId {@link ZoneId} Time zone of {@code ldt}
+   * @param outFormat {@link String} Date time format used for the output
+   * @return Formatted date time
+   */
+  public static String convertLdtToUTCStr(LocalDateTime ldt, ZoneId zoneId, String outFormat) {
+    LocalDateTime ldtInUtc = ldt.atZone(zoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+    var outFormatter = DateTimeFormatter.ofPattern(outFormat);
+    return ldtInUtc.format(outFormatter);
+  }
+
+  /**
+   * Converts {@code ldt} to timestamp string, retaining the time and date values of {@code ldt}, outputs using the
+   * format specified in {@link #DEFAULT_TIMESTAMP_FORMAT}
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @return Formatted date time
+   */
+  public static String convertLdtToStr(LocalDateTime ldt) {
+    return convertLdtToStr(ldt, DEFAULT_TIMESTAMP_FORMAT);
+  }
+
+  /**
+   * Converts {@code ldt} to timestamp string, retaining the time and date values of {@code ldt}
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param outFormat {@link String} Date time format used for the output
+   * @return Formatted date time
+   */
+  public static String convertLdtToStr(LocalDateTime ldt, String outFormat) {
+    var outFormatter = DateTimeFormatter.ofPattern(outFormat);
+    return ldt.format(outFormatter);
+  }
 }
