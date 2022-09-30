@@ -43,6 +43,11 @@ public abstract class DateUtil {
   public static final String DEFAULT_TIMEZONE = "Asia/Shanghai";
 
   /**
+   * UTC Zulu Timezone, timezone output format will output 'z'
+   */
+  public static final ZoneId UTC_ZULU_TIMEZONE = ZoneId.of("UTC");
+
+  /**
    * Get the current date time in string format in UTC timezone
    *
    * @return Date and time in {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE} format
@@ -83,6 +88,19 @@ public abstract class DateUtil {
     var ldt = LocalDateTime.parse(dateStr, inFormat);
     var zdt = ZonedDateTime.of(ldt, ZoneOffset.UTC);
     return zdt.format(outFormat);
+  }
+
+  /**
+   * Converts a date string to a specific date time format.
+   *
+   * @param dateStr {@link String} Date Time string to convert
+   * @param inFormat {@link String} date time format of {@code dateStr}
+   * @param outFormat {@link String} desired format for the output
+   * @return {@link String} Date time string outputted in desired format
+   */
+  public static String convertStrDateToFormat(String dateStr, String inFormat, String outFormat) {
+    return convertStrDateToFormat(dateStr, DateTimeFormatter.ofPattern(inFormat),
+        DateTimeFormatter.ofPattern(outFormat));
   }
 
   /**
@@ -172,7 +190,8 @@ public abstract class DateUtil {
   }
 
   /**
-   * Converts {@code ldt} to timestamp string, retaining the time and date values of {@code ldt}
+   * Converts {@code ldt} to timestamp string, changing the the time and date values of
+   * {@code ldt}, to the given timezone by {@code outTz}.
    *
    * @param ldt {@link LocalDateTime} Date and time to convert
    * @param inTz {@link ZoneId} Time zone of {@code ldt}
@@ -183,5 +202,17 @@ public abstract class DateUtil {
   public static String convertLdtToStr(LocalDateTime ldt, ZoneId inTz, ZoneId outTz, String outFormat) {
     var outFormatter = DateTimeFormatter.ofPattern(outFormat);
     return ZonedDateTime.of(ldt, inTz).withZoneSameInstant(outTz).format(outFormatter);
+  }
+
+  /**
+   * Converts {@code ldt} to timestamp string, retaining the time and date values of {@code ldt}
+   *
+   * @param ldt {@link LocalDateTime} Date and time to convert
+   * @param inTz {@link ZoneId} Time zone of {@code ldt} and output timestamp
+   * @param outFormat {@link String} Date time format used for the output
+   * @return Formatted date time
+   */
+  public static String convertLdtToStr(LocalDateTime ldt, ZoneId inTz, String outFormat) {
+    return convertLdtToStr(ldt, inTz, inTz, outFormat);
   }
 }
