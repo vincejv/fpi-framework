@@ -27,6 +27,10 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Utility class for Date and Time operations.
+ * <ul>
+ * <li>{@code *convert} methods are for changing {@link LocalDateTime} to {@link String}</li>
+ * <li>{@code *mod} methods are for modifying the {@link LocalDateTime} or {@link String} retaining its current type</li>
+ * </ul>
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
@@ -77,51 +81,99 @@ public abstract class DateUtil {
   }
 
   /**
-   * Converts a date string to a specific date time format.
+   * Changes a date time string to another date time format.
    *
    * @param dateStr {@link String} Date Time string to convert
    * @param inFormat {@link DateTimeFormatter} date time format of {@code dateStr}
    * @param outFormat {@link DateTimeFormatter} desired format for the output
    * @return {@link String} Date time string outputted in desired format
    */
-  public static String convertStrDateToFormat(String dateStr, DateTimeFormatter inFormat, DateTimeFormatter outFormat) {
+  public static String modStrDateToFormat(String dateStr, DateTimeFormatter inFormat, DateTimeFormatter outFormat) {
     var ldt = LocalDateTime.parse(dateStr, inFormat);
     var zdt = ZonedDateTime.of(ldt, ZoneOffset.UTC);
     return zdt.format(outFormat);
   }
 
   /**
-   * Converts a date string to a specific date time format.
+   * Parses a date time string that may or may not contain timezone information and retains the date and time values.
+   *
+   * @param dateStr Date time string without timezone specified
+   * @param inFormat Format of {@code dateStr}
+   * @return {@link LocalDateTime} object
+   */
+  public static LocalDateTime parseStrDateToLdt(String dateStr, DateTimeFormatter inFormat) {
+    return LocalDateTime.parse(dateStr, inFormat);
+  }
+
+  /**
+   * Parses a date time string that may or may not contain timezone information and retains the date and time values.
+   *
+   * @param dateStr Date time string without timezone specified
+   * @param inFormat Format of {@code dateStr}
+   * @return {@link LocalDateTime} object
+   */
+  public static LocalDateTime parseStrDateToLdt(String dateStr, String inFormat) {
+    return parseStrDateToLdt(dateStr, DateTimeFormatter.ofPattern(inFormat));
+  }
+
+  /**
+   * Parses a date time string containing a timezone and changes the date and time values based on given {@code outTz}
+   * timezone
+   *
+   * @param dateStr Input date time string
+   * @param inFormat Format of {@code dateStr}
+   * @param outTz Output timezone
+   * @return {@link LocalDateTime} object
+   */
+  public static LocalDateTime parseStrDateWTzToLdt(String dateStr, DateTimeFormatter inFormat, ZoneId outTz) {
+    return ZonedDateTime.parse(dateStr, inFormat).withZoneSameInstant(outTz).toLocalDateTime();
+  }
+
+  /**
+   * Parses a date time string containing a timezone and changes the date and time values based on given {@code outTz}
+   * timezone
+   *
+   * @param dateStr Input date time string
+   * @param inFormat Format of {@code dateStr}
+   * @param outTz Output timezone
+   * @return {@link LocalDateTime} object
+   */
+  public static LocalDateTime parseStrDateWTzToLdt(String dateStr, String inFormat, ZoneId outTz) {
+    return parseStrDateWTzToLdt(dateStr, DateTimeFormatter.ofPattern(inFormat), outTz);
+  }
+
+  /**
+   * Changes a date time string to another date time format.
    *
    * @param dateStr {@link String} Date Time string to convert
    * @param inFormat {@link String} date time format of {@code dateStr}
    * @param outFormat {@link String} desired format for the output
    * @return {@link String} Date time string outputted in desired format
    */
-  public static String convertStrDateToFormat(String dateStr, String inFormat, String outFormat) {
-    return convertStrDateToFormat(dateStr, DateTimeFormatter.ofPattern(inFormat),
+  public static String modStrDateToFormat(String dateStr, String inFormat, String outFormat) {
+    return modStrDateToFormat(dateStr, DateTimeFormatter.ofPattern(inFormat),
         DateTimeFormatter.ofPattern(outFormat));
   }
 
   /**
-   * Converts the {@link LocalDateTime} to UTC specifying the timezone used by the date time object.
-   * @param ldt {@link LocalDateTime} to convert
-   * @param zoneId Timezone of {@link LocalDateTime}
+   * Changes the {@link LocalDateTime} to UTC specifying the timezone used by {@code ldt}
    *
+   * @param ldt {@link LocalDateTime} to convert
+   * @param zoneId Timezone of {@code ldt}
    * @return {@link LocalDateTime} in UTC
    */
-  public static LocalDateTime convertLdtToUtc(LocalDateTime ldt, ZoneId zoneId) {
+  public static LocalDateTime modtLdtToUtc(LocalDateTime ldt, ZoneId zoneId) {
     var zdt = ZonedDateTime.of(ldt, zoneId);
     return zdt.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
   }
 
   /**
-   * Converts the {@link LocalDateTime} assuming that it uses the {@link #DEFAULT_TIMEZONE}, to UTC.
-   * @param ldt {@link LocalDateTime} to convert
+   * Changes the {@link LocalDateTime} assuming that {@code ldt} uses the {@link #DEFAULT_TIMEZONE}, to UTC.
    *
+   * @param ldt {@link LocalDateTime} to convert
    * @return {@link LocalDateTime} in UTC
    */
-  public static LocalDateTime convertLdtUTC8ToUtc(LocalDateTime ldt) {
+  public static LocalDateTime modLdtToUtc(LocalDateTime ldt) {
     var zdt = ZonedDateTime.of(ldt, ZoneId.of(DEFAULT_TIMEZONE));
     return zdt.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
   }
@@ -190,7 +242,7 @@ public abstract class DateUtil {
   }
 
   /**
-   * Converts {@code ldt} to timestamp string, changing the the time and date values of
+   * Converts {@code ldt} to timestamp string, changing the time and date values of
    * {@code ldt}, to the given timezone by {@code outTz}.
    *
    * @param ldt {@link LocalDateTime} Date and time to convert
