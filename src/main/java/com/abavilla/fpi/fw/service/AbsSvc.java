@@ -18,13 +18,11 @@
 
 package com.abavilla.fpi.fw.service;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 
-import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
@@ -34,22 +32,30 @@ import io.smallrye.mutiny.Uni;
 import org.apache.commons.lang3.NotImplementedException;
 import org.bson.types.ObjectId;
 
-public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<D, I> {
+/**
+ * Base service layer for creating services with access to a generic repository.
+ *
+ * @param <Dto> DTO Type
+ * @param <Item> Entity Type
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
+public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements ISvc<Dto, Item> {
 
   /**
-   * The repository to manage {@link I}
+   * The repository to manage {@link Item}
    */
   @Inject
-  protected IMongoRepo<I> repo;
+  protected IMongoRepo<Item> repo;
 
   /**
    * Retrieves an item by id.
    *
    * @param id {@link String} Id
-   * @return {@link I} Item retrieved
+   * @return {@link Item} Item retrieved
    */
-  public Uni<D> get(String id) {
-    Uni<Optional<I>> byId = repo.byId(id);
+  public Uni<Dto> get(String id) {
+    Uni<Optional<Item>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         return Uni.createFrom()
@@ -67,7 +73,7 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * @param size Items per page
    * @return {@link PageDto} page
    */
-  public Uni<PageDto<D>> getByPage(int ndx, int size) {
+  public Uni<PageDto<Dto>> getByPage(int ndx, int size) {
     var determineNextPage = repo.byPage(ndx, size)
         .hasNextPage();
 
@@ -87,11 +93,11 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * It does not update the existing item's id.
    *
    * @param id {@link String} Id
-   * @param item {@link D} Item to save
-   * @return {@link I} Item after saving to db
+   * @param item {@link Dto} Item to save
+   * @return {@link Item} Item after saving to db
    */
-  public Uni<D> update(String id, D item) {
-    Uni<Optional<I>> byId = repo.byId(id);
+  public Uni<Dto> update(String id, Dto item) {
+    Uni<Optional<Item>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         var updatedItem = mapToEntity(item);
@@ -107,11 +113,11 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * It does not update the existing item's id.
    *
    * @param id {@link String} Id
-   * @param item {@link D} Item to save
-   * @return {@link I} Item after saving to db
+   * @param item {@link Dto} Item to save
+   * @return {@link Item} Item after saving to db
    */
-  public Uni<D> patch(String id, D item) {
-    Uni<Optional<I>> byId = repo.byId(id);
+  public Uni<Dto> patch(String id, Dto item) {
+    Uni<Optional<Item>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         var updatedItem = opt.get();
@@ -126,11 +132,11 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
   /**
    * Saves a new item to database.
    *
-   * @param item {@link D} Item to save
-   * @return {@link I} Item after saving to db
+   * @param item {@link Dto} Item to save
+   * @return {@link Item} Item after saving to db
    */
-  public Uni<D> save(D item) {
-    Uni<I> persistedItem = repo.persist(mapToEntity(item));
+  public Uni<Dto> save(Dto item) {
+    Uni<Item> persistedItem = repo.persist(mapToEntity(item));
     return persistedItem.map(this::mapToDto);
   }
 
@@ -138,10 +144,10 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * Deletes an item from the database given by id.
    *
    * @param id Database id
-   * @return {@link D}
+   * @return {@link Dto}
    */
-  public Uni<D> delete(String id) {
-    Uni<Optional<I>> byId = repo.byId(id);
+  public Uni<Dto> delete(String id) {
+    Uni<Optional<Item>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         opt.get().setIsArchived(true);
@@ -151,15 +157,15 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
     });
   }
 
-  public Multi<D> list() {
+  public Multi<Dto> list() {
     return repo.streamAll().map(this::mapToDto);
   }
 
-  public D mapToDto(I entity) {
+  public Dto mapToDto(Item entity) {
     throw new NotImplementedException("Mapping to DTO not implemented");
   }
 
-  public I mapToEntity(D dto) {
+  public Item mapToEntity(Dto dto) {
     throw new NotImplementedException("Mapping to Entity not implemented");
   }
 
@@ -170,7 +176,7 @@ public abstract class AbsSvc<D extends IDto, I extends AbsItem> implements ISvc<
    * @param entity Target entity
    * @param dto Source DTO
    */
-  public void patchEntityFromDto(I entity, D dto) {
+  public void patchEntityFromDto(Item entity, Dto dto) {
     throw new NotImplementedException("Patching to Entity not implemented");
   }
 }
