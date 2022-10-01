@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.abavilla.fpi.fw.util.MapperUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
@@ -37,6 +39,7 @@ public abstract class AbsDto implements IDto {
 
   protected LocalDateTime dateUpdated;
 
+  @JsonIgnore
   private transient List<Exception> exceptions;
 
   public AbsDto() {
@@ -48,6 +51,7 @@ public abstract class AbsDto implements IDto {
     exceptions.add(ex);
   }
 
+  @JsonIgnore // used only internally, not to be serialized
   public Exception getLastEx() {
     if (exceptions.size() == 0) {
       return null;
