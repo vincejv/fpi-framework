@@ -88,9 +88,10 @@ public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
     int ord = -1;
     while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
       // decode only value type, ignore ord
-      if (StringUtils.equals(reader.readName(), ORD_KEY_NODE_NAME)) {
+      String key = reader.readName();
+      if (StringUtils.equals(key, ORD_KEY_NODE_NAME)) {
         value = reader.readString();
-      } else if (StringUtils.equals(reader.readName(), ORD_KEY_NODE_NAME)) {
+      } else if (StringUtils.equals(key, ORD_KEY_NODE_NAME)) {
         ord = reader.readInt32();
       } else {
         reader.skipValue();
