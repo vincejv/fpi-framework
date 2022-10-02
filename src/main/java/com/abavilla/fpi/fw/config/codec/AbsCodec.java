@@ -29,41 +29,89 @@ import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 
+/**
+ * Generic codec for encoding Enum to MongoDB Document
+ * @param <T> Enum Type
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
 
+  /**
+   * Document key name for the value node
+   */
   public static final String VALUE_KEY_NODE_NAME = "value";
+
+  /**
+   * Document key name for the enum id
+   */
   public static final String ORD_KEY_NODE_NAME = "ord";
 
+  /**
+   * Creates a new {@link AbsCodec} instance
+   */
   public AbsCodec() {
   }
 
+  /**
+   * Encodes the given {@link T} Enum
+   *
+   * @param writer the BSON writer to encode into
+   * @param value the value to encode
+   * @param encoderContext the encoder context
+   */
   @SneakyThrows
   @Override
   final public void encode(final BsonWriter writer, final T value, final EncoderContext encoderContext) {
-    Method getId = getEncoderClass().getDeclaredMethod("getId");
-    writer.writeStartDocument();
-    writer.writeString(VALUE_KEY_NODE_NAME, value.toString());
-    writer.writeInt32(ORD_KEY_NODE_NAME, (Integer) getId.invoke(value));
-    writer.writeEndDocument();
+    if (value != null) {
+      Method getId = getEncoderClass().getDeclaredMethod("getId");
+      writer.writeStartDocument();
+      writer.writeString(VALUE_KEY_NODE_NAME, value.toString());
+      writer.writeInt32(ORD_KEY_NODE_NAME, (Integer) getId.invoke(value));
+      writer.writeEndDocument();
+    }
   }
 
+  /**
+   * Decodes the enum from the mongo db document
+   *
+   * @param reader         the BSON reader
+   * @param decoderContext the decoder context
+   * @return an instance of the type parameter {@code T}.
+   */
   @SneakyThrows
   @Override
+  @SuppressWarnings("unchecked")
   final public T decode(final BsonReader reader, final DecoderContext decoderContext) {
     reader.readStartDocument();
     String value = StringUtils.EMPTY;
+    int ord = -1;
     while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
       // decode only value type, ignore ord
-      if (StringUtils.equals(reader.readName(), VALUE_KEY_NODE_NAME)) {
+      if (StringUtils.equals(reader.readName(), ORD_KEY_NODE_NAME)) {
         value = reader.readString();
+      } else if (StringUtils.equals(reader.readName(), ORD_KEY_NODE_NAME)) {
+        ord = reader.readInt32();
       } else {
         reader.skipValue();
       }
     }
     reader.readEndDocument();
-    Method method = getEncoderClass().getDeclaredMethod("fromValue", String.class);
-    return (T) method.invoke(null, value);
+
+    Method fromValue = getEncoderClass().getDeclaredMethod("fromValue", String.class);
+    T decodedEnum = (T) fromValue.invoke(null, value);
+    if (ord == -1) { // if enum.ord is -1, it is 'UNKNOWN'
+      // if unknown, retain the enum.value content when encoding
+      Method setValue = getEncoderClass().getDeclaredMethod("setValue", String.class);
+      setValue.invoke(decodedEnum, value);
+    }
+    return decodedEnum;
   }
 
+  /**
+   * Get the Enum class being encoded or decoded.
+   *
+   * @return an Enum class
+   */
   public abstract Class<T> getEncoderClass();
 }
