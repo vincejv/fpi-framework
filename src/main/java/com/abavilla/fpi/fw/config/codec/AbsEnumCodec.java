@@ -20,6 +20,7 @@ package com.abavilla.fpi.fw.config.codec;
 
 import java.lang.reflect.Method;
 
+import com.abavilla.fpi.fw.entity.enums.IBaseEnum;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.BsonReader;
@@ -35,7 +36,7 @@ import org.bson.codecs.EncoderContext;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
+public abstract class AbsEnumCodec<T extends IBaseEnum> implements Codec<T> {
 
   /**
    * Document key name for the value node
@@ -48,9 +49,9 @@ public abstract class AbsCodec<T extends Enum<T>> implements Codec<T> {
   public static final String ORD_KEY_NODE_NAME = "ord";
 
   /**
-   * Creates a new {@link AbsCodec} instance
+   * Creates a new {@link AbsEnumCodec} instance
    */
-  public AbsCodec() {
+  public AbsEnumCodec() {
   }
 
   /**

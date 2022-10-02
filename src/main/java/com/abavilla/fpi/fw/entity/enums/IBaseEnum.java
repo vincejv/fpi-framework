@@ -18,63 +18,19 @@
 
 package com.abavilla.fpi.fw.entity.enums;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
-@Getter
-@AllArgsConstructor
+/**
+ * Base implementation of {@link Enum} types
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 @RegisterForReflection
-public enum BaseEnum {
-  UNKNOWN(-1, "");
-  private static final Map<String, BaseEnum> ENUM_MAP = new HashMap<>();
-
-  static {
-    for(BaseEnum w : EnumSet.allOf(BaseEnum.class))
-      ENUM_MAP.put(w.getValue(), w);
-  }
-
-  private final int id;
-  @Accessors(chain = true)
-  @Setter
-  private String value;
-
-  @JsonCreator
-  public static BaseEnum fromValue(String value) {
-    return ENUM_MAP.getOrDefault(value, BaseEnum.UNKNOWN.setValue(value));
-  }
-
-  public static BaseEnum fromId(int id) {
-    return ENUM_MAP.values().stream().filter(telco -> telco.getId() == id).findAny()
-        .orElse(getDefaultValue().setValue(String.format("Unknown (%d)", id)));
-  }
+public interface IBaseEnum {
 
   /**
-   * Used by the Mongo codec
-   *
-   * @return
+   * Prefix for Unknown enum values
    */
-  public static BaseEnum getDefaultValue() {
-    return UNKNOWN;
-  }
+  String UNKNOWN_PREFIX = "UNK >> ";
 
-  /**
-   * Required to properly convert Java Enum name to value.
-   * Value is used by front-end and usually uses <br>
-   * 1. lowercase <br>
-   * 2. dashes instead of underscores <br> <br>
-   */
-  @Override
-  @JsonValue
-  public String toString() {
-    return this.value;
-  }
 }

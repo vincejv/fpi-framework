@@ -18,17 +18,17 @@
 
 package com.abavilla.fpi.fw.config.codec.impl;
 
-import com.abavilla.fpi.fw.config.codec.AbsCodec;
-import com.abavilla.fpi.fw.entity.enums.BaseEnum;
+import com.abavilla.fpi.fw.config.codec.AbsEnumCodec;
+import com.abavilla.fpi.fw.entity.enums.SampleEnum;
 
-public class BaseCodec extends AbsCodec<BaseEnum> {
+public class SampleEnumCodec extends AbsEnumCodec<SampleEnum> {
 
-  public BaseCodec() {
+  public SampleEnumCodec() {
     super();
   }
 
   @Override
-  public Class<BaseEnum> getEncoderClass() {
-    return BaseEnum.class;
+  public Class<SampleEnum> getEncoderClass() {
+    return SampleEnum.class;
   }
 }
