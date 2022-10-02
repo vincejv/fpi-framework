@@ -18,8 +18,10 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -57,8 +59,7 @@ public abstract class AbsBaseResource<E extends IDto, I extends AbsItem,
    * @param x Exception thrown
    * @return HTTP Response detailing the exception
    */
-  @ServerExceptionMapper
-  public RestResponse<RespDto<?>> mapException(FPISvcEx x) {
+  protected RestResponse<RespDto<Object>> mapException(FPISvcEx x) {
     RespDto<Object> resp = new RespDto<>();
     resp.setTimestamp(DateUtil.nowAsStr());
     resp.setResp(x.getEntity());
