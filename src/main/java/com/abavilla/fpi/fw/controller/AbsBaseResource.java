@@ -22,10 +22,16 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.abavilla.fpi.fw.dto.IDto;
+import com.abavilla.fpi.fw.dto.impl.RespDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
+import com.abavilla.fpi.fw.exceptions.FPISvcEx;
 import com.abavilla.fpi.fw.service.AbsSvc;
+import com.abavilla.fpi.fw.util.DateUtil;
+import org.jboss.resteasy.reactive.RestResponse;
+import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 
 /**
  * REST API resource with no built-in CRUD operations.
@@ -44,5 +50,20 @@ public abstract class AbsBaseResource<E extends IDto, I extends AbsItem,
    */
   @Inject
   protected S service;
+
+  /**
+   * Handles exceptions thrown by service layer.
+   *
+   * @param x Exception thrown
+   * @return HTTP Response detailing the exception
+   */
+  @ServerExceptionMapper
+  public RestResponse<RespDto<?>> mapException(FPISvcEx x) {
+    RespDto<Object> resp = new RespDto<>();
+    resp.setTimestamp(DateUtil.nowAsStr());
+    resp.setResp(x.getEntity());
+    resp.setError(x.getMessage());
+    return RestResponse.status(Response.Status.fromStatusCode(x.getHttpStatus()), resp);
+  }
 
 }
