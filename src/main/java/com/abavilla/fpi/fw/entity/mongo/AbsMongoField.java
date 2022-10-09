@@ -33,8 +33,15 @@ import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 @NoArgsConstructor
 @BsonDiscriminator
 public abstract class AbsMongoField implements IField {
+
   @Override
   public JsonNode toJson() {
       return MapperUtil.mapper().convertValue(this, JsonNode.class);
   }
+
+  @Override
+  public String toJsonStr() {
+    return toJson().toString();
+  }
+
 }

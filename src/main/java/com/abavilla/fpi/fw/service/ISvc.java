@@ -18,6 +18,12 @@
 
 package com.abavilla.fpi.fw.service;
 
-public interface ISvc<D, I> {
+/**
+ * Interface for all services that works with DTO and Entity objects.
+ *
+ * @param <Dto> DTO Type
+ * @param <Item> Entity Type
+ */
+public interface ISvc<Dto, Item> {
 
 }

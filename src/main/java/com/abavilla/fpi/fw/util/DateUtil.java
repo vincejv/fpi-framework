@@ -96,6 +96,17 @@ public abstract class DateUtil {
 
   /**
    * Parses a date time string that may or may not contain timezone information and retains the date and time values.
+   * Uses {@link #DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE} as the output format.
+   *
+   * @param dateStr Date time string without timezone specified
+   * @return {@link LocalDateTime} object
+   */
+  public static LocalDateTime parseStrDateToLdt(String dateStr) {
+    return parseStrDateToLdt(dateStr, DEFAULT_TIMESTAMP_FORMAT_WITH_TIMEZONE);
+  }
+
+  /**
+   * Parses a date time string that may or may not contain timezone information and retains the date and time values.
    *
    * @param dateStr Date time string without timezone specified
    * @param inFormat Format of {@code dateStr}

@@ -18,7 +18,15 @@
 
 package com.abavilla.fpi.fw.dto.impl;
 
+import com.abavilla.fpi.fw.controller.AbsBaseResource;
 import com.abavilla.fpi.fw.dto.AbsDto;
+import com.abavilla.fpi.fw.service.AbsSvc;
 
+/**
+ * Data transfer object for transporting {@code null} or empty items/response, can be used as placeholders for
+ * {@link AbsBaseResource} or {@link AbsSvc}
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 public class NullDto extends AbsDto {
 }

@@ -29,28 +29,64 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 
+/**
+ * Data transfer object template for which all DTO objects inherit, contains the basic common functionality and fields
+ * that a DTO may optionally use.
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 @Data
 @RegisterForReflection
 public abstract class AbsDto implements IDto {
 
+  /**
+   * Object Id
+   */
   protected String id;
 
+  /**
+   * Date and time the DTO is created
+   */
   protected LocalDateTime dateCreated;
 
+  /**
+   * Date and time the DTO is last updated
+   */
   protected LocalDateTime dateUpdated;
 
+  /**
+   * {@link List} of {@link Exception} that were encountered while generating the DTO output.
+   * Marked with {@code transient} and {@link JsonIgnore} so it won't be part of serializations.
+   */
   @JsonIgnore
   private transient List<Exception> exceptions;
 
+  /**
+   * Creates an instance of an empty DTO and initializes {@link #exceptions} list.
+   */
   public AbsDto() {
     exceptions = new ArrayList<>();
   }
 
-
+  /**
+   * Inserts a new {@link Exception} that was encountered while generating the DTO Output.
+   * Initializes {@link #exceptions} list if not yet initialized.
+   *
+   * @param ex Exception encountered
+   */
   public void chainEx(Exception ex) {
+    if (exceptions == null) {
+      exceptions = new ArrayList<>();
+    }
     exceptions.add(ex);
   }
 
+  /**
+   * Gets the last {@link Exception} encountered while generating the DTO Output.
+   * Should not be included during serialization as it is marked with {@link JsonIgnore} annotation.
+   *
+   * @return the exception
+   */
   @JsonIgnore // used only internally, not to be serialized
   public Exception getLastEx() {
     if (exceptions.size() == 0) {
@@ -59,8 +95,19 @@ public abstract class AbsDto implements IDto {
     return exceptions.get(exceptions.size()-1);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonNode toJson() {
     return MapperUtil.mapper().convertValue(this, JsonNode.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toJsonStr() {
+    return toJson().toString();
   }
 }

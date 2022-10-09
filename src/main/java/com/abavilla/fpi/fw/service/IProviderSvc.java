@@ -18,8 +18,40 @@
 
 package com.abavilla.fpi.fw.service;
 
+import com.abavilla.fpi.fw.engine.IEngine;
+
+/**
+ * Interface for upstream provider services, to be used together with {@link IEngine}, implementing classes should
+ * define may define a {@code callSvc} method for calling the provider and exeucute actions.
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 public interface IProviderSvc {
+
+  /**
+   * Initializes the service
+   */
   void init();
+
+  /**
+   * Service priority, the lower the number, the more it is prioritized when multiple upstream services are available.
+   *
+   * @return the priority number
+   */
   long getPriority();
+
+  /**
+   * Service provider name.
+   * @return the provider name
+   */
   String getProviderName();
+
+  /**
+   * Flag to check if service is currently available.
+   *
+   * @return the service availability
+   */
+  default boolean isEnabled() {
+    return true;
+  }
 }

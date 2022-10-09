@@ -24,4 +24,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public interface IItem extends Serializable {
   JsonNode toJson();
+
+  String toJsonStr();
 }

@@ -18,13 +18,15 @@
 
 package com.abavilla.fpi.fw.util;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.logging.Log;
 
-@Singleton
+@ApplicationScoped
 public class MapperUtil {
 
   private static ObjectMapper mapper;
@@ -42,5 +44,22 @@ public class MapperUtil {
 
   public static <T> T convert(Object obj, Class<T> clazz) {
     return mapper.convertValue(obj, clazz);
+  }
+
+  /**
+   * Deserializes json string into a java pojo object
+   *
+   * @param jsonString the json string
+   * @param clazz Target java object
+   * @return the deserialized object
+   * @param <T> Type of the target pojo
+   */
+  public static <T> T readJson(String jsonString, Class<T> clazz) {
+    try {
+      return mapper.readerFor(clazz).readValue(jsonString);
+    } catch (JsonProcessingException e) {
+      Log.warn("Cannot serialize from JSON string: " + jsonString);
+      return null;
+    }
   }
 }

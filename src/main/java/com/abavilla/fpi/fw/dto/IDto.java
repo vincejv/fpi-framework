@@ -20,9 +20,24 @@ package com.abavilla.fpi.fw.dto;
 
 import java.io.Serializable;
 
+import com.abavilla.fpi.fw.util.MapperUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 
+/**
+ * Data transfer object template for which all DTO objects inherit, contains the basic common functionality and fields
+ * that a DTO may optionally use.
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 public interface IDto extends Serializable {
 
+  /**
+   * Converts the DTO into a generic {@link JsonNode} object for displaying JSON and operations, converts the DTO using
+   * {@link MapperUtil} utility methods.
+   *
+   * @return the JSON object
+   */
   JsonNode toJson();
+
+  String toJsonStr();
 }

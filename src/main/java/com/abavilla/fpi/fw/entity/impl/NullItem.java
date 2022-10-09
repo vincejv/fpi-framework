@@ -18,7 +18,16 @@
 
 package com.abavilla.fpi.fw.entity.impl;
 
+import com.abavilla.fpi.fw.controller.AbsBaseResource;
 import com.abavilla.fpi.fw.entity.AbsItem;
+import com.abavilla.fpi.fw.repo.IMongoRepo;
+import com.abavilla.fpi.fw.service.AbsSvc;
 
+/**
+ * Entity item for transporting {@code null} or empty items/response,  can be used as placeholders for
+ * {@link AbsBaseResource}, {@link AbsSvc} or {@link IMongoRepo}
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 public class NullItem extends AbsItem {
 }

@@ -60,4 +60,9 @@ public abstract class AbsItem implements IItem {
   public JsonNode toJson() {
     return MapperUtil.mapper().convertValue(this, JsonNode.class);
   }
+
+  @Override
+  public String toJsonStr() {
+    return toJson().toString();
+  }
 }
