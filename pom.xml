@@ -26,7 +26,8 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.90-RC</version>
+    <version>1.0.105-RC</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <properties>
@@ -36,16 +37,13 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.12.0.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.12.2.Final</quarkus.platform.version>
     <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <json-jackson.version>2.13.4</json-jackson.version>
-
-    <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
-    <abavilla.framework.version>${project.parent.version}</abavilla.framework.version>
   </properties>
 
   <dependencyManagement>
