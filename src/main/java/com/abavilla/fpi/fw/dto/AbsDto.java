@@ -40,9 +40,14 @@ import lombok.Data;
 public abstract class AbsDto implements IDto {
 
   /**
-   * Object Id
+   * Object ID
    */
   protected String id;
+
+  /**
+   * Status message to pass regarding current object state
+   */
+  protected String status;
 
   /**
    * Date and time the DTO is created
