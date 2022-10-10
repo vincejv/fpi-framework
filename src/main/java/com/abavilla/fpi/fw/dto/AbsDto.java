@@ -47,7 +47,8 @@ public abstract class AbsDto implements IDto {
   /**
    * Status message to pass regarding current object state
    */
-  protected String status;
+  @JsonIgnore
+  protected transient String status;
 
   /**
    * Date and time the DTO is created
