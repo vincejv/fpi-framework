@@ -19,13 +19,6 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <scm>
-    <url>https://github.com/vincejv/fpi-framework-pom</url>
-    <connection>scm:git:git://github.com/vincejv/fpi-framework-pom.git</connection>
-    <developerConnection>scm:git:git@github.com:vincejv/fpi-framework-pom.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
   <modelVersion>4.0.0</modelVersion>
   <artifactId>fpi-framework-pom</artifactId>
   <name>fpi-framework-pom</name>
@@ -34,7 +27,7 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework-bom</artifactId>
-    <version>1.0.112-SNAPSHOT</version>
+    <version>1.0.112</version>
     <relativePath>../fpi-framework-bom/pom.xml</relativePath>
   </parent>
 
