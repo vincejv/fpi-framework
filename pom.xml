@@ -14,23 +14,14 @@
   ~ GNU General Public License for more details.                              ~
   ~                                                                           ~
   ~ You should have received a copy of the GNU General Public License         ~
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.    ~
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses />.    ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <scm>
-        <url>https://github.com/vincejv/fpi-framework</url>
-        <connection>scm:git:git://github.com/vincejv/fpi-framework.git</connection>
-        <developerConnection>scm:git:git@github.com:vincejv/fpi-framework.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.112-SNAPSHOT</version>
+    <version>1.0.112</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
@@ -42,7 +33,7 @@
 
     <properties>
         <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
-        <abavilla.framework.version>1.0.112-SNAPSHOT</abavilla.framework.version>
+        <abavilla.framework.version>1.0.112</abavilla.framework.version>
     </properties>
 
     <repositories>
