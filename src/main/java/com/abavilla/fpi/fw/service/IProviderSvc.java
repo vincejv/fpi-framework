@@ -28,7 +28,7 @@ import io.quarkus.arc.Priority;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IProviderSvc {
+public interface IProviderSvc extends ISvc {
 
   /**
    * Initializes the service

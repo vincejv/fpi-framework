@@ -18,7 +18,7 @@ import com.abavilla.fpi.fw.repo.IMongoRepo;
  */
 @ApplicationScoped
 public abstract class AbsRepoSvc<Dto extends IDto, Item extends AbsItem, Repo extends IMongoRepo<Item>>
-    extends AbsSvc<Dto, Item> implements ISvc<Dto, Item>{
+    extends AbsSvc<Dto, Item> implements ISvc {
 
   /**
    * The repository to manage {@link Item}

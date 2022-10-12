@@ -24,6 +24,6 @@ package com.abavilla.fpi.fw.service;
  * @param <Dto> DTO Type
  * @param <Item> Entity Type
  */
-public interface ISvc<Dto, Item> {
+public interface ISvc {
 
 }

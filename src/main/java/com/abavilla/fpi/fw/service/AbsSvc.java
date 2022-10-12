@@ -40,7 +40,7 @@ import org.bson.types.ObjectId;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements ISvc<Dto, Item> {
+public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements ISvc {
 
   /**
    * The repository to manage {@link Item}
