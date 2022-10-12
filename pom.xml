@@ -26,7 +26,7 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.112</version>
+    <version>1.0.113</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -37,13 +37,15 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.12.2.Final</quarkus.platform.version>
-    <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+    <quarkus.platform.version>2.13.1.Final</quarkus.platform.version>
+    <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <json-jackson.version>2.13.4</json-jackson.version>
+    <!-- Maintain compatibility with older keycloak server versions until 19.0.2 is fixed -->
+    <keycloak.version>18.0.2</keycloak.version>
   </properties>
 
   <dependencyManagement>
