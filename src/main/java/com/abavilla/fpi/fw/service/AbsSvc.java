@@ -26,6 +26,7 @@ import javax.ws.rs.NotFoundException;
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
+import com.abavilla.fpi.fw.exceptions.OptimisticLockEx;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -105,7 +106,7 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
         return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
       }
       return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
-    });
+    }).onFailure(OptimisticLockEx.class).retry().indefinitely();
   }
 
   /**
@@ -126,7 +127,7 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
         return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
       }
       return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
-    });
+    }).onFailure(OptimisticLockEx.class).retry().indefinitely();
   }
 
   /**
@@ -154,7 +155,7 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
         return repo.persistOrUpdate(opt.get()).map(this::mapToDto);
       }
       return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
-    });
+    }).onFailure(OptimisticLockEx.class).retry().indefinitely();
   }
 
   public Multi<Dto> list() {
