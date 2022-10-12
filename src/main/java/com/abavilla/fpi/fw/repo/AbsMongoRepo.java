@@ -18,106 +18,31 @@
 
 package com.abavilla.fpi.fw.repo;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import com.abavilla.fpi.fw.entity.AbsItem;
-import com.abavilla.fpi.fw.exceptions.OptimisticLockEx;
-import com.mongodb.MongoException;
+import io.quarkus.mongodb.panache.reactive.ReactivePanacheQuery;
+import io.quarkus.panache.common.Sort;
 import io.smallrye.mutiny.Uni;
+import org.bson.types.ObjectId;
 
 @ApplicationScoped
 public abstract class AbsMongoRepo<I extends AbsItem> implements IMongoRepo<I> {
 
-  @Override
-  public Uni<I> update(I toSave) {
-    if (toSave.getId() != null) {
-      return findByIdOptional(toSave.getId()).chain(inDb -> {
-        if (inDb.isPresent()) {
-          // update with optimistic locking
-          if (Objects.equals(toSave.getVersion(), inDb.get().getVersion())) {
-            toSave.setVersion(toSave.getVersion() == null ?
-              BigInteger.ONE : toSave.getVersion().add(BigInteger.ONE));
-            return IMongoRepo.super.update(toSave);
-          }
-          throw new OptimisticLockEx(String.format("Found version %s, while item in memory is %s while saving %s",
-            inDb.get().getVersion().toString(), toSave.getVersion(), toSave.getId()));
-        } else {
-          throw new MongoException("Cannot perform update on non-existing entity " + toSave);
-        }
-      });
-    }
-    throw new MongoException("Cannot perform update on null id, entity is " + toSave);
+  /**
+   * Retrieves items from db by page
+   *
+   * @param index Page number (zero based)
+   * @param itemPerPage Items per page
+   * @return Paged query
+   */
+  public ReactivePanacheQuery<I> byPage(int index, int itemPerPage) {
+    return findAll(Sort.by("dateUpdated")).page(index, itemPerPage);
   }
 
-  @Override
-  public Uni<I> persistOrUpdate(I toSave) {
-    if (toSave.getId() != null) {
-      return findByIdOptional(toSave.getId()).chain(inDb -> {
-          if (inDb.isPresent()) {
-            // update with optimistic locking
-            if (Objects.equals(toSave.getVersion(), inDb.get().getVersion())) {
-              toSave.setVersion(toSave.getVersion() == null ?
-                BigInteger.ONE : toSave.getVersion().add(BigInteger.ONE));
-              return IMongoRepo.super.update(toSave);
-            }
-            throw new OptimisticLockEx(String.format("Found version %s, while item in memory is %s while saving %s",
-              inDb.get().getVersion().toString(), toSave.getVersion(), toSave.getId()));
-          } else {
-            return IMongoRepo.super.persist(toSave);
-          }
-        }
-      );
-    } else {
-      return IMongoRepo.super.persist(toSave);
-    }
-  }
-
-  @Override
-  public Uni<Void> update(Iterable<I> is) {
-    for (I i : is) {
-      this.update(i).replaceWithVoid().subscribe().with(ignored->{});
-    }
-    return Uni.createFrom().voidItem();
-  }
-
-  @Override
-  public Uni<Void> update(Stream<I> entities) {
-    entities.forEach(i -> this.update(i).replaceWithVoid().subscribe().with(ignored->{}));
-    return Uni.createFrom().voidItem();
-  }
-
-  @SafeVarargs
-  @Override
-  public final Uni<Void> update(I firstEntity, I... is) {
-    this.update(firstEntity).replaceWithVoid().subscribe().with(ignored->{});
-    this.update(List.of(is));
-    return Uni.createFrom().voidItem();
-  }
-
-  @Override
-  public Uni<Void> persistOrUpdate(Iterable<I> is) {
-    for (I i : is) {
-      this.persistOrUpdate(i).replaceWithVoid().subscribe().with(ignored->{});
-    }
-    return Uni.createFrom().voidItem();
-  }
-
-  @Override
-  public Uni<Void> persistOrUpdate(Stream<I> entities) {
-    entities.forEach(i -> this.persistOrUpdate(i).replaceWithVoid().subscribe().with(ignored->{}));
-    return Uni.createFrom().voidItem();
-  }
-
-  @SafeVarargs
-  @Override
-  public final Uni<Void> persistOrUpdate(I firstEntity, I... is) {
-    this.persistOrUpdate(firstEntity).replaceWithVoid().subscribe().with(ignored->{});
-    this.persistOrUpdate(List.of(is));
-    return Uni.createFrom().voidItem();
+  public Uni<Optional<I>> byId(String id) {
+    return findByIdOptional(new ObjectId(id));
   }
 }

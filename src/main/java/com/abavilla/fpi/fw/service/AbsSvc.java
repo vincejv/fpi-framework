@@ -20,6 +20,7 @@ package com.abavilla.fpi.fw.service;
 
 import java.util.Optional;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 
@@ -27,7 +28,7 @@ import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.exceptions.OptimisticLockEx;
-import com.abavilla.fpi.fw.repo.IMongoRepo;
+import com.abavilla.fpi.fw.repo.AbsMongoRepo;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.apache.commons.lang3.NotImplementedException;
@@ -41,13 +42,14 @@ import org.bson.types.ObjectId;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@ApplicationScoped
 public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements ISvc {
 
   /**
    * The repository to manage {@link Item}
    */
   @Inject
-  protected IMongoRepo<Item> repo;
+  protected AbsMongoRepo<Item> repo;
 
   /**
    * Retrieves an item by id.
