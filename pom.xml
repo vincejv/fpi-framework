@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework-bom</artifactId>
-    <version>1.0.115</version>
+    <version>1.0.116</version>
     <relativePath>../fpi-framework-bom/pom.xml</relativePath>
   </parent>
 
