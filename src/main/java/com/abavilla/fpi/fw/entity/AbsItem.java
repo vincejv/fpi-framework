@@ -18,6 +18,7 @@
 
 package com.abavilla.fpi.fw.entity;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public abstract class AbsItem implements IItem {
   protected LocalDateTime dateCreated;
 
   protected LocalDateTime dateUpdated;
+
+  private BigInteger version;
 
   private transient List<Exception> exceptions;
 
