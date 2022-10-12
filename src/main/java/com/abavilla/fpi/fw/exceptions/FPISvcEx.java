@@ -2,6 +2,7 @@ package com.abavilla.fpi.fw.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * FPI Exceptions thrown in service layer to generate HTTP errors with custom status code.
@@ -9,6 +10,7 @@ import lombok.Setter;
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @Getter
+@ToString(callSuper = true)
 public class FPISvcEx extends RuntimeException {
 
   /**

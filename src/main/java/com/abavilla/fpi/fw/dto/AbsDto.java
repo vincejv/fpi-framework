@@ -24,7 +24,6 @@ import java.util.List;
 
 import com.abavilla.fpi.fw.util.MapperUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;

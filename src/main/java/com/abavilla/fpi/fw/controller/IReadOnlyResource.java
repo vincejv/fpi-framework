@@ -18,10 +18,6 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import javax.ws.rs.PATCH;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
@@ -31,33 +27,33 @@ import io.smallrye.mutiny.Uni;
 /**
  * REST API resource capable of reading only
  *
- * @param <E> DTO Type
- * @param <I> Entity Type
+ * @param <Dto> DTO Type
+ * @param <Entity> Entity Type
 *  @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IReadOnlyResource<E extends IDto, I extends AbsItem> extends IResource<E, I> {
+public interface IReadOnlyResource<Dto extends IDto, Entity extends AbsItem> extends IResource<Dto, Entity> {
 
    /**
    * Retrieves by page, if page number and size are not given, returns the entire list.
    *
    * @param pageNo Page number
    * @param size Items per page
-   * @return List of {@link E} items
+   * @return List of {@link Dto} items
    */
-  Uni<PageDto<E>> getByPage(Integer pageNo, Integer size);
+  Uni<PageDto<Dto>> getByPage(Integer pageNo, Integer size);
 
   /**
    * Retrieves all items from the database
    *
-   * @return List of {@link E} items
+   * @return List of {@link Dto} items
    */
-  Multi<E> getAll();
+  Multi<Dto> getAll();
 
   /**
    * Retrieve item given by id
    *
    * @param id Item id
-   * @return {@link E} Object retrieved
+   * @return {@link Dto} Object retrieved
    */
-  Uni<E> getById(String id);
+  Uni<Dto> getById(String id);
 }

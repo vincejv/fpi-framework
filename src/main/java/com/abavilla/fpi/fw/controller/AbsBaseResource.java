@@ -21,7 +21,6 @@ package com.abavilla.fpi.fw.controller;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,25 +32,26 @@ import com.abavilla.fpi.fw.exceptions.FPISvcEx;
 import com.abavilla.fpi.fw.service.AbsSvc;
 import com.abavilla.fpi.fw.util.DateUtil;
 import org.jboss.resteasy.reactive.RestResponse;
-import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 
 /**
  * REST API resource with no built-in CRUD operations.
  *
- * @param <E> DTO Type
- * @param <I> Entity Type
+ * @param <Dto> DTO Type
+ * @param <Entity> Entity Type
+ * @param <Service> Service layer Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsBaseResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> implements IResource<E, I> {
+public abstract class AbsBaseResource<Dto extends IDto, Entity extends AbsItem,
+    Service extends AbsSvc<Dto, Entity>> implements IResource<Dto, Entity> {
 
   /**
-   * Service layer to operate on {@link I} item
+   * Service layer to operate on {@link Entity} item
    */
   @Inject
-  protected S service;
+  protected Service service;
 
   /**
    * Handles exceptions thrown by service layer.

@@ -19,6 +19,8 @@
 package com.abavilla.fpi.fw.service;
 
 import com.abavilla.fpi.fw.engine.IEngine;
+import io.quarkus.arc.All;
+import io.quarkus.arc.Priority;
 
 /**
  * Interface for upstream provider services, to be used together with {@link IEngine}, implementing classes should
@@ -35,9 +37,12 @@ public interface IProviderSvc {
 
   /**
    * Service priority, the lower the number, the more it is prioritized when multiple upstream services are available.
+   * @deprecated Use {@link Priority} and {@link All} to define the list of providers
+   * available for an engine
    *
    * @return the priority number
    */
+  @Deprecated(forRemoval = true)
   long getPriority();
 
   /**

@@ -25,6 +25,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Utility class for Date and Time operations.
  * <ul>
@@ -34,7 +37,8 @@ import java.time.format.DateTimeFormatter;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public abstract class DateUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class DateUtil {
 
   /**
    * Default timestamp format with timezone specified
@@ -278,4 +282,5 @@ public abstract class DateUtil {
   public static String convertLdtToStr(LocalDateTime ldt, ZoneId inTz, String outFormat) {
     return convertLdtToStr(ldt, inTz, inTz, outFormat);
   }
+
 }

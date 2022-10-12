@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RegisterForReflection
 public class PageDto<DTO extends IDto> extends AbsDto {
 
   /**

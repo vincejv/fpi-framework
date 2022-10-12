@@ -18,8 +18,11 @@
 
 package com.abavilla.fpi.fw.repo;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import com.abavilla.fpi.fw.entity.AbsItem;
 
+@ApplicationScoped
 public abstract class AbsMongoRepo<I extends AbsItem> implements IMongoRepo<I> {
 
 }

@@ -1,5 +1,6 @@
 package com.abavilla.fpi.fw.service;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.abavilla.fpi.fw.dto.IDto;
@@ -15,7 +16,8 @@ import com.abavilla.fpi.fw.repo.IMongoRepo;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public class AbsRepoSvc<Dto extends IDto, Item extends AbsItem, Repo extends IMongoRepo<Item>>
+@ApplicationScoped
+public abstract class AbsRepoSvc<Dto extends IDto, Item extends AbsItem, Repo extends IMongoRepo<Item>>
     extends AbsSvc<Dto, Item> implements ISvc<Dto, Item>{
 
   /**

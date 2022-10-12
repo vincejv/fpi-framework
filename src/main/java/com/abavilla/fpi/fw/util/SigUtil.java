@@ -14,7 +14,7 @@ import org.bouncycastle.util.encoders.Hex;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public abstract class SigUtil {
+public final class SigUtil {
 
   /**
    * HMAC Hash algorithm to use
@@ -48,4 +48,6 @@ public abstract class SigUtil {
     byte[] hash = calculateHmac(payload, key);
     return Arrays.equals(Hex.encode(hash), signatureToVerify.getBytes(StandardCharsets.UTF_8));
   }
+
+  private SigUtil() { }
 }

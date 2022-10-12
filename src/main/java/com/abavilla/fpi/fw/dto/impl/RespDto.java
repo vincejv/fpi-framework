@@ -1,10 +1,10 @@
 package com.abavilla.fpi.fw.dto.impl;
 
 import com.abavilla.fpi.fw.dto.AbsDto;
+import com.abavilla.fpi.fw.util.DateUtil;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * Default data transfer object to use for responding over rest api.
@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 @RegisterForReflection
 public class RespDto<T> extends AbsDto {
 
@@ -37,5 +36,25 @@ public class RespDto<T> extends AbsDto {
    * Timestamp
    */
   private String timestamp;
+
+  public static <T> RespDto<T> wrap(T entity) {
+    return wrap(entity, null);
+  }
+
+  public static <T> RespDto<T> wrap(T entity, Object status) {
+    RespDto<T> respDto = new RespDto<>();
+    respDto.setStatus(String.valueOf(status));
+    respDto.setResp(entity);
+    respDto.setTimestamp(DateUtil.nowAsStr());
+    return respDto;
+  }
+
+  public static <T> RespDto<T> error(T entity, Object errorMsg) {
+    RespDto<T> respDto = new RespDto<>();
+    respDto.setError(String.valueOf(errorMsg));
+    respDto.setResp(entity);
+    respDto.setTimestamp(DateUtil.nowAsStr());
+    return respDto;
+  }
 
 }

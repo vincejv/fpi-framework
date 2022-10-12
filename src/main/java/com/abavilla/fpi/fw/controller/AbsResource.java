@@ -18,6 +18,7 @@
 
 package com.abavilla.fpi.fw.controller;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.PATCH;
@@ -36,15 +37,17 @@ import io.smallrye.mutiny.Uni;
 /**
  * REST API resource with built-in CRUD operations.
  *
- * @param <E> DTO Type
- * @param <I> Entity Type
+ * @param <Dto> DTO Type
+ * @param <Entity> Entity Type
+ * @param <Service> Service layer Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> extends AbsReadOnlyResource<E, I, S>
-    implements ICRUDResource<E, I>, IReadOnlyResource<E, I> {
+public abstract class AbsResource<Dto extends IDto, Entity extends AbsItem,
+    Service extends AbsSvc<Dto, Entity>> extends AbsReadOnlyResource<Dto, Entity, Service>
+    implements ICRUDResource<Dto, Entity>, IReadOnlyResource<Dto, Entity> {
 
   /**
    * {@inheritDoc}
@@ -52,7 +55,7 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
   @Override
   @Path("{id}")
   @PUT
-  public Uni<E> updateItem(@PathParam("id") String id, E body) {
+  public Uni<Dto> updateItem(@PathParam("id") String id, Dto body) {
     return service.update(id, body);
   }
 
@@ -62,7 +65,7 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
   @Override
   @Path("{id}")
   @PATCH
-  public Uni<E> patchItem(@PathParam("id") String id, E body) {
+  public Uni<Dto> patchItem(@PathParam("id") String id, Dto body) {
     return service.patch(id, body);
   }
 
@@ -71,7 +74,7 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
    */
   @Override
   @POST
-  public Uni<E> saveItem(E body) {
+  public Uni<Dto> saveItem(Dto body) {
     return service.save(body);
   }
 
@@ -81,7 +84,7 @@ public abstract class AbsResource<E extends IDto, I extends AbsItem,
   @Override
   @Path("{id}")
   @DELETE
-  public Uni<E> deleteItem(@PathParam("id") String id) {
+  public Uni<Dto> deleteItem(@PathParam("id") String id) {
     return service.delete(id);
   }
 }

@@ -18,13 +18,20 @@
 
 package com.abavilla.fpi.fw.engine;
 
-import javax.enterprise.inject.Instance;
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.abavilla.fpi.fw.service.IProviderSvc;
+import io.quarkus.arc.All;
 
+@ApplicationScoped
 public abstract class AbsEngine<Provider extends IProviderSvc, Basis>
     implements IEngine<Provider, Basis> {
+
   @Inject
-  protected Instance<Provider> providers;
+  @All
+  protected List<Provider> providers;
+
 }

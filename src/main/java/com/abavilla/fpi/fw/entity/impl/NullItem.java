@@ -22,6 +22,7 @@ import com.abavilla.fpi.fw.controller.AbsBaseResource;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
 import com.abavilla.fpi.fw.service.AbsSvc;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * Entity item for transporting {@code null} or empty items/response,  can be used as placeholders for
@@ -29,5 +30,6 @@ import com.abavilla.fpi.fw.service.AbsSvc;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@RegisterForReflection
 public class NullItem extends AbsItem {
 }

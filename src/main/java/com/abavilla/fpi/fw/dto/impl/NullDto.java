@@ -21,6 +21,7 @@ package com.abavilla.fpi.fw.dto.impl;
 import com.abavilla.fpi.fw.controller.AbsBaseResource;
 import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.service.AbsSvc;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * Data transfer object for transporting {@code null} or empty items/response, can be used as placeholders for
@@ -28,5 +29,6 @@ import com.abavilla.fpi.fw.service.AbsSvc;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@RegisterForReflection
 public class NullDto extends AbsDto {
 }

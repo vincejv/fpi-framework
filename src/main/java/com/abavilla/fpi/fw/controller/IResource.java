@@ -24,10 +24,10 @@ import com.abavilla.fpi.fw.entity.AbsItem;
 /**
  * Interface for REST API resources
  *
- * @param <E> DTO Type
- * @param <I> Entity Type
+ * @param <Dto> DTO Type
+ * @param <Entity> Entity Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IResource<E extends IDto, I extends AbsItem> {
+public interface IResource<Dto extends IDto, Entity extends AbsItem> {
 
 }

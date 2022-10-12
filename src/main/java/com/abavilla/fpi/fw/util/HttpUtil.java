@@ -23,8 +23,11 @@ import java.util.List;
 import java.util.Objects;
 
 import io.vertx.core.http.HttpServerRequest;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-public abstract class HttpUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class HttpUtil {
 
   public static final String USER_AGENT = "User-Agent";
 

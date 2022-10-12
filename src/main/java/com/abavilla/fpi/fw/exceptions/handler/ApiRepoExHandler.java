@@ -16,26 +16,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.     *
  ******************************************************************************/
 
-package com.abavilla.fpi.fw.config;
+package com.abavilla.fpi.fw.exceptions.handler;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.jackson.ObjectMapperCustomizer;
+import javax.ws.rs.Priorities;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+
+import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.quarkus.arc.Priority;
+import lombok.SneakyThrows;
+import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
 
 /**
- * {@inheritDoc}
+ * Default exception handler for REST Client exceptions, handles when REST Client gets an HTTP status greater than or
+ * equal to 400.
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IObjectMapperConfig extends ObjectMapperCustomizer {
+@Priority(Priorities.USER)
+public class ApiRepoExHandler
+    implements ResponseExceptionMapper<ApiSvcEx> {
+
   @Override
-  default void customize(ObjectMapper mapper) {
-    final var originalSerConfig = mapper.getSerializationConfig();
-    final var newSerConfig = originalSerConfig
-        .with(MapperFeature.PROPAGATE_TRANSIENT_MARKER);
-    mapper.setConfig(newSerConfig);
-    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    customizeMapper(mapper);
+  public ApiSvcEx toThrowable(Response response) {
+    try {
+      response.bufferEntity();
+    } catch (Exception ignored) {
+    }
+    return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response));
   }
 
-  void customizeMapper(ObjectMapper mapper);
+  @Override
+  public boolean handles(int status, MultivaluedMap<String, Object> headers) {
+    return status >= 400;
+  }
+
+  @SneakyThrows
+  private JsonNode getBody(Response response) {
+    if (response.hasEntity()) {
+      return response.readEntity(JsonNode.class);
+    } else {
+      return null;
+    }
+  }
 }

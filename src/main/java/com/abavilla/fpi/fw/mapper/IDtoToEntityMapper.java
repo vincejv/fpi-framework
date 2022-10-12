@@ -18,10 +18,8 @@
 
 package com.abavilla.fpi.fw.mapper;
 
-import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.IItem;
-import com.abavilla.fpi.fw.entity.mongo.AbsMongoItem;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;

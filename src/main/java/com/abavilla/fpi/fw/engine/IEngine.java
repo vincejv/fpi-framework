@@ -23,4 +23,5 @@ import com.abavilla.fpi.fw.service.IProviderSvc;
 public interface IEngine<Provider extends IProviderSvc, Basis> {
 
   Provider getProvider(Basis promo);
+
 }

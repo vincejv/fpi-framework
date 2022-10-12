@@ -20,7 +20,7 @@ package com.abavilla.fpi.fw.controller;
 
 import java.util.Objects;
 
-import javax.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -39,22 +39,24 @@ import io.smallrye.mutiny.Uni;
 /**
  * REST API resource that's only capable or READ operations.
  *
- * @param <E> DTO Type
- * @param <I> Entity Type
+ * @param <Dto> DTO Type
+ * @param <Entity> Entity Type
+ * @param <Service> Service layer Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsReadOnlyResource<E extends IDto, I extends AbsItem,
-    S extends AbsSvc<E, I>> extends AbsBaseResource<E, I, S>
-    implements IReadOnlyResource<E, I>, IResource<E, I> {
+public abstract class AbsReadOnlyResource<Dto extends IDto, Entity extends AbsItem,
+    Service extends AbsSvc<Dto, Entity>> extends AbsBaseResource<Dto, Entity, Service>
+    implements IReadOnlyResource<Dto, Entity>, IResource<Dto, Entity> {
 
   /**
    * {@inheritDoc}
    */
   @Override
   @GET
-  public Multi<E> getAll() {
+  public Multi<Dto> getAll() {
     return service.list();
   }
 
@@ -64,8 +66,8 @@ public abstract class AbsReadOnlyResource<E extends IDto, I extends AbsItem,
   @Override
   @Path("page")
   @GET
-  public Uni<PageDto<E>> getByPage(@QueryParam("no") Integer pageNo,
-                                   @QueryParam("size") Integer size) {
+  public Uni<PageDto<Dto>> getByPage(@QueryParam("no") Integer pageNo,
+                                     @QueryParam("size") Integer size) {
     return service.getByPage(pageNo,
         Objects.requireNonNullElse(size, 50));
   }
@@ -76,7 +78,7 @@ public abstract class AbsReadOnlyResource<E extends IDto, I extends AbsItem,
   @Override
   @Path("{id}")
   @GET
-  public Uni<E> getById(@PathParam("id") String id) {
+  public Uni<Dto> getById(@PathParam("id") String id) {
     return service.get(id);
   }
 

@@ -27,12 +27,12 @@ import io.smallrye.mutiny.Uni;
 /**
  * REST API resource capable of both reading and writing.
  *
- * @param <E> DTO Type
- * @param <I> Entity Type
+ * @param <Dto> DTO Type
+ * @param <Entity> Entity Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface ICRUDResource<E extends IDto, I extends AbsItem>
-    extends IReadOnlyResource<E,I>, IResource<E, I> {
+public interface ICRUDResource<Dto extends IDto, Entity extends AbsItem>
+    extends IReadOnlyResource<Dto, Entity>, IResource<Dto, Entity> {
 
   /**
    * Update the item given by id.
@@ -40,9 +40,9 @@ public interface ICRUDResource<E extends IDto, I extends AbsItem>
    *
    * @param id Item id
    * @param body Updated item
-   * @return {@link E} Object retrieved
+   * @return {@link Dto} Object retrieved
    */
-  Uni<E> updateItem(String id, E body);
+  Uni<Dto> updateItem(String id, Dto body);
 
   /**
    * Patches the item given by id.
@@ -50,23 +50,23 @@ public interface ICRUDResource<E extends IDto, I extends AbsItem>
    *
    * @param id Item id
    * @param body Updated item
-   * @return {@link E} Object retrieved
+   * @return {@link Dto} Object retrieved
    */
-  Uni<E> patchItem(@PathParam("id") String id, E body);
+  Uni<Dto> patchItem(@PathParam("id") String id, Dto body);
 
   /**
    * Save a new item in database
    *
    * @param body Item to be saved in db
-   * @return {@link E} Item after saved in db
+   * @return {@link Dto} Item after saved in db
    */
-  Uni<E> saveItem(E body);
+  Uni<Dto> saveItem(Dto body);
 
   /**
    * Deletes an item given an id.
    *
    * @param id Item id
-   * @return {@link E} Deleted item
+   * @return {@link Dto} Deleted item
    */
-  Uni<E> deleteItem(String id);
+  Uni<Dto> deleteItem(String id);
 }

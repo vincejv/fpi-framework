@@ -18,10 +18,14 @@
 
 package com.abavilla.fpi.fw.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * FPI Framework constants.
  */
-public abstract class FWConst {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class FWConst {
 
   /**
    * Comma separator

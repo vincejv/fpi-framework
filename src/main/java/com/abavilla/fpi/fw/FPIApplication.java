@@ -18,10 +18,9 @@
 
 package com.abavilla.fpi.fw;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
-import com.abavilla.fpi.fw.util.MapperUtil;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
 
@@ -30,17 +29,11 @@ import io.quarkus.runtime.StartupEvent;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public abstract class FPIApplication {
-
-  /**
-   * Bean to initialize {@link MapperUtil} config
-   */
-  @Inject
-  MapperUtil mapperUtil;
+@ApplicationScoped
+public class FPIApplication {
 
   public void onStart(@Observes StartupEvent ev) {
     Log.info("FPI application is starting...");
-    mapperUtil.init();
     postStart();
   }
 

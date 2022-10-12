@@ -20,12 +20,6 @@ package com.abavilla.fpi.fw.mapper;
 
 import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.entity.mongo.AbsMongoItem;
-import org.bson.types.ObjectId;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Mappings;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
 /**
  * Mapper used for conversion and mapping fields between {@link AbsDto} and {@link AbsMongoItem} database item.

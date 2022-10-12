@@ -24,6 +24,11 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Exception thrown when an error is occured when an FPI Service is invoking an external rest call.
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 @Getter
 @ToString(callSuper = true)
 public class ApiSvcEx extends RuntimeException {

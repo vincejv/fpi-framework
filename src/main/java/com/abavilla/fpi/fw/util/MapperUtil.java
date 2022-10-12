@@ -18,23 +18,24 @@
 
 package com.abavilla.fpi.fw.util;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.logging.Log;
+import io.quarkus.runtime.StartupEvent;
 
 @ApplicationScoped
-public class MapperUtil {
+public final class MapperUtil {
 
   private static ObjectMapper mapper;
 
   @Inject
   ObjectMapper _mapper;
 
-  public void init() {
+  public void init(@Observes StartupEvent evt) {
     mapper = _mapper;
   }
 
