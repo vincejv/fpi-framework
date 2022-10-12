@@ -9,6 +9,6 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 public abstract class AbsApiSvc<Api extends IApi> implements ISvc {
 
   @RestClient
-  Api client;
+  protected Api client;
 
 }
