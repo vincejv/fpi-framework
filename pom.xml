@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.118</version>
+    <version>1.0.119</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
@@ -33,7 +33,7 @@
 
     <properties>
         <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
-        <abavilla.framework.version>1.0.118</abavilla.framework.version>
+        <abavilla.framework.version>1.0.119</abavilla.framework.version>
     </properties>
 
     <repositories>
