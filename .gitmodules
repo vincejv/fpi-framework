@@ -1,6 +1,3 @@
-[submodule "fpi-framework-core"]
-	path = fpi-framework-core
-	url = https://github.com/vincejv/fpi-framework-core.git
 [submodule "fpi-framework-pom"]
 	path = fpi-framework-pom
 	url = https://github.com/vincejv/fpi-framework-pom.git
