@@ -21,8 +21,7 @@ package com.abavilla.fpi.fw.service;
 /**
  * Interface for all services that works with DTO and Entity objects.
  *
- * @param <Dto> DTO Type
- * @param <Item> Entity Type
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 public interface ISvc {
 
