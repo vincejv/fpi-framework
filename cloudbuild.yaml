@@ -12,18 +12,6 @@ steps:
         done
     id: "Cancel ongoing builds"
     entrypoint: 'bash'
-  - name: gcr.io/cloud-builders/git
-    env:
-      - 'GITHUB_USERNAME=${_GITHUB_USERNAME}'
-      - 'GITHUB_TOKEN=${_GITHUB_TOKEN}'
-    args: # submodule update --init --recursive
-      - 'submodule'
-      - 'update'
-      - '--init'
-      - '--recursive'
-      - '--jobs'
-      - '8'
-    id: "Pull all submodules"
   - name: gcr.io/cloud-builders/mvn
     env:
       - 'GITHUB_USERNAME=${_GITHUB_USERNAME}'
