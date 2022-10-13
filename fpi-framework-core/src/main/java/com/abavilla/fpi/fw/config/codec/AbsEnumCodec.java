@@ -33,12 +33,12 @@ import org.bson.codecs.EncoderContext;
 
 /**
  * Generic codec for encoding Enum to MongoDB Document
- * @param <EnumType> Enum Type
+ * @param <E> Enum Type
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @NoArgsConstructor
-public abstract class AbsEnumCodec<EnumType extends IBaseEnum> implements Codec<EnumType> {
+public abstract class AbsEnumCodec<E extends IBaseEnum> implements Codec<E> {
 
   /**
    * Document key name for the value node
@@ -51,7 +51,7 @@ public abstract class AbsEnumCodec<EnumType extends IBaseEnum> implements Codec<
   public static final String ORD_KEY_NODE_NAME = "ord";
 
   /**
-   * Encodes the given {@link EnumType} Enum
+   * Encodes the given {@link E} Enum
    *
    * @param writer the BSON writer to encode into
    * @param value the value to encode
@@ -59,7 +59,7 @@ public abstract class AbsEnumCodec<EnumType extends IBaseEnum> implements Codec<
    */
   @SneakyThrows
   @Override
-  final public void encode(final BsonWriter writer, final EnumType value, final EncoderContext encoderContext) {
+  public final void encode(final BsonWriter writer, final E value, final EncoderContext encoderContext) {
     if (value != null) {
       Method getId = getEncoderClass().getDeclaredMethod("getId");
       writer.writeStartDocument();
@@ -79,7 +79,7 @@ public abstract class AbsEnumCodec<EnumType extends IBaseEnum> implements Codec<
   @SneakyThrows
   @Override
   @SuppressWarnings("unchecked")
-  final public EnumType decode(final BsonReader reader, final DecoderContext decoderContext) {
+  public final E decode(final BsonReader reader, final DecoderContext decoderContext) {
     reader.readStartDocument();
     String value = StringUtils.EMPTY;
     int ord = -1;
@@ -97,7 +97,7 @@ public abstract class AbsEnumCodec<EnumType extends IBaseEnum> implements Codec<
     reader.readEndDocument();
 
     Method fromValue = getEncoderClass().getDeclaredMethod("fromValue", String.class);
-    EnumType decodedEnum = (EnumType) fromValue.invoke(null, value);
+    E decodedEnum = (E) fromValue.invoke(null, value);
     if (ord == -1) { // if enum.ord is -1, it is 'UNKNOWN'
       // if unknown, retain the enum.value content when encoding
       Method setValue = getEncoderClass().getDeclaredMethod("setValue", String.class);
@@ -105,11 +105,5 @@ public abstract class AbsEnumCodec<EnumType extends IBaseEnum> implements Codec<
     }
     return decodedEnum;
   }
-
-  /**
-   * Get the Enum class being encoded or decoded.
-   *
-   * @return an Enum class
-   */
-  public abstract Class<EnumType> getEncoderClass();
+  
 }

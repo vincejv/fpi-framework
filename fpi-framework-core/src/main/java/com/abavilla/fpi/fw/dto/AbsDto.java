@@ -63,7 +63,7 @@ public abstract class AbsDto implements IDto {
   /**
    * Creates an instance of an empty DTO and initializes {@link #exceptions} list.
    */
-  public AbsDto() {
+  protected AbsDto() {
     exceptions = new ArrayList<>();
   }
 
@@ -88,7 +88,7 @@ public abstract class AbsDto implements IDto {
    */
   @JsonIgnore // used only internally, not to be serialized
   public Exception getLastEx() {
-    if (exceptions.size() == 0) {
+    if (exceptions.isEmpty()) {
       return null;
     }
     return exceptions.get(exceptions.size()-1);

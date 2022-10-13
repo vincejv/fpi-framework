@@ -18,16 +18,11 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import com.abavilla.fpi.fw.dto.IDto;
-import com.abavilla.fpi.fw.entity.AbsItem;
-
 /**
  * Interface for REST API resources
  *
- * @param <Dto> DTO Type
- * @param <Entity> Entity Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IResource<Dto extends IDto, Entity extends AbsItem> {
+public interface IResource {
 
 }

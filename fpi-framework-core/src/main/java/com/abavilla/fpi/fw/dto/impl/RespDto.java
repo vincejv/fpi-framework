@@ -1,6 +1,7 @@
 package com.abavilla.fpi.fw.dto.impl;
 
 import com.abavilla.fpi.fw.dto.AbsDto;
+import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.util.DateUtil;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @RegisterForReflection
-public class RespDto<T> extends AbsDto {
+public class RespDto<T extends IDto> extends AbsDto {
 
   /**
    * API Response
@@ -37,11 +38,11 @@ public class RespDto<T> extends AbsDto {
    */
   private String timestamp;
 
-  public static <T> RespDto<T> wrap(T entity) {
+  public static <T extends IDto> RespDto<T> wrap(T entity) {
     return wrap(entity, null);
   }
 
-  public static <T> RespDto<T> wrap(T entity, Object status) {
+  public static <T extends IDto> RespDto<T> wrap(T entity, Object status) {
     RespDto<T> respDto = new RespDto<>();
     respDto.setStatus(String.valueOf(status));
     respDto.setResp(entity);
@@ -49,7 +50,7 @@ public class RespDto<T> extends AbsDto {
     return respDto;
   }
 
-  public static <T> RespDto<T> error(T entity, Object errorMsg) {
+  public static <T extends IDto> RespDto<T> error(T entity, Object errorMsg) {
     RespDto<T> respDto = new RespDto<>();
     respDto.setError(String.valueOf(errorMsg));
     respDto.setResp(entity);

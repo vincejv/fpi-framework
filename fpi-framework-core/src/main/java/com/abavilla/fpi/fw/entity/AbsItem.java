@@ -18,7 +18,7 @@
 
 package com.abavilla.fpi.fw.entity;
 
-import java.math.BigInteger;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import lombok.Data;
 @RegisterForReflection
 public abstract class AbsItem implements IItem {
 
-  protected Object id;
+  private Serializable id;
 
   protected Boolean isArchived;
 
@@ -40,11 +40,11 @@ public abstract class AbsItem implements IItem {
 
   protected LocalDateTime dateUpdated;
 
-  private BigInteger version;
+  private long version;
 
   private transient List<Exception> exceptions;
 
-  public AbsItem() {
+  protected AbsItem() {
     exceptions = new ArrayList<>();
   }
 
@@ -53,7 +53,7 @@ public abstract class AbsItem implements IItem {
   }
 
   public Exception lastEx() {
-    if (exceptions.size() == 0) {
+    if (exceptions.isEmpty()) {
       return null;
     }
     return exceptions.get(exceptions.size()-1);

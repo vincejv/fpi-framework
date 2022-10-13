@@ -20,40 +20,38 @@ package com.abavilla.fpi.fw.controller;
 
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.dto.impl.PageDto;
-import com.abavilla.fpi.fw.entity.AbsItem;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
 /**
  * REST API resource capable of reading only
  *
- * @param <Dto> DTO Type
- * @param <Entity> Entity Type
+ * @param <D> DTO Type
 *  @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IReadOnlyResource<Dto extends IDto, Entity extends AbsItem> extends IResource<Dto, Entity> {
+public interface IReadOnlyResource<D extends IDto> extends IResource {
 
    /**
    * Retrieves by page, if page number and size are not given, returns the entire list.
    *
    * @param pageNo Page number
    * @param size Items per page
-   * @return List of {@link Dto} items
+   * @return List of {@link D} items
    */
-  Uni<PageDto<Dto>> getByPage(Integer pageNo, Integer size);
+  Uni<PageDto<D>> getByPage(Integer pageNo, Integer size);
 
   /**
    * Retrieves all items from the database
    *
-   * @return List of {@link Dto} items
+   * @return List of {@link D} items
    */
-  Multi<Dto> getAll();
+  Multi<D> getAll();
 
   /**
    * Retrieve item given by id
    *
    * @param id Item id
-   * @return {@link Dto} Object retrieved
+   * @return {@link D} Object retrieved
    */
-  Uni<Dto> getById(String id);
+  Uni<D> getById(String id);
 }

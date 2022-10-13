@@ -40,5 +40,7 @@ public class ObjectMapperConfig implements ObjectMapperCustomizer {
     customizeMapper(mapper);
   }
 
-  public void customizeMapper(ObjectMapper mapper) { }
+  public void customizeMapper(ObjectMapper mapper) {
+    // implementing class will provide the functionality optionally
+  }
 }

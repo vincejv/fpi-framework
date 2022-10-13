@@ -26,16 +26,16 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 /**
  * Mapper used for conversion and mapping fields between {@link IDto} and {@link IItem} database item.
- * @param <DTO> DTO Type
- * @param <ENTITY> Entity Type
+ * @param <D> DTO Type
+ * @param <E> Entity Type
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IDtoToEntityMapper<DTO extends IDto, ENTITY extends IItem> extends IMapper {
+public interface IDtoToEntityMapper<D extends IDto, E extends IItem> extends IMapper {
 
-  DTO mapToDto(ENTITY entity);
+  D mapToDto(E entity);
 
-  ENTITY mapToEntity(DTO dto);
+  E mapToEntity(D dto);
 
   /**
    * Partially patch entity, skip updating null values and only update the target entity with filled values
@@ -45,5 +45,5 @@ public interface IDtoToEntityMapper<DTO extends IDto, ENTITY extends IItem> exte
    * @param dto Source DTO
    */
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  void patchEntity(@MappingTarget ENTITY entity, DTO dto);
+  void patchEntity(@MappingTarget E entity, D dto);
 }

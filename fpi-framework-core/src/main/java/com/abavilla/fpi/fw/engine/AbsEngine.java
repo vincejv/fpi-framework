@@ -26,12 +26,19 @@ import javax.inject.Inject;
 import com.abavilla.fpi.fw.service.IProviderSvc;
 import io.quarkus.arc.All;
 
+/**
+ * Abstract Engine
+ *
+ * @param <P> Provider type
+ * @param <B> Basis Type
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
 @ApplicationScoped
-public abstract class AbsEngine<Provider extends IProviderSvc, Basis>
-    implements IEngine<Provider, Basis> {
+public abstract class AbsEngine<P extends IProviderSvc, B>
+    implements IEngine<P, B> {
 
   @Inject
   @All
-  protected List<Provider> providers;
+  protected List<P> providers;
 
 }

@@ -33,10 +33,10 @@ public final class MapperUtil {
   private static ObjectMapper mapper;
 
   @Inject
-  ObjectMapper _mapper;
+  ObjectMapper configuredMapper;
 
-  public void init(@Observes StartupEvent evt) {
-    mapper = _mapper;
+  public synchronized void init(@Observes StartupEvent evt) {
+    mapper = configuredMapper;
   }
 
   public static ObjectMapper mapper() {

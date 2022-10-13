@@ -29,6 +29,7 @@ import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.exceptions.OptimisticLockEx;
 import com.abavilla.fpi.fw.repo.AbsMongoRepo;
+import com.abavilla.fpi.fw.util.FWConst;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.apache.commons.lang3.NotImplementedException;
@@ -37,35 +38,35 @@ import org.bson.types.ObjectId;
 /**
  * Base service layer for creating services with access to a generic repository.
  *
- * @param <Dto> DTO Type
- * @param <Item> Entity Type
+ * @param <D> DTO Type
+ * @param <E> Entity Type
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @ApplicationScoped
-public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements ISvc {
+public abstract class AbsSvc<D extends IDto, E extends AbsItem> implements ISvc {
 
   /**
-   * The repository to manage {@link Item}
+   * The repository to manage {@link E}
    */
   @Inject
-  protected AbsMongoRepo<Item> repo;
+  protected AbsMongoRepo<E> repo;
 
   /**
    * Retrieves an item by id.
    *
    * @param id {@link String} Id
-   * @return {@link Item} Item retrieved
+   * @return {@link E} Item retrieved
    */
-  public Uni<Dto> get(String id) {
-    Uni<Optional<Item>> byId = repo.byId(id);
+  public Uni<D> get(String id) {
+    Uni<Optional<E>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         return Uni.createFrom()
             .item(this.mapToDto(opt.get()));
       }
       return Uni.createFrom()
-          .failure(new NotFoundException("Cannot find " + id));
+          .failure(new NotFoundException(FWConst.CANNOT_FIND_ERR_MSG + id));
     });
   }
 
@@ -76,7 +77,7 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
    * @param size Items per page
    * @return {@link PageDto} page
    */
-  public Uni<PageDto<Dto>> getByPage(int ndx, int size) {
+  public Uni<PageDto<D>> getByPage(int ndx, int size) {
     var determineNextPage = repo.byPage(ndx, size)
         .hasNextPage();
 
@@ -96,18 +97,18 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
    * It does not update the existing item's id.
    *
    * @param id {@link String} Id
-   * @param item {@link Dto} Item to save
-   * @return {@link Item} Item after saving to db
+   * @param item {@link D} Item to save
+   * @return {@link E} Item after saving to db
    */
-  public Uni<Dto> update(String id, Dto item) {
-    Uni<Optional<Item>> byId = repo.byId(id);
+  public Uni<D> update(String id, D item) {
+    Uni<Optional<E>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         var updatedItem = mapToEntity(item);
         updatedItem.setId(new ObjectId(id));
         return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
       }
-      return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
+      return Uni.createFrom().failure(new NotFoundException(FWConst.CANNOT_FIND_ERR_MSG + id));
     }).onFailure(OptimisticLockEx.class).retry().indefinitely();
   }
 
@@ -116,11 +117,11 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
    * It does not update the existing item's id.
    *
    * @param id {@link String} Id
-   * @param item {@link Dto} Item to save
-   * @return {@link Item} Item after saving to db
+   * @param item {@link D} Item to save
+   * @return {@link E} Item after saving to db
    */
-  public Uni<Dto> patch(String id, Dto item) {
-    Uni<Optional<Item>> byId = repo.byId(id);
+  public Uni<D> patch(String id, D item) {
+    Uni<Optional<E>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         var updatedItem = opt.get();
@@ -128,18 +129,18 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
         updatedItem.setId(new ObjectId(id));
         return repo.persistOrUpdate(updatedItem).map(this::mapToDto);
       }
-      return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
+      return Uni.createFrom().failure(new NotFoundException(FWConst.CANNOT_FIND_ERR_MSG + id));
     }).onFailure(OptimisticLockEx.class).retry().indefinitely();
   }
 
   /**
    * Saves a new item to database.
    *
-   * @param item {@link Dto} Item to save
-   * @return {@link Item} Item after saving to db
+   * @param item {@link D} Item to save
+   * @return {@link E} Item after saving to db
    */
-  public Uni<Dto> save(Dto item) {
-    Uni<Item> persistedItem = repo.persist(mapToEntity(item));
+  public Uni<D> save(D item) {
+    Uni<E> persistedItem = repo.persist(mapToEntity(item));
     return persistedItem.map(this::mapToDto);
   }
 
@@ -147,28 +148,28 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
    * Deletes an item from the database given by id.
    *
    * @param id Database id
-   * @return {@link Dto}
+   * @return {@link D}
    */
-  public Uni<Dto> delete(String id) {
-    Uni<Optional<Item>> byId = repo.byId(id);
+  public Uni<D> delete(String id) {
+    Uni<Optional<E>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
         opt.get().setIsArchived(true);
         return repo.persistOrUpdate(opt.get()).map(this::mapToDto);
       }
-      return Uni.createFrom().failure(new NotFoundException("Cannot find " + id));
+      return Uni.createFrom().failure(new NotFoundException(FWConst.CANNOT_FIND_ERR_MSG + id));
     }).onFailure(OptimisticLockEx.class).retry().indefinitely();
   }
 
-  public Multi<Dto> list() {
+  public Multi<D> list() {
     return repo.streamAll().map(this::mapToDto);
   }
 
-  public Dto mapToDto(Item entity) {
+  public D mapToDto(E entity) {
     throw new NotImplementedException("Mapping to DTO not implemented");
   }
 
-  public Item mapToEntity(Dto dto) {
+  public E mapToEntity(D dto) {
     throw new NotImplementedException("Mapping to Entity not implemented");
   }
 
@@ -179,7 +180,7 @@ public abstract class AbsSvc<Dto extends IDto, Item extends AbsItem> implements 
    * @param entity Target entity
    * @param dto Source DTO
    */
-  public void patchEntityFromDto(Item entity, Dto dto) {
+  public void patchEntityFromDto(E entity, D dto) {
     throw new NotImplementedException("Patching to Entity not implemented");
   }
 }

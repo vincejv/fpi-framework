@@ -32,8 +32,11 @@ import lombok.ToString;
 @Getter
 @ToString(callSuper = true)
 public class ApiSvcEx extends RuntimeException {
-  private JsonNode jsonResponse;
-  private HttpResponseStatus httpResponseStatus;
+
+  private final transient JsonNode jsonResponse;
+
+  private final transient HttpResponseStatus httpResponseStatus;
+
   public ApiSvcEx(String message, int httpStatus, JsonNode jsonNode) {
     super(message);
     this.httpResponseStatus = HttpResponseStatus.valueOf(httpStatus);
@@ -41,10 +44,13 @@ public class ApiSvcEx extends RuntimeException {
   }
   public ApiSvcEx(String message) {
     super(message);
+    this.jsonResponse = null;
+    this.httpResponseStatus = null;
   }
 
   public ApiSvcEx(String message, int httpStatus) {
     super(message);
+    this.jsonResponse = null;
     this.httpResponseStatus = HttpResponseStatus.valueOf(httpStatus);
   }
 

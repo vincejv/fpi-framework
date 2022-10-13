@@ -39,24 +39,24 @@ import io.smallrye.mutiny.Uni;
 /**
  * REST API resource that's only capable or READ operations.
  *
- * @param <Dto> DTO Type
- * @param <Entity> Entity Type
- * @param <Service> Service layer Type
+ * @param <D> DTO Type
+ * @param <E> Entity Type
+ * @param <S> Service layer Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsReadOnlyResource<Dto extends IDto, Entity extends AbsItem,
-    Service extends AbsSvc<Dto, Entity>> extends AbsBaseResource<Dto, Entity, Service>
-    implements IReadOnlyResource<Dto, Entity>, IResource<Dto, Entity> {
+public abstract class AbsReadOnlyResource<D extends IDto, E extends AbsItem,
+    S extends AbsSvc<D, E>> extends AbsBaseResource<D, E, S>
+    implements IReadOnlyResource<D>, IResource {
 
   /**
    * {@inheritDoc}
    */
   @Override
   @GET
-  public Multi<Dto> getAll() {
+  public Multi<D> getAll() {
     return service.list();
   }
 
@@ -66,8 +66,8 @@ public abstract class AbsReadOnlyResource<Dto extends IDto, Entity extends AbsIt
   @Override
   @Path("page")
   @GET
-  public Uni<PageDto<Dto>> getByPage(@QueryParam("no") Integer pageNo,
-                                     @QueryParam("size") Integer size) {
+  public Uni<PageDto<D>> getByPage(@QueryParam("no") Integer pageNo,
+                                   @QueryParam("size") Integer size) {
     return service.getByPage(pageNo,
         Objects.requireNonNullElse(size, 50));
   }
@@ -78,7 +78,7 @@ public abstract class AbsReadOnlyResource<Dto extends IDto, Entity extends AbsIt
   @Override
   @Path("{id}")
   @GET
-  public Uni<Dto> getById(@PathParam("id") String id) {
+  public Uni<D> getById(@PathParam("id") String id) {
     return service.get(id);
   }
 

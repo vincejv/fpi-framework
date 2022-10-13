@@ -4,10 +4,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public abstract class AbsApiSecSvc<Api extends IApi,
-  ApiKeys extends IApiKeyConfig> extends AbsApiSvc<Api> {
+public abstract class AbsApiSecSvc<A extends IApi,
+  K extends IApiKeyConfig> extends AbsApiSvc<A> {
 
   @Inject
-  protected ApiKeys keys;
+  protected K keys;
 
 }

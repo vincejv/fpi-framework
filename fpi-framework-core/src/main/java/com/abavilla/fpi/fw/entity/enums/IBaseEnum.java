@@ -28,9 +28,4 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection
 public interface IBaseEnum {
 
-  /**
-   * Prefix for Unknown enum values
-   */
-  String UNKNOWN_PREFIX = "UNK >> ";
-
 }

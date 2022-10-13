@@ -1,7 +1,7 @@
 package com.abavilla.fpi.fw.exceptions;
 
+import com.abavilla.fpi.fw.dto.IDto;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -16,7 +16,7 @@ public class FPISvcEx extends RuntimeException {
   /**
    * Default HTTP Status code for the exception when not defined
    */
-  public static int DEFAULT_HTTP_STATUS_CODE = 500;
+  public static final int DEFAULT_HTTP_STATUS_CODE = 500;
 
   /**
    * Http Status Code
@@ -26,8 +26,7 @@ public class FPISvcEx extends RuntimeException {
   /**
    * Http response body
    */
-  @Setter
-  private Object entity;
+  private final IDto entity;
 
   /**
    * Create a {@link FPISvcEx} given a message, this message will be wrapped in the http response. Default http status
@@ -38,6 +37,20 @@ public class FPISvcEx extends RuntimeException {
   public FPISvcEx(String message) {
     super(message);
     this.httpStatus = DEFAULT_HTTP_STATUS_CODE;
+    this.entity = null;
+  }
+
+  /**
+   * Create a {@link FPISvcEx} given a message, this message will be wrapped in the http response. Default http status
+   * code will be used as defined by {@link #DEFAULT_HTTP_STATUS_CODE}
+   *
+   * @param message Exception message
+   * @param entity the entity
+   */
+  public FPISvcEx(String message, IDto entity) {
+    super(message);
+    this.httpStatus = DEFAULT_HTTP_STATUS_CODE;
+    this.entity = entity;
   }
 
   /**
@@ -49,6 +62,20 @@ public class FPISvcEx extends RuntimeException {
   public FPISvcEx(String message, int httpStatus) {
     super(message);
     this.httpStatus = httpStatus;
+    this.entity = null;
+  }
+
+  /**
+   * Create a {@link FPISvcEx} given a message and http status code, this message will be wrapped in the http response.
+   *
+   * @param message Exception message
+   * @param httpStatus HTTP Status code
+   * @param entity the entity
+   */
+  public FPISvcEx(String message, int httpStatus, IDto entity) {
+    super(message);
+    this.httpStatus = httpStatus;
+    this.entity = entity;
   }
 
   /**
@@ -56,10 +83,26 @@ public class FPISvcEx extends RuntimeException {
    * Default http status code will be used as defined by {@link #DEFAULT_HTTP_STATUS_CODE}
    *
    * @param message Exception message
+   * @param cause the cause
    */
   public FPISvcEx(String message, Throwable cause) {
     super(message, cause);
     this.httpStatus = DEFAULT_HTTP_STATUS_CODE;
+    this.entity = null;
+  }
+
+  /**
+   * Create a {@link FPISvcEx} given a message and exception cause, this message will be wrapped in the http response.
+   * Default http status code will be used as defined by {@link #DEFAULT_HTTP_STATUS_CODE}
+   *
+   * @param message Exception message
+   * @param cause the cause
+   * @param entity the entity
+   */
+  public FPISvcEx(String message, Throwable cause, IDto entity) {
+    super(message, cause);
+    this.httpStatus = DEFAULT_HTTP_STATUS_CODE;
+    this.entity = entity;
   }
 
   /**
@@ -73,6 +116,22 @@ public class FPISvcEx extends RuntimeException {
   public FPISvcEx(String message, Throwable cause, int httpStatus) {
     super(message, cause);
     this.httpStatus = httpStatus;
+    this.entity = null;
+  }
+
+  /**
+   * Create an {@link FPISvcEx} given a message, a cause, and http status code, this message will be wrapped in the
+   * http response
+   *
+   * @param message Exception message
+   * @param cause Cause of exception
+   * @param httpStatus HTTP Status code
+   * @param entity the entity
+   */
+  public FPISvcEx(String message, Throwable cause, int httpStatus, IDto entity) {
+    super(message, cause);
+    this.httpStatus = httpStatus;
+    this.entity = entity;
   }
 
   /**
@@ -85,6 +144,21 @@ public class FPISvcEx extends RuntimeException {
   public FPISvcEx(Throwable cause) {
     super(cause.getMessage(), cause);
     this.httpStatus = DEFAULT_HTTP_STATUS_CODE;
+    this.entity = null;
+  }
+
+  /**
+   * Create a {@link FPISvcEx} given the exception cause, message to be used is from {@code cause}, this message will
+   * be wrapped in the http response. Default http status code will be used as defined by
+   * {@link #DEFAULT_HTTP_STATUS_CODE}
+   *
+   * @param cause Cause of exception
+   * @param entity the entity
+   */
+  public FPISvcEx(Throwable cause, IDto entity) {
+    super(cause.getMessage(), cause);
+    this.httpStatus = DEFAULT_HTTP_STATUS_CODE;
+    this.entity = entity;
   }
 
   /**
@@ -97,6 +171,21 @@ public class FPISvcEx extends RuntimeException {
   public FPISvcEx(Throwable cause, int httpStatus) {
     super(cause);
     this.httpStatus = httpStatus;
+    this.entity = null;
+  }
+
+  /**
+   * Create a {@link FPISvcEx} given the exception cause, message to be used is from {@code cause}, this message will
+   * be wrapped in the http response.
+   *
+   * @param cause Cause of exception
+   * @param httpStatus HTTP Status code
+   * @param entity the entity
+   */
+  public FPISvcEx(Throwable cause, int httpStatus, IDto entity) {
+    super(cause);
+    this.httpStatus = httpStatus;
+    this.entity = entity;
   }
 
 }

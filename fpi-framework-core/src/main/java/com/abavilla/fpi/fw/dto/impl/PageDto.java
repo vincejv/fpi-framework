@@ -14,6 +14,7 @@ import lombok.ToString;
 /**
  * Data transfer object containing a page of {@link AbsDto}.
  *
+ * @param <D> DTO Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @Getter
@@ -21,12 +22,12 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @RegisterForReflection
-public class PageDto<DTO extends IDto> extends AbsDto {
+public class PageDto<D extends IDto> extends AbsDto {
 
   /**
-   * Content of the page containing list of {@link DTO}
+   * Content of the page containing list of {@link D}
    */
-  private final List<DTO> content;
+  private final List<D> content;
 
   /**
    * Flag to indicate if page has a next page, {@code true} if has a next page,
@@ -50,15 +51,16 @@ public class PageDto<DTO extends IDto> extends AbsDto {
   private final Integer requestedCount;
 
   /**
-   * Creates a new page containing list of {@link DTO}
+   * Creates a new page containing list of {@link D}
    *
    * @param content Page content
    * @param hasNextPage Flag to indicate if it has a next page
    * @param pageNumber Current page number
    * @param count Number of items in page
+   * @param <D> DTO Type
    * @return {@link PageDto}
    */
-  public static <DTO extends IDto> PageDto<DTO> of(List<DTO> content, Boolean hasNextPage, Integer pageNumber, Integer count, Integer maxCount) {
+  public static <D extends IDto> PageDto<D> of(List<D> content, Boolean hasNextPage, Integer pageNumber, Integer count, Integer maxCount) {
     return new PageDto<>(content, hasNextPage, pageNumber, count, maxCount);
   }
 

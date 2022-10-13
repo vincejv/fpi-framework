@@ -37,17 +37,17 @@ import io.smallrye.mutiny.Uni;
 /**
  * REST API resource with built-in CRUD operations.
  *
- * @param <Dto> DTO Type
- * @param <Entity> Entity Type
- * @param <Service> Service layer Type
+ * @param <D> DTO Type
+ * @param <E> Entity Type
+ * @param <S> Service layer Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsResource<Dto extends IDto, Entity extends AbsItem,
-    Service extends AbsSvc<Dto, Entity>> extends AbsReadOnlyResource<Dto, Entity, Service>
-    implements ICRUDResource<Dto, Entity>, IReadOnlyResource<Dto, Entity> {
+public abstract class AbsResource<D extends IDto, E extends AbsItem,
+    S extends AbsSvc<D, E>> extends AbsReadOnlyResource<D, E, S>
+    implements ICRUDResource<D>, IReadOnlyResource<D> {
 
   /**
    * {@inheritDoc}
@@ -55,7 +55,7 @@ public abstract class AbsResource<Dto extends IDto, Entity extends AbsItem,
   @Override
   @Path("{id}")
   @PUT
-  public Uni<Dto> updateItem(@PathParam("id") String id, Dto body) {
+  public Uni<D> updateItem(@PathParam("id") String id, D body) {
     return service.update(id, body);
   }
 
@@ -65,7 +65,7 @@ public abstract class AbsResource<Dto extends IDto, Entity extends AbsItem,
   @Override
   @Path("{id}")
   @PATCH
-  public Uni<Dto> patchItem(@PathParam("id") String id, Dto body) {
+  public Uni<D> patchItem(@PathParam("id") String id, D body) {
     return service.patch(id, body);
   }
 
@@ -74,7 +74,7 @@ public abstract class AbsResource<Dto extends IDto, Entity extends AbsItem,
    */
   @Override
   @POST
-  public Uni<Dto> saveItem(Dto body) {
+  public Uni<D> saveItem(D body) {
     return service.save(body);
   }
 
@@ -84,7 +84,7 @@ public abstract class AbsResource<Dto extends IDto, Entity extends AbsItem,
   @Override
   @Path("{id}")
   @DELETE
-  public Uni<Dto> deleteItem(@PathParam("id") String id) {
+  public Uni<D> deleteItem(@PathParam("id") String id) {
     return service.delete(id);
   }
 }

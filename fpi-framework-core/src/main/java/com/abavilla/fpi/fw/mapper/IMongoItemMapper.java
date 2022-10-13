@@ -23,12 +23,12 @@ import com.abavilla.fpi.fw.entity.mongo.AbsMongoItem;
 
 /**
  * Mapper used for conversion and mapping fields between {@link AbsDto} and {@link AbsMongoItem} database item.
- * @param <DTO> DTO Type
- * @param <ENTITY> Entity Type
+ * @param <D> DTO Type
+ * @param <E> Entity Type
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface IMongoItemMapper<DTO extends AbsDto, ENTITY extends AbsMongoItem>
-    extends IDtoToEntityMapper<DTO, ENTITY> {
+public interface IMongoItemMapper<D extends AbsDto, E extends AbsMongoItem>
+    extends IDtoToEntityMapper<D, E> {
 
 }

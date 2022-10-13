@@ -43,6 +43,7 @@ public class ApiRepoExHandler
     try {
       response.bufferEntity();
     } catch (Exception ignored) {
+      // exception is ignored
     }
     return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response));
   }

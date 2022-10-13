@@ -21,18 +21,16 @@ package com.abavilla.fpi.fw.controller;
 import javax.ws.rs.PathParam;
 
 import com.abavilla.fpi.fw.dto.IDto;
-import com.abavilla.fpi.fw.entity.AbsItem;
 import io.smallrye.mutiny.Uni;
 
 /**
  * REST API resource capable of both reading and writing.
  *
- * @param <Dto> DTO Type
- * @param <Entity> Entity Type
+ * @param <D> DTO Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-public interface ICRUDResource<Dto extends IDto, Entity extends AbsItem>
-    extends IReadOnlyResource<Dto, Entity>, IResource<Dto, Entity> {
+public interface ICRUDResource<D extends IDto>
+    extends IReadOnlyResource<D>, IResource {
 
   /**
    * Update the item given by id.
@@ -40,9 +38,9 @@ public interface ICRUDResource<Dto extends IDto, Entity extends AbsItem>
    *
    * @param id Item id
    * @param body Updated item
-   * @return {@link Dto} Object retrieved
+   * @return {@link D} Object retrieved
    */
-  Uni<Dto> updateItem(String id, Dto body);
+  Uni<D> updateItem(String id, D body);
 
   /**
    * Patches the item given by id.
@@ -50,23 +48,23 @@ public interface ICRUDResource<Dto extends IDto, Entity extends AbsItem>
    *
    * @param id Item id
    * @param body Updated item
-   * @return {@link Dto} Object retrieved
+   * @return {@link D} Object retrieved
    */
-  Uni<Dto> patchItem(@PathParam("id") String id, Dto body);
+  Uni<D> patchItem(@PathParam("id") String id, D body);
 
   /**
    * Save a new item in database
    *
    * @param body Item to be saved in db
-   * @return {@link Dto} Item after saved in db
+   * @return {@link D} Item after saved in db
    */
-  Uni<Dto> saveItem(Dto body);
+  Uni<D> saveItem(D body);
 
   /**
    * Deletes an item given an id.
    *
    * @param id Item id
-   * @return {@link Dto} Deleted item
+   * @return {@link D} Deleted item
    */
-  Uni<Dto> deleteItem(String id);
+  Uni<D> deleteItem(String id);
 }

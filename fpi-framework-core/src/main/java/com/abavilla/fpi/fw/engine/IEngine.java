@@ -20,8 +20,15 @@ package com.abavilla.fpi.fw.engine;
 
 import com.abavilla.fpi.fw.service.IProviderSvc;
 
-public interface IEngine<Provider extends IProviderSvc, Basis> {
+/**
+ * Interface Engine
+ *
+ * @param <P> Provider type
+ * @param <B> Basis Type
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
+public interface IEngine<P extends IProviderSvc, B> {
 
-  Provider getProvider(Basis promo);
+  P getProvider(B basis);
 
 }

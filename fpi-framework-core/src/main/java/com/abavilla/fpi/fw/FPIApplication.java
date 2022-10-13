@@ -40,5 +40,7 @@ public class FPIApplication {
   /**
    * Additional methods to invoke after application startup.
    */
-  public void postStart() {}
+  public void postStart() {
+    // implementing class will provide the functionality optionally
+  }
 }

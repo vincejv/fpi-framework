@@ -41,5 +41,11 @@ public final class FWConst {
    * Failed message used for API response
    */
   public static final String FAILED = "Failed";
+  public static final String CANNOT_FIND_ERR_MSG = "Cannot find ";
+
+  /**
+   * Prefix for Unknown enum values
+   */
+  public static final String UNKNOWN_PREFIX = "UNK >> ";
 
 }

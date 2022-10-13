@@ -36,22 +36,22 @@ import org.jboss.resteasy.reactive.RestResponse;
 /**
  * REST API resource with no built-in CRUD operations.
  *
- * @param <Dto> DTO Type
- * @param <Entity> Entity Type
- * @param <Service> Service layer Type
+ * @param <D> DTO Type
+ * @param <E> Entity Type
+ * @param <S> Service layer Type
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class AbsBaseResource<Dto extends IDto, Entity extends AbsItem,
-    Service extends AbsSvc<Dto, Entity>> implements IResource<Dto, Entity> {
+public abstract class AbsBaseResource<D extends IDto, E extends AbsItem,
+    S extends AbsSvc<D, E>> implements IResource {
 
   /**
-   * Service layer to operate on {@link Entity} item
+   * Service layer to operate on {@link E} item
    */
   @Inject
-  protected Service service;
+  protected S service;
 
   /**
    * Handles exceptions thrown by service layer.
@@ -59,8 +59,8 @@ public abstract class AbsBaseResource<Dto extends IDto, Entity extends AbsItem,
    * @param x Exception thrown
    * @return HTTP Response detailing the exception
    */
-  protected RestResponse<RespDto<Object>> mapException(FPISvcEx x) {
-    RespDto<Object> resp = new RespDto<>();
+  protected RestResponse<RespDto<IDto>> mapException(FPISvcEx x) {
+    RespDto<IDto> resp = new RespDto<>();
     resp.setTimestamp(DateUtil.nowAsStr());
     resp.setResp(x.getEntity());
     resp.setError(x.getMessage());
