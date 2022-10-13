@@ -32,6 +32,8 @@
     </modules>
 
     <properties>
+        <sonar.organization>vincejv</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
         <abavilla.framework.version>1.0.124</abavilla.framework.version>
     </properties>
