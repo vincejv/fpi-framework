@@ -17,11 +17,17 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses />.    ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <scm>
+        <url>https://github.com/vincejv/fpi-framework</url>
+        <connection>scm:git:git://github.com/vincejv/fpi-framework.git</connection>
+        <developerConnection>scm:git:git@github.com:vincejv/fpi-framework.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.124</version>
+    <version>1.0.124-SNAPSHOT</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
@@ -35,7 +41,7 @@
         <sonar.organization>vincejv</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
-        <abavilla.framework.version>1.0.124</abavilla.framework.version>
+        <abavilla.framework.version>1.0.124-SNAPSHOT</abavilla.framework.version>
     </properties>
 
     <repositories>
@@ -53,5 +59,40 @@
             <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
         </repository>
     </distributionManagement>
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-release-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <preparationGoals>versions:set-property</preparationGoals>-->
+<!--                    <completionGoals>versions:set-property</completionGoals>-->
+<!--                    <arguments>-Prelease-super</arguments>-->
+<!--                </configuration>-->
+<!--                <inherited>false</inherited>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+
+<!--    &lt;!&ndash; sync property abavilla.framework.version to version &ndash;&gt;-->
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>release-super</id>-->
+<!--            <build>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.codehaus.mojo</groupId>-->
+<!--                        <artifactId>versions-maven-plugin</artifactId>-->
+<!--                        <version>2.12.0</version>-->
+<!--                        <configuration>-->
+<!--                            <property>abavilla.framework.version</property>-->
+<!--                            <newVersion>${project.version}</newVersion>-->
+<!--                        </configuration>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
+<!--    </profiles>-->
 
 </project>
