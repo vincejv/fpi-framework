@@ -58,15 +58,14 @@
         </repository>
     </distributionManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <skip.deploy>true</skip.deploy>
+                <maven.deploy.skip>true</maven.deploy.skip>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
