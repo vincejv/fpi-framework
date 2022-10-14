@@ -21,13 +21,13 @@
         <url>https://github.com/vincejv/fpi-framework</url>
         <connection>scm:git:git://github.com/vincejv/fpi-framework.git</connection>
         <developerConnection>scm:git:git@github.com:vincejv/fpi-framework.git</developerConnection>
-        <tag>fpi-framework-1.0.125</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.125</version>
+    <version>1.0.126-SNAPSHOT</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
