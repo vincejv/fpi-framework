@@ -1,12 +1,12 @@
 name: Github Packages release
 on:
   push:
-    branches:
-      - main
+    tags:
+      - fpi-framework-*
 
 jobs:
   build:
-    name: Build
+    name: Release artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,4 +26,4 @@ jobs:
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=vincejv_fpi-framework
+        run: mvn deploy -Dmaven.deploy.skip=false
