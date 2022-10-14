@@ -44,10 +44,13 @@
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <json-jackson.version>2.13.4</json-jackson.version>
+    <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
+    <abavilla.framework.version>1.0.124-SNAPSHOT</abavilla.framework.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+
       <dependency>
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>${quarkus.platform.artifact-id}</artifactId>
@@ -55,6 +58,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
+      <dependency>
+        <groupId>${abavilla.framework.group-id}</groupId>
+        <artifactId>fpi-framework-core</artifactId>
+        <version>${abavilla.framework.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 

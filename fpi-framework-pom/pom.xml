@@ -40,7 +40,6 @@
     <dependency>
       <groupId>${abavilla.framework.group-id}</groupId>
       <artifactId>fpi-framework-core</artifactId>
-      <version>${abavilla.framework.version}</version>
     </dependency>
 
   </dependencies>
