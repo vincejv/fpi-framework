@@ -2,8 +2,8 @@ name: Github Packages release for Development
 
 on:
   push:
-    branches:
-      - gcp-build
+    branches-ignore:
+      - main
 
 jobs:
   deploy:
