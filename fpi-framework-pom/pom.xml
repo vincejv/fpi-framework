@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ FPI Application - Abavilla                                                ~
   ~ Copyright (C) 2022  Vince Jerald Villamora                                ~
@@ -17,45 +17,30 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses />.    ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <scm>
-        <url>https://github.com/vincejv/fpi-framework</url>
-        <connection>scm:git:git://github.com/vincejv/fpi-framework.git</connection>
-        <developerConnection>scm:git:git@github.com:vincejv/fpi-framework.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>fpi-framework-pom</artifactId>
+  <name>fpi-framework-pom</name>
+  <packaging>pom</packaging>
+
+  <parent>
     <groupId>com.abavilla</groupId>
-    <artifactId>fpi-framework</artifactId>
+    <artifactId>fpi-framework-bom</artifactId>
     <version>0</version> <!-- jgitver.used_version -->
-    <name>fpi-framework</name>
-    <packaging>pom</packaging>
+    <relativePath>../fpi-framework-bom/pom.xml</relativePath>
+  </parent>
 
-    <modules>
-        <module>fpi-framework-bom</module>
-        <module>fpi-framework-core</module>
-        <module>fpi-framework-pom</module>
-    </modules>
+  <properties>
 
-    <properties>
-        <sonar.organization>vincejv</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    </properties>
+  </properties>
 
-    <repositories>
-        <repository>
-            <id>github</id>
-            <name>Github FPI Framework Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
-        </repository>
-    </repositories>
+  <dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>Github FPI Framework Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
-        </repository>
-    </distributionManagement>
+    <dependency>
+      <groupId>${abavilla.framework.group-id}</groupId>
+      <artifactId>fpi-framework-core</artifactId>
+    </dependency>
+
+  </dependencies>
 
 </project>
