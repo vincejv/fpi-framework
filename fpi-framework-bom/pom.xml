@@ -45,7 +45,7 @@
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <json-jackson.version>2.13.4</json-jackson.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
-    <abavilla.framework.version>${jgitver.used_version</abavilla.framework.version>
+    <abavilla.framework.version>${jgitver.used_version}</abavilla.framework.version>
   </properties>
 
   <dependencyManagement>
