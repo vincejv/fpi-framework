@@ -25,7 +25,7 @@ jobs:
       - name: Prepare release
         id: prep_release
         run: |
-          echo "latest_tag:steps.tag_version.outputs.new_tag" >> $GITHUB_ENV
+          echo "latest_tag=steps.tag_version.outputs.new_tag" >> $GITHUB_ENV
   deploy:
     name: Release artifact
     needs: versioning
