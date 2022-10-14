@@ -22,13 +22,22 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
+      - name: Prepare release
+        id: prep_release
+        run: |
+          echo "latest_tag:steps.tag_version.outputs.new_tag" >> $GITHUB_ENV
   deploy:
     name: Release artifact
+    needs: versioning
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          ref: '${{ env.latest_tag }}'
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
