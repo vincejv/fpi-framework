@@ -1,11 +1,12 @@
-name: Github Packages release
+name: Github Packages release for Development
+
 on:
   push:
-    tags:
-      - fpi-framework-*
+    branches:
+      - gcp-build
 
 jobs:
-  build:
+  deploy:
     name: Release artifact
     runs-on: ubuntu-latest
     steps:
