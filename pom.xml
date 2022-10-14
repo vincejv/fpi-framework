@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>1.0.127-SNAPSHOT</version>
+    <version>0</version>
     <name>fpi-framework</name>
     <packaging>pom</packaging>
 
@@ -57,15 +57,5 @@
             <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
         </repository>
     </distributionManagement>
-
-    <profiles>
-        <profile>
-            <id>local</id>
-            <properties>
-                <skip.deploy>true</skip.deploy>
-                <maven.deploy.skip>true</maven.deploy.skip>
-            </properties>
-        </profile>
-    </profiles>
 
 </project>
