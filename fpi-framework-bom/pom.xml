@@ -26,7 +26,7 @@
   <parent>
     <groupId>com.abavilla</groupId>
     <artifactId>fpi-framework</artifactId>
-    <version>0</version>
+    <version>0</version> <!-- jgitver.used_version -->
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -45,6 +45,7 @@
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <json-jackson.version>2.13.4</json-jackson.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
+    <!--suppress UnresolvedMavenProperty -->
     <abavilla.framework.version>${jgitver.used_version}</abavilla.framework.version>
   </properties>
 
