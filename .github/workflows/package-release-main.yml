@@ -66,4 +66,4 @@ jobs:
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn deploy
+        run: mvn deploy -Djgitver.config=./.mvn/jgitver.main.config.xml
