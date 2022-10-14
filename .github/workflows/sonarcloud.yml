@@ -1,10 +1,7 @@
 name: Sonarcloud Analysis
 
 on:
-  push:
-    branches:
-      - main
-      - gcp-build
+  push: # perform analysis on all commits
   pull_request:
     types: [opened, synchronize, reopened]
 
