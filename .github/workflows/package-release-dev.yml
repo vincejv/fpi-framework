@@ -1,4 +1,4 @@
-name: Github Packages release for Development
+name: Packages release for Development to Maven Central Repository
 
 on:
   push:
@@ -54,4 +54,4 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-        run: mvn -B deploy -Psign-for-oss
+        run: mvn -B deploy -Psign-for-oss -Dgpg.passphrase=$MAVEN_GPG_PASSPHRASE
