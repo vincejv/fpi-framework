@@ -34,25 +34,10 @@
 
   </properties>
 
-  <repositories>
-    <repository>
-      <id>github</id>
-      <name>Github FPI Framework Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
-    </repository>
-  </repositories>
-
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub FPI Framework Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
-    </repository>
-  </distributionManagement>
-
   <dependencies>
 
   </dependencies>
+
   <build>
     <plugins>
 
