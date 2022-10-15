@@ -119,7 +119,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -127,14 +127,10 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
-                                <configuration>
-                                    <!-- Prevent gpg from using pinentry programs. Fixes: gpg: signing
-                                        failed: Inappropriate ioctl for device -->
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                    </gpgArguments>
-                                </configuration>
+<!--                                <configuration>-->
+<!--                                    <keyname>${gpg.keyname}</keyname>-->
+<!--                                    <passphraseServerId>${gpg.keyname}</passphraseServerId>-->
+<!--                                </configuration>-->
                             </execution>
                         </executions>
                     </plugin>
