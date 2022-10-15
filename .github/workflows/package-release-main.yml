@@ -1,4 +1,4 @@
-name: Github Packages release for Production
+name: Packages release for Production to Maven Central Repository
 
 on:
   push:
