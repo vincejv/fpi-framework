@@ -57,69 +57,80 @@
     </modules>
 
     <properties>
+        <!-- sonar properties -->
         <sonar.organization>vincejv</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    </properties>
 
-    <repositories>
-        <repository>
-            <id>github</id>
-            <name>Github FPI Framework Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/vincejv/fpi-framework</url>
-        </repository>
-    </repositories>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+
+        <!-- repository settings for deployment -->
+        <maven.deploy.nexus.repository-id>ossrh</maven.deploy.nexus.repository-id>
+        <maven.deploy.nexus.base-url>https://s01.oss.sonatype.org/</maven.deploy.nexus.base-url>
+        <maven.deploy.nexus.repository-url>${maven.deploy.nexus.base-url}service/local/staging/deploy/maven2</maven.deploy.nexus.repository-url>
+
+        <!-- repository settings for snapshot release -->
+        <maven.deploy.nexus.snapshot.repository-id>${maven.deploy.nexus.repository-id}</maven.deploy.nexus.snapshot.repository-id>
+        <maven.deploy.nexus.snapshot.repository-url>${maven.deploy.nexus.base-url}content/repositories/snapshots</maven.deploy.nexus.snapshot.repository-url>
+    </properties>
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <id>${maven.deploy.nexus.snapshot.repository-id}</id>
+            <url>${maven.deploy.nexus.snapshot.repository-url}</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>${maven.deploy.nexus.repository-id}</id>
+            <url>${maven.deploy.nexus.repository-url}</url>
         </repository>
     </distributionManagement>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>sign-for-oss</id>
+            <id>release-for-oss</id>
             <build>
                 <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven-source-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>${maven-gpg-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -130,8 +141,22 @@
                             </execution>
                         </executions>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${nexus-staging-maven-plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>${maven.deploy.nexus.repository-id}</serverId>
+                            <nexusUrl>${maven.deploy.nexus.base-url}</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
     </profiles>
+
 </project>
