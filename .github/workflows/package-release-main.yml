@@ -5,7 +5,11 @@ on:
     branches:
       - main
 
+env:
+  SONAR_PROJECT_KEY: vincejv_fpi-framework
+
 jobs:
+
   pre_job:
     name: Duplicate checks
     runs-on: ubuntu-latest
