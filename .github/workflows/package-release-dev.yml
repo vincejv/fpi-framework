@@ -8,6 +8,7 @@ on:
 jobs:
   pre_job:
     name: Duplicate checks
+    # continue-on-error: true # Uncomment once integration is finished
     runs-on: ubuntu-latest
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -29,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
