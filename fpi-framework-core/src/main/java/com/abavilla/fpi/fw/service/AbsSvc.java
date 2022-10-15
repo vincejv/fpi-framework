@@ -59,6 +59,7 @@ public abstract class AbsSvc<D extends IDto, E extends AbsItem> implements ISvc 
    * @return {@link E} Item retrieved
    */
   public Uni<D> get(String id) {
+    System.out.println("trigger sonar");
     Uni<Optional<E>> byId = repo.byId(id);
     return byId.chain(opt -> {
       if (opt.isPresent()) {
