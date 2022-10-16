@@ -57,9 +57,6 @@
     </modules>
 
     <properties>
-        <!-- jgitver options -->
-        <jgitver.resolve-project-version>true</jgitver.resolve-project-version>
-
         <!-- sonar properties -->
         <sonar.organization>vincejv</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>

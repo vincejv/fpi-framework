@@ -1,4 +1,4 @@
-name: Packages release for Production to Maven Central Repository
+name: Maven Central deployment
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
   pre_job:
     name: Duplicate checks
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'docs-update(') }} # skip for commits containing 'docs-update('
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
       paths_result: ${{ steps.skip_check.outputs.paths_result }}
@@ -21,7 +22,7 @@ jobs:
         id: skip_check
         uses: fkirc/skip-duplicate-actions@v5
         with:
-          concurrent_skipping: same_content_newer
+          concurrent_skipping: outdated_runs
           cancel_others: true
 
   code_quality_checks:
@@ -34,18 +35,21 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
           cache: maven
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -59,11 +63,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
@@ -84,6 +90,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -95,6 +102,7 @@ jobs:
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
       - name: Build and release to central repo
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
