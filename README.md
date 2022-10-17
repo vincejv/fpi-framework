@@ -1,5 +1,11 @@
 <img src="banner.png" alt="FPI Framework" width="500"/>
-<hr>
+
+[![Maven Central version](https://img.shields.io/maven-central/v/com.abavilla/fpi-framework?logo=apache-maven&style=for-the-badge)](https://search.maven.org/artifact/com.abavilla/fpi-framework-core)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vincejv/fpi-framework/Maven%20Central%20deployment?label=CI/CD&logo=github&style=for-the-badge)](https://github.com/vincejv/fpi-framework/actions?query=workflow%3A%22Maven+Central+deployment%22)
+[![License](https://img.shields.io/github/license/vincejv/fpi-framework?style=for-the-badge&logo=apache)](https://github.com/vincejv/fpi-framework/blob/main/LICENSE)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vincejv/fpi-framework?label=commits&logo=git&style=for-the-badge)](https://github.com/vincejv/fpi-framework/pulse)
+[![Lines of code](https://img.shields.io/tokei/lines/github/vincejv/fpi-framework?style=for-the-badge&label=LOC&logo=intellij%20idea)](https://github.com/vincejv/fpi-framework/)
+
 
 ### Sample Usage
 #### Entity
