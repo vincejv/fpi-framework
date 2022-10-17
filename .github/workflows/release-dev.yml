@@ -58,6 +58,8 @@ jobs:
     name: Release artifact
     runs-on: ubuntu-latest
     needs: code_quality_checks
+    outputs:
+      artifact_version: ${{ steps.gen_ver.outputs.artifact_version }}
     permissions:
       contents: read
       packages: write
@@ -85,3 +87,53 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
         run: mvn -B deploy -Prelease-for-oss
+
+      - name: Store artifact version
+        id: gen_ver
+        run: |
+          echo "artifact_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+
+  pr_update:
+    name: Pull request update
+    if: always()
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write # allows job to decorate PRs with analysis results
+    steps:
+      - name: Update PR (Success message)
+        uses: marocchino/sticky-pull-request-comment@v2
+        if:  ${{ always() && needs.deploy.outputs.artifact_version != '' }}
+        with:
+          message: |
+            ✅ Released version to SNAPSHOT repository: `${{ needs.deploy.outputs.artifact_version }}`
+            
+            #### Parent POM Usage:
+            ```xml
+            <parent>
+              <groupId>com.abavilla</groupId>
+              <artifactId>fpi-framework-pom</artifactId>
+              <version>${{ needs.deploy.outputs.artifact_version }}</version>
+            </parent>
+            ```
+            
+            #### BOM Usage:
+            ```xml
+            <dependencyManagement>
+              <dependency>
+                <groupId>com.abavilla</groupId>
+                <artifactId>fpi-framework-bom</artifactId>
+                <version>${{ needs.deploy.outputs.artifact_version }}</version>
+                <type>pom</type>
+                <scope>import</scope>
+              </dependency>
+            </dependencyManagement>
+            ```
+
+      - name: Update PR (Failure message)
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ always() && needs.deploy.outputs.artifact_version == '' }}
+        with:
+          message: |
+            ❌ CI Build & Deployment failed, please check the [logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details
