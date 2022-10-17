@@ -1,10 +1,16 @@
 <img src="banner.png" alt="FPI Framework" width="500"/>
 
-[![Maven Central version](https://img.shields.io/maven-central/v/com.abavilla/fpi-framework?logo=apache-maven&style=for-the-badge)](https://search.maven.org/artifact/com.abavilla/fpi-framework-core)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vincejv/fpi-framework/Maven%20Central%20deployment?label=CI/CD&logo=github&style=for-the-badge)](https://github.com/vincejv/fpi-framework/actions?query=workflow%3A%22Maven+Central+deployment%22)
-[![License](https://img.shields.io/github/license/vincejv/fpi-framework?style=for-the-badge&logo=apache)](https://github.com/vincejv/fpi-framework/blob/main/LICENSE)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vincejv/fpi-framework?label=commits&logo=git&style=for-the-badge)](https://github.com/vincejv/fpi-framework/pulse)
-[![Lines of code](https://img.shields.io/tokei/lines/github/vincejv/fpi-framework?style=for-the-badge&label=LOC&logo=intellij%20idea)](https://github.com/vincejv/fpi-framework/)
+[![Maven Central version](https://img.shields.io/maven-central/v/com.abavilla/fpi-framework?logo=apache-maven)](https://search.maven.org/artifact/com.abavilla/fpi-framework-core)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vincejv/fpi-framework/Maven%20Central%20deployment?label=CI/CD&logo=github)](https://github.com/vincejv/fpi-framework/actions?query=workflow%3A%22Maven+Central+deployment%22)
+[![License](https://img.shields.io/github/license/vincejv/fpi-framework?logo=apache)](https://github.com/vincejv/fpi-framework/blob/main/LICENSE)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vincejv/fpi-framework?label=commits&logo=git)](https://github.com/vincejv/fpi-framework/pulse)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=alert_status)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
+[![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=vincejv_fpi-framework)
+[![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=vincejv_fpi-framework)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=security_rating)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=ncloc)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
 
 
 ### Sample Usage
