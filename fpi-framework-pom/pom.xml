@@ -16,9 +16,13 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+  <name>FPI Framework shared POM module</name>
+  <description>Reactive API backend Framework, built on top of Quarkus, for quick and easy REST API development - external shared POM module</description>
+  <url>https://github.com/vincejv/fpi-framework</url>
+  <inceptionYear>2022</inceptionYear>
+
   <modelVersion>4.0.0</modelVersion>
   <artifactId>fpi-framework-pom</artifactId>
-  <name>fpi-framework-pom</name>
   <packaging>pom</packaging>
 
   <parent>
