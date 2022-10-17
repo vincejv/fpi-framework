@@ -45,7 +45,7 @@
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <json-jackson.version>2.13.4</json-jackson.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
-    <abavilla.framework.version>${project.version}</abavilla.framework.version>
+    <abavilla.framework.version>0</abavilla.framework.version> <!-- should be managed by versioning plugin -->
   </properties>
 
   <dependencyManagement>
