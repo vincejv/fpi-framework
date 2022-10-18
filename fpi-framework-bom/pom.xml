@@ -39,8 +39,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.13.2.Final</quarkus.platform.version>
-    <quarkus.platform.version.keycloak>2.12.3.Final</quarkus.platform.version.keycloak>
+    <quarkus.platform.version>2.12.3.Final</quarkus.platform.version>
     <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
@@ -56,15 +55,6 @@
 
   <dependencyManagement>
     <dependencies>
-
-      <!-- retain compatibility with keycloak 18 -->
-      <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-keycloak-authorization</artifactId>
-        <version>${quarkus.platform.version.keycloak}</version>  <!-- last quarkus version that used keycloak 18 -->
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
 
       <dependency>
         <groupId>${quarkus.platform.group-id}</groupId>
