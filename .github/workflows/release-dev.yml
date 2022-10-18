@@ -95,8 +95,8 @@ jobs:
 
   pr_update:
     name: Pull request update
-    if: always()
-    needs: deploy
+    if: always() && needs.pre_job.outputs.should_skip != 'true'
+    needs: [pre_job, deploy]
     runs-on: ubuntu-latest
     permissions:
       contents: read
