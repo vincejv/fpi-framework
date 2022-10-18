@@ -12,6 +12,41 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=security_rating)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=ncloc)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
 
+### Importing the POM (choose 1 option)
+
+#### As Parent POM
+```xml
+<parent>
+  <!-- FPI Framework Parent POM -->
+  <groupId>com.abavilla</groupId>
+  <artifactId>fpi-framework-pom</artifactId>
+  <version>1.1.1</version> <!-- replace with latest version -->
+</parent>
+<!-- As dependencies are defined in parent POM
+ no need to add FPI Framework Core as a dependency -->
+```
+
+#### As BOM
+```xml
+<dependencyManagement>
+  <dependency>
+    <!-- FPI Framework BOM -->
+    <groupId>com.abavilla</groupId>
+    <artifactId>fpi-framework-bom</artifactId>
+    <version>1.1.1</version> <!-- replace with latest version -->
+    <type>pom</type>
+    <scope>import</scope>
+  </dependency>
+</dependencyManagement>
+
+<dependencies>
+  <!-- FPI Framework Core dependency -->
+  <dependency>
+    <groupId>com.abavilla</groupId>
+    <artifactId>fpi-framework-core</artifactId>
+  </dependency>
+</dependencies>
+```
 
 ### Sample Usage
 #### Entity
