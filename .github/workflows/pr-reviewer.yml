@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Approve pull request
         if: ${{ github.actor == env.REPOSITORY_OWNER && contains(github.event.comment.body, format('@{0}', env.REPOSITORY_BOT)) }}
-        uses: vincejv/auto-approve-action@v3.0.3
+        uses: vincejv/auto-approve-action@v3.0.4
         with:
           force-review: true
           pull-request-number: ${{ github.event.issue.number }}
