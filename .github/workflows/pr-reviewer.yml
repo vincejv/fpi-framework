@@ -16,5 +16,5 @@ jobs:
         with:
           repo-token: ${{ secrets.FPI_BOT_TOKEN }}
           event: APPROVE
-          body: ${{ format('Hi @{0}, your code changes are approved! 🥳', github.actor) }}
+          body: ${{ format('Hi @{0}, your code changes are approved 🥳', github.actor) }}
           allow_duplicate: false
