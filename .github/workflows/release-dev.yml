@@ -96,15 +96,22 @@ jobs:
   pr_update:
     name: Pull request update
     if: always()
-    needs: deploy
+    needs: [pre_job, deploy]
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write # allows job to decorate PRs with analysis results
     steps:
+      - name: Update PR (Skip message)
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ always() && needs.pre_job.outputs.should_skip == 'true' }}
+        with:
+          message: |
+            ⚪ Skipped CI/CD as deployment was done in a previous job
+
       - name: Update PR (Success message)
         uses: marocchino/sticky-pull-request-comment@v2
-        if:  ${{ always() && needs.deploy.outputs.artifact_version != '' }}
+        if:  ${{ always() && needs.pre_job.outputs.should_skip != 'true' && needs.deploy.outputs.artifact_version != '' }}
         with:
           message: |
             ✅ Released version to SNAPSHOT repository: `${{ needs.deploy.outputs.artifact_version }}`
@@ -133,7 +140,7 @@ jobs:
 
       - name: Update PR (Failure message)
         uses: marocchino/sticky-pull-request-comment@v2
-        if: ${{ always() && needs.deploy.outputs.artifact_version == '' }}
+        if: ${{ always() && needs.pre_job.outputs.should_skip != 'true' && needs.deploy.outputs.artifact_version == '' }}
         with:
           message: |
             ❌ CI Build & Deployment failed, please check the [logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details

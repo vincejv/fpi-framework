@@ -1,0 +1,20 @@
+name: PR Reviewer
+on:
+  issue_comment:
+    types: [ created, edited ]
+env:
+  REPOSITORY_OWNER: vincejv
+jobs:
+  review:
+    name: Perform review
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '@fpibot') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Approve pull request
+        if: ${{ github.actor == env.REPOSITORY_OWNER }}
+        uses: Ana06/automatic-pull-request-review@v0.1.0
+        with:
+          repo-token: ${{ secrets.FPI_BOT_TOKEN }}
+          event: APPROVE
+          body: ${{ format('Hi @{0}, your code changes are approved! 🥳', github.actor) }}
+          allow_duplicate: false
