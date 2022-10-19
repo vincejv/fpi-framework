@@ -2,9 +2,6 @@ name: PR Reviewer
 on:
   issue_comment:
     types: [ created, edited ]
-    inputs: pullRequestNumber
-    description: Pull request number to auto-approve
-    required: false
 env:
   REPOSITORY_OWNER: vincejv
   REPOSITORY_BOT: fpibot
