@@ -8,11 +8,11 @@ env:
 jobs:
   review:
     name: Perform review
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, format('@{0}', env.REPOSITORY_BOT)) }}
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - name: Approve pull request
-        if: ${{ github.actor == env.REPOSITORY_OWNER }}
+        if: ${{ github.actor == env.REPOSITORY_OWNER && contains(github.event.comment.body, format('@{0}', env.REPOSITORY_BOT)) }}
         uses: hmarr/auto-approve-action@v3
         with:
           pull-request-number: ${{ github.event.issue.number }}
