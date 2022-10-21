@@ -48,11 +48,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: versioning
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: ReSync Branch
         uses: Joao208/resync-branch@1.5.1
         with:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_TOKEN: ${{ secrets.FPI_BOT_TOKEN }}
           BRANCH_NAME: development
           DEFAULT_BRANCH: ${{github.event.repository.default_branch}}
 
