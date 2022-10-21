@@ -88,10 +88,13 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          VERSIONING_GIT_REF: ${{ github.event.pull_request.head.sha }}
         run: mvn -B deploy -Prelease-for-oss
 
       - name: Store artifact version
         id: gen_ver
+        env:
+          VERSIONING_GIT_REF: ${{ github.event.pull_request.head.sha }}
         run: |
           echo "artifact_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
 
