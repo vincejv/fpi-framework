@@ -7,13 +7,13 @@ on:
 
 env:
   SONAR_PROJECT_KEY: vincejv_fpi-framework
+  DEVELOPMENT_SYNC_BRANCH: development
 
 jobs:
 
   pre_job:
     name: Duplicate checks
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, 'docs-update(') }} # skip for commits containing 'docs-update('
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
       paths_result: ${{ steps.skip_check.outputs.paths_result }}
@@ -51,13 +51,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
 
       - name: ReSync Branch
         uses: Joao208/resync-branch@1.5.1
         with:
           PERSONAL_TOKEN: ${{ secrets.FPI_BOT_TOKEN }}
-          BRANCH_NAME: development
+          BRANCH_NAME: ${{ env.DEVELOPMENT_SYNC_BRANCH }}
           DEFAULT_BRANCH: ${{github.event.repository.default_branch}}
 
   code_quality_checks:
@@ -68,6 +69,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Set up JDK 17
