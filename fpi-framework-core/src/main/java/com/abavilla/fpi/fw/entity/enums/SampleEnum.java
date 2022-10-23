@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Template base {@link Enum} for creating enums from, since {@link Enum} do not
@@ -48,7 +47,7 @@ public enum SampleEnum implements IBaseEnum {
   /**
    * Ordinal id to enum mapping
    */
-  private static final Map<Integer, SampleEnum> ENUM_MAP = new HashMap<>();
+  private static final Map<Integer, IBaseEnum> ENUM_MAP = new HashMap<>();
 
   static {
     for(SampleEnum w : EnumSet.allOf(SampleEnum.class))
@@ -63,7 +62,7 @@ public enum SampleEnum implements IBaseEnum {
   /**
    * The enum value
    */
-  private String value;
+  private final String value;
 
   /**
    * Creates an enum based from given string value
@@ -72,21 +71,8 @@ public enum SampleEnum implements IBaseEnum {
    * @return the created enum
    */
   @JsonCreator
-  public static SampleEnum fromValue(String value) {
-    if (StringUtils.isBlank(value)) {
-      return null;
-    } else {
-      return ENUM_MAP.values().stream().filter(enumItem -> StringUtils.equalsIgnoreCase(value, enumItem.getValue())).findAny()
-          .orElseGet(() -> {
-            var unknown = UNKNOWN;
-            String enumValue = value;
-            if (StringUtils.startsWithIgnoreCase(enumValue, UNKNOWN_PREFIX)) {
-              enumValue = StringUtils.removeStart(enumValue, UNKNOWN_PREFIX);
-            }
-            unknown.value = UNKNOWN_PREFIX + enumValue;
-            return unknown;
-          });
-    }
+  public static IBaseEnum fromValue(String value) {
+    return IBaseEnum.fromValue(value, ENUM_MAP, UNKNOWN);
   }
 
   /**
@@ -95,13 +81,8 @@ public enum SampleEnum implements IBaseEnum {
    * @param id the ordinal id
    * @return the created enum
    */
-  public static SampleEnum fromId(int id) {
-    return ENUM_MAP.values().stream().filter(enumItem -> id == enumItem.getId()).findAny()
-        .orElseGet(() -> {
-          var unknown = UNKNOWN;
-          unknown.value = UNKNOWN_PREFIX + id;
-          return unknown;
-        });
+  public static IBaseEnum fromId(int id) {
+    return IBaseEnum.fromId(id, ENUM_MAP, UNKNOWN);
   }
 
   /**
