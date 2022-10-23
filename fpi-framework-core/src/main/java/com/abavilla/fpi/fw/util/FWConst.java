@@ -44,6 +44,6 @@ public final class FWConst {
   /**
    * Prefix for Unknown enum values
    */
-  public static final String UNKNOWN_PREFIX = "UNK >> ";
+  public static final String UNKNOWN_PREFIX = "Unknown";
 
 }
