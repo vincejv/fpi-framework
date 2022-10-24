@@ -77,6 +77,12 @@
       <artifactId>quarkus-mongodb-client</artifactId>
     </dependency>
 
+    <!-- Liquibase MongoDB -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-liquibase-mongodb</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
