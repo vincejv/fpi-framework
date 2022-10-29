@@ -172,6 +172,17 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>allow-snapshots</id>
+      <repositories>
+        <repository>
+          <id>${maven.deploy.nexus.snapshot.repository-id}</id>
+          <url>${maven.deploy.nexus.snapshot.repository-url}</url>
+          <releases><enabled>false</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+      </repositories>
+    </profile>
   </profiles>
 
 </project>
