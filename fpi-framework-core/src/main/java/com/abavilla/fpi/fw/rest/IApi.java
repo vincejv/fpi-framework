@@ -16,9 +16,8 @@
 
 package com.abavilla.fpi.fw.rest;
 
-import com.abavilla.fpi.fw.exceptions.handler.ApiRepoExHandler;
-import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
+import com.abavilla.fpi.fw.annotation.HandleRestEx;
 
-@RegisterProvider(value = ApiRepoExHandler.class)
+@HandleRestEx
 public interface IApi {
 }
