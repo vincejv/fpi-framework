@@ -16,8 +16,5 @@
 
 package com.abavilla.fpi.fw.rest;
 
-import com.abavilla.fpi.fw.annotation.HandleRestEx;
-
-@HandleRestEx
 public interface IApi {
 }
