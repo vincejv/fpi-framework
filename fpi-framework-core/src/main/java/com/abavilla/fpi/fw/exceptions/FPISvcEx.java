@@ -204,4 +204,18 @@ public class FPISvcEx extends RuntimeException {
     this.entity = entity;
   }
 
+  /**
+   * Gets the entity given the target class type, returns {@code null} if not castable
+   * @param targetClass the target class type
+   * @return the entity
+   * @param <T> Type of entity
+   */
+  public <T extends IDto> T getEntity(Class<T> targetClass) {
+    if (targetClass.isInstance(entity)) {
+      return targetClass.cast(entity);
+    } else {
+      return null;
+    }
+  }
+
 }
