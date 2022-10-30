@@ -19,6 +19,7 @@ package com.abavilla.fpi.fw.dto;
 import java.io.Serializable;
 
 import com.abavilla.fpi.fw.util.MapperUtil;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public interface IDto extends Serializable {
 
   /**
