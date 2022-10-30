@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @RegisterForReflection
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, defaultImpl = SampleEnum.class)
 public enum SampleEnum implements IBaseEnum {
 
   /**
