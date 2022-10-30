@@ -19,6 +19,7 @@ package com.abavilla.fpi.fw.dto.impl;
 import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.util.DateUtil;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +33,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @RegisterForReflection
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, defaultImpl = RespDto.class)
 public class RespDto<T extends IDto> extends AbsDto {
 
   /**
