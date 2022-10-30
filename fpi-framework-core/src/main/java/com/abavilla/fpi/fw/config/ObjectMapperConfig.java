@@ -19,6 +19,7 @@ package com.abavilla.fpi.fw.config;
 import javax.enterprise.context.ApplicationScoped;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.jackson.ObjectMapperCustomizer;
@@ -35,6 +36,8 @@ public class ObjectMapperConfig implements ObjectMapperCustomizer {
         .with(MapperFeature.PROPAGATE_TRANSIENT_MARKER);
     mapper.setConfig(newSerConfig);
     mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
+    mapper.configure(DeserializationFeature.FAIL_ON_UNRESOLVED_OBJECT_IDS, false);
     customizeMapper(mapper);
   }
 
