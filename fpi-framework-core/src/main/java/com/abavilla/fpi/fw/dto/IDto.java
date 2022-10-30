@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public interface IDto extends Serializable {
 
   /**
