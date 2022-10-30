@@ -21,7 +21,6 @@ import javax.enterprise.context.ApplicationScoped;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import io.quarkus.jackson.ObjectMapperCustomizer;
 
 /**
@@ -34,10 +33,8 @@ public class ObjectMapperConfig implements ObjectMapperCustomizer {
     final var originalSerConfig = mapper.getSerializationConfig();
     final var newSerConfig = originalSerConfig
         .with(MapperFeature.PROPAGATE_TRANSIENT_MARKER);
-    final var ptv = BasicPolymorphicTypeValidator.builder().build();
     mapper.setConfig(newSerConfig);
     mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    mapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE);
     customizeMapper(mapper);
   }
 
