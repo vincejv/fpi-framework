@@ -33,12 +33,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @RegisterForReflection
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, defaultImpl = RespDto.class)
 public class RespDto<T extends IDto> extends AbsDto {
 
   /**
    * API Response
    */
+  @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "respType")
   private T resp;
 
   /**

@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.dto.IDto;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -39,7 +38,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @RegisterForReflection
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, defaultImpl = PageDto.class)
 public class PageDto<D extends IDto> extends AbsDto {
 
   /**

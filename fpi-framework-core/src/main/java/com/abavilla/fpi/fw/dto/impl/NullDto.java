@@ -19,7 +19,6 @@ package com.abavilla.fpi.fw.dto.impl;
 import com.abavilla.fpi.fw.controller.AbsBaseResource;
 import com.abavilla.fpi.fw.dto.AbsDto;
 import com.abavilla.fpi.fw.service.AbsSvc;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
@@ -29,6 +28,5 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
 @RegisterForReflection
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, defaultImpl = NullDto.class)
 public class NullDto extends AbsDto {
 }
