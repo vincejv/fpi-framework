@@ -70,9 +70,9 @@ public enum SampleEnum implements IBaseEnum {
    * @param value the string value
    * @return the created enum
    */
-  @JsonCreator
-  public static IBaseEnum fromValue(String value) {
-    return IBaseEnum.fromValue(value, ENUM_MAP, UNKNOWN);
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+  public static SampleEnum fromValue(String value) {
+    return (SampleEnum) IBaseEnum.fromValue(value, ENUM_MAP, UNKNOWN);
   }
 
   /**
@@ -81,8 +81,8 @@ public enum SampleEnum implements IBaseEnum {
    * @param id the ordinal id
    * @return the created enum
    */
-  public static IBaseEnum fromId(int id) {
-    return IBaseEnum.fromId(id, ENUM_MAP, UNKNOWN);
+  public static SampleEnum fromId(int id) {
+    return (SampleEnum) IBaseEnum.fromId(id, ENUM_MAP, UNKNOWN);
   }
 
   /**
