@@ -16,14 +16,19 @@
 
 package com.abavilla.fpi.fw.exceptions.handler;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.ws.rs.Priorities;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
+import com.abavilla.fpi.fw.util.FWConst;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.arc.Priority;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
 
 /**
@@ -43,7 +48,11 @@ public class ApiRepoExHandler
     } catch (Exception ignored) {
       // exception is ignored
     }
-    return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response));
+    return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response),
+      String.valueOf(response.getLocation()),
+      response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
+        Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
+      )));
   }
 
   @Override

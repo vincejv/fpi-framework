@@ -22,6 +22,8 @@ import java.util.Arrays;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.bouncycastle.util.encoders.Hex;
 
@@ -30,6 +32,7 @@ import org.bouncycastle.util.encoders.Hex;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SigUtil {
 
   /**
@@ -65,5 +68,4 @@ public final class SigUtil {
     return Arrays.equals(Hex.encode(hash), signatureToVerify.getBytes(StandardCharsets.UTF_8));
   }
 
-  private SigUtil() { }
 }
