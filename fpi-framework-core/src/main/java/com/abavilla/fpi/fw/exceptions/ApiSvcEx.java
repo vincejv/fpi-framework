@@ -16,6 +16,8 @@
 
 package com.abavilla.fpi.fw.exceptions;
 
+import java.util.Map;
+
 import com.abavilla.fpi.fw.util.MapperUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -35,21 +37,29 @@ public class ApiSvcEx extends RuntimeException {
 
   private final transient HttpResponseStatus httpResponseStatus;
 
-  public ApiSvcEx(String message, int httpStatus, JsonNode jsonNode) {
-    super(message);
-    this.httpResponseStatus = HttpResponseStatus.valueOf(httpStatus);
-    this.jsonResponse = jsonNode;
+  private final transient String uriPath;
+
+  private final transient Map<String, String> headers;
+
+  public ApiSvcEx(String message, int httpStatus, JsonNode jsonNode, String uriPath, Map<String, String> headers) {
+    this(message, HttpResponseStatus.valueOf(httpStatus), jsonNode, uriPath, headers);
   }
-  public ApiSvcEx(String message) {
+
+  public ApiSvcEx(String message, HttpResponseStatus httpStatus, JsonNode jsonNode, String uriPath,
+                  Map<String, String> headers) {
     super(message);
-    this.jsonResponse = null;
-    this.httpResponseStatus = null;
+    this.httpResponseStatus = httpStatus;
+    this.jsonResponse = jsonNode;
+    this.uriPath = uriPath;
+    this.headers = headers;
+  }
+
+  public ApiSvcEx(String message) {
+    this(message, null, null, null, null);
   }
 
   public ApiSvcEx(String message, int httpStatus) {
-    super(message);
-    this.jsonResponse = null;
-    this.httpResponseStatus = HttpResponseStatus.valueOf(httpStatus);
+    this(message, httpStatus, null, null, null);
   }
 
   public <T> T getJsonResponse(Class<T> clazz) {
