@@ -38,7 +38,7 @@ public abstract class AbsItem implements IItem {
 
   protected LocalDateTime dateUpdated;
 
-  private long version;
+  private Long version;
 
   private transient List<Exception> exceptions;
 
