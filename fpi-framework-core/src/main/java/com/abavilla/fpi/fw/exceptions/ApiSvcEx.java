@@ -37,33 +37,29 @@ public class ApiSvcEx extends RuntimeException {
 
   private final transient HttpResponseStatus httpResponseStatus;
 
-  private final String httpMethod;
-
   private final transient String uriPath;
 
   private final transient Map<String, String> headers;
 
-  public ApiSvcEx(String message, int httpStatus, JsonNode jsonNode, String httpMethod, String uriPath,
-                  Map<String, String> headers) {
-    this(message, HttpResponseStatus.valueOf(httpStatus), jsonNode, httpMethod, uriPath, headers);
+  public ApiSvcEx(String message, int httpStatus, JsonNode jsonNode, String uriPath, Map<String, String> headers) {
+    this(message, HttpResponseStatus.valueOf(httpStatus), jsonNode, uriPath, headers);
   }
 
-  public ApiSvcEx(String message, HttpResponseStatus httpStatus, JsonNode jsonNode, String httpMethod, String uriPath,
+  public ApiSvcEx(String message, HttpResponseStatus httpStatus, JsonNode jsonNode, String uriPath,
                   Map<String, String> headers) {
     super(message);
     this.httpResponseStatus = httpStatus;
     this.jsonResponse = jsonNode;
-    this.httpMethod = httpMethod;
     this.uriPath = uriPath;
     this.headers = headers;
   }
 
   public ApiSvcEx(String message) {
-    this(message, null, null, null, null, null);
+    this(message, null, null, null, null);
   }
 
   public ApiSvcEx(String message, int httpStatus) {
-    this(message, httpStatus, null, null, null, null);
+    this(message, httpStatus, null, null, null);
   }
 
   public <T> T getJsonResponse(Class<T> clazz) {
