@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.Priorities;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -27,6 +28,7 @@ import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
 import com.abavilla.fpi.fw.util.FWConst;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.arc.Priority;
+import io.vertx.core.http.HttpClientRequest;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
@@ -41,6 +43,9 @@ import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
 public class ApiRepoExHandler
     implements ResponseExceptionMapper<ApiSvcEx> {
 
+  @Context
+  private HttpClientRequest httpRequest;
+
   @Override
   public ApiSvcEx toThrowable(Response response) {
     try {
@@ -49,7 +54,7 @@ public class ApiRepoExHandler
       // exception is ignored
     }
     return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response),
-      String.valueOf(response.getLocation()),
+      httpRequest.getMethod().name(), String.valueOf(httpRequest.getURI()),
       response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
         Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
       )));
