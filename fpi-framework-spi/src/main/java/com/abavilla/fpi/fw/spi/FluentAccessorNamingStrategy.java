@@ -22,6 +22,7 @@ import javax.lang.model.type.TypeKind;
 
 import org.mapstruct.ap.spi.AccessorNamingStrategy;
 import org.mapstruct.ap.spi.DefaultAccessorNamingStrategy;
+import org.mapstruct.ap.spi.MapStructProcessingEnvironment;
 
 /**
  * A custom {@link AccessorNamingStrategy} recognizing getters in the form of {@code property()} and setters in the
@@ -32,22 +33,48 @@ import org.mapstruct.ap.spi.DefaultAccessorNamingStrategy;
  */
 public class FluentAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
 
+  private static final String PACKAGE_APPLIED = "com.pengrad.telegrambot.model";
+
+  @Override
+  public void init(MapStructProcessingEnvironment processingEnvironment) {
+    super.init( processingEnvironment );
+    elementUtils = processingEnvironment.getElementUtils();
+  }
+
   @Override
   public boolean isGetterMethod(ExecutableElement method) {
-    String methodName = method.getSimpleName().toString();
-    return !methodName.startsWith( "with" ) && method.getReturnType().getKind() != TypeKind.VOID;
+    if ( isCustomPackage( method ) ) {
+      String methodName = method.getSimpleName().toString();
+      return !methodName.startsWith( "with" ) && method.getReturnType().getKind() != TypeKind.VOID;
+    }
+    return super.isGetterMethod( method );
   }
 
   @Override
   public boolean isSetterMethod(ExecutableElement method) {
-    String methodName = method.getSimpleName().toString();
-    return methodName.startsWith( "with" ) && methodName.length() > 4;
+    if ( isCustomPackage( method ) ) {
+      String methodName = method.getSimpleName().toString();
+      return methodName.startsWith( "with" ) && methodName.length() > 4;
+    }
+    return super.isSetterMethod( method );
   }
 
   @Override
   public String getPropertyName(ExecutableElement getterOrSetterMethod) {
-    String methodName = getterOrSetterMethod.getSimpleName().toString();
-    return Introspector.decapitalize( methodName.startsWith( "with" ) ? methodName.substring(  4 ) : methodName );
+    if ( isCustomPackage( getterOrSetterMethod ) ) {
+      String methodName = getterOrSetterMethod.getSimpleName().toString();
+      return Introspector.decapitalize( methodName.startsWith( "with" ) ? methodName.substring(  4 ) : methodName );
+    }
+    return super.getPropertyName( getterOrSetterMethod );
+  }
+
+  private boolean isCustomPackage(ExecutableElement method) {
+    return getPackage( method ).contains( "." + PACKAGE_APPLIED + "." ) // subpackage
+      || getPackage( method ).endsWith( "." + PACKAGE_APPLIED ); // current package
+  }
+
+  private String getPackage(ExecutableElement element) {
+    return elementUtils.getPackageOf( element ).getQualifiedName().toString();
   }
 
 }
