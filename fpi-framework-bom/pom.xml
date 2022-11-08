@@ -133,12 +133,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.mapstruct</groupId>
-        <artifactId>mapstruct-processor</artifactId>
-        <version>${org.mapstruct.version}</version>
-      </dependency>
-
-      <dependency>
         <groupId>${abavilla.framework.group-id}</groupId>
         <artifactId>fpi-framework-core</artifactId>
         <version>${abavilla.framework.version}</version>
