@@ -74,8 +74,8 @@
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <org.projectlombok.version>1.18.24</org.projectlombok.version>
-    <json-jackson-databind.version>2.13.4.2</json-jackson-databind.version>
-    <json-jackson-datatype-jsr310.version>2.13.4</json-jackson-datatype-jsr310.version>
+    <json-jackson-databind.version>2.14.0</json-jackson-databind.version>
+    <json-jackson-datatype-jsr310.version>2.14.0</json-jackson-datatype-jsr310.version>
     <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <jandex-maven-plugin.version>1.2.3</jandex-maven-plugin.version>
@@ -129,12 +129,6 @@
       <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>
-        <version>${org.mapstruct.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.mapstruct</groupId>
-        <artifactId>mapstruct-processor</artifactId>
         <version>${org.mapstruct.version}</version>
       </dependency>
 

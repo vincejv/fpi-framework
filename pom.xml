@@ -58,7 +58,6 @@
 
   <modules>
     <module>fpi-framework-bom</module>
-    <module>fpi-framework-spi</module>
     <module>fpi-framework-core</module>
     <module>fpi-framework-pom</module>
   </modules>
