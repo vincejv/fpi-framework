@@ -16,5 +16,10 @@
 
 package com.abavilla.fpi.fw.rest;
 
+import java.time.temporal.ChronoUnit;
+
+import org.eclipse.microprofile.faulttolerance.Retry;
+
+@Retry(maxRetries = 5, delay = 3, delayUnit = ChronoUnit.SECONDS)
 public interface IApi {
 }
