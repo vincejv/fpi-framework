@@ -24,12 +24,14 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
+import com.abavilla.fpi.fw.exceptions.AuthApiSvcEx;
 import com.abavilla.fpi.fw.util.FWConst;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.arc.Priority;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
+import org.jboss.resteasy.reactive.RestResponse;
 
 /**
  * Default exception handler for REST Client exceptions, handles when REST Client gets an HTTP status greater than or
@@ -48,11 +50,21 @@ public class ApiRepoExHandler
     } catch (Exception ignored) {
       // exception is ignored
     }
-    return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response),
-      String.valueOf(response.getLocation()),
-      response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
-        Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
-      )));
+
+    if (response.getStatus() != RestResponse.StatusCode.UNAUTHORIZED ||
+      response.getStatus() != RestResponse.StatusCode.FORBIDDEN) {
+      return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response),
+        String.valueOf(response.getLocation()),
+        response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
+          Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
+        )));
+    } else {
+      return new AuthApiSvcEx("Rest Client was unable to access the resource!", response.getStatus(), getBody(response),
+        String.valueOf(response.getLocation()),
+        response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
+          Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
+        )));
+    }
   }
 
   @Override

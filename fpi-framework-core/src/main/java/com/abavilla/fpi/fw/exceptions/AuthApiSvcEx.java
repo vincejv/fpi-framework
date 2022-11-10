@@ -14,13 +14,37 @@
  * permissions and limitations under the License.                        *
  *************************************************************************/
 
-package com.abavilla.fpi.fw.rest;
+package com.abavilla.fpi.fw.exceptions;
 
-import java.time.temporal.ChronoUnit;
+import java.util.Map;
 
-import com.abavilla.fpi.fw.exceptions.AuthApiSvcEx;
-import org.eclipse.microprofile.faulttolerance.Retry;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import lombok.Getter;
+import lombok.ToString;
 
-@Retry(maxRetries = 5, delay = 3, delayUnit = ChronoUnit.SECONDS, retryOn = AuthApiSvcEx.class)
-public interface IApi {
+/**
+ * Exception thrown when an error is occured when an FPI Service is invoking an external rest call.
+ *
+ * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
+ */
+@Getter
+@ToString(callSuper = true)
+public class AuthApiSvcEx extends ApiSvcEx {
+
+  public AuthApiSvcEx(String message, int httpStatus, JsonNode jsonNode, String uriPath, Map<String, String> headers) {
+    super(message, httpStatus, jsonNode, uriPath, headers);
+  }
+
+  public AuthApiSvcEx(String message, HttpResponseStatus httpStatus, JsonNode jsonNode, String uriPath, Map<String, String> headers) {
+    super(message, httpStatus, jsonNode, uriPath, headers);
+  }
+
+  public AuthApiSvcEx(String message) {
+    super(message);
+  }
+
+  public AuthApiSvcEx(String message, int httpStatus) {
+    super(message, httpStatus);
+  }
 }
