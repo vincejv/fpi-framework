@@ -51,15 +51,15 @@ public class ApiRepoExHandler
       // exception is ignored
     }
 
-    if (response.getStatus() != RestResponse.StatusCode.UNAUTHORIZED ||
-      response.getStatus() != RestResponse.StatusCode.FORBIDDEN) {
-      return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response),
+    if (response.getStatus() == RestResponse.StatusCode.UNAUTHORIZED ||
+      response.getStatus() == RestResponse.StatusCode.FORBIDDEN) {
+      return new AuthApiSvcEx("Rest Client was unable to access the resource!", response.getStatus(), getBody(response),
         String.valueOf(response.getLocation()),
         response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
           Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
         )));
     } else {
-      return new AuthApiSvcEx("Rest Client was unable to access the resource!", response.getStatus(), getBody(response),
+      return new ApiSvcEx("Rest Client encountered an exception!", response.getStatus(), getBody(response),
         String.valueOf(response.getLocation()),
         response.getStringHeaders().entrySet().stream().collect(Collectors.toUnmodifiableMap(
           Map.Entry::getKey, e -> StringUtils.join(e.getValue(), FWConst.COMMA_SEP)
