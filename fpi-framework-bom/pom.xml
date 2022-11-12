@@ -78,6 +78,7 @@
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <jandex-maven-plugin.version>1.2.3</jandex-maven-plugin.version>
     <jackson-bom.version>2.14.0</jackson-bom.version>
+    <keycloak.version>20.0.1</keycloak.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
     <abavilla.framework.version>0</abavilla.framework.version> <!-- should be managed by versioning plugin -->
   </properties>
@@ -91,6 +92,12 @@
         <version>${jackson-bom.version}</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>org.keycloak</groupId>
+        <artifactId>keycloak-authz-client</artifactId>
+        <version>${keycloak.version}</version>
       </dependency>
 
       <dependency>
