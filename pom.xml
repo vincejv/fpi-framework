@@ -57,9 +57,9 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>fpi-framework-bom</module>
-    <module>fpi-framework-core</module>
-    <module>fpi-framework-pom</module>
+    <module>bom</module>
+    <module>core</module>
+    <module>pom</module>
   </modules>
 
   <properties>
