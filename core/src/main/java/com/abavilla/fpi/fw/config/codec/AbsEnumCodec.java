@@ -95,13 +95,7 @@ public abstract class AbsEnumCodec<E extends IBaseEnum> implements Codec<E> {
     reader.readEndDocument();
 
     Method fromValue = getEncoderClass().getDeclaredMethod("fromValue", String.class);
-    E decodedEnum = (E) fromValue.invoke(null, value);
-    if (ord == -1) { // if enum.ord is -1, it is 'UNKNOWN'
-      // if unknown, retain the enum.value content when encoding
-      Method setValue = getEncoderClass().getDeclaredMethod("setValue", String.class);
-      setValue.invoke(decodedEnum, value);
-    }
-    return decodedEnum;
+    return (E) fromValue.invoke(null, value);
   }
   
 }
