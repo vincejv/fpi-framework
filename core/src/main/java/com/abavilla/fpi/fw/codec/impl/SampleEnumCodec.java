@@ -14,9 +14,9 @@
  * permissions and limitations under the License.                        *
  *************************************************************************/
 
-package com.abavilla.fpi.fw.config.codec.impl;
+package com.abavilla.fpi.fw.codec.impl;
 
-import com.abavilla.fpi.fw.config.codec.AbsEnumCodec;
+import com.abavilla.fpi.fw.codec.AbsEnumCodec;
 import com.abavilla.fpi.fw.entity.enums.SampleEnum;
 
 public class SampleEnumCodec extends AbsEnumCodec<SampleEnum> {

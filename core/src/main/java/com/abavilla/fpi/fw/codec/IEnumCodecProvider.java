@@ -14,9 +14,9 @@
  * permissions and limitations under the License.                        *
  *************************************************************************/
 
-package com.abavilla.fpi.fw.config.codec;
+package com.abavilla.fpi.fw.codec;
 
-import com.abavilla.fpi.fw.config.codec.impl.SampleEnumCodec;
+import com.abavilla.fpi.fw.codec.impl.SampleEnumCodec;
 import com.abavilla.fpi.fw.entity.enums.IBaseEnum;
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecProvider;

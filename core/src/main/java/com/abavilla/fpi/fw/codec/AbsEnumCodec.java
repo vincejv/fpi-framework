@@ -14,7 +14,7 @@
  * permissions and limitations under the License.                        *
  *************************************************************************/
 
-package com.abavilla.fpi.fw.config.codec;
+package com.abavilla.fpi.fw.codec;
 
 import java.lang.reflect.Method;
 
@@ -79,22 +79,22 @@ public abstract class AbsEnumCodec<E extends IBaseEnum> implements Codec<E> {
   @SuppressWarnings("unchecked")
   public final E decode(final BsonReader reader, final DecoderContext decoderContext) {
     reader.readStartDocument();
-    String value = StringUtils.EMPTY;
+    int ord = Integer.MIN_VALUE;
     while (reader.readBsonType() != BsonType.END_OF_DOCUMENT) {
       // decode only value type, ignore ord
       String key = reader.readName();
       if (StringUtils.equals(key, VALUE_KEY_NODE_NAME)) {
-        value = reader.readString();
+        reader.readString();
       } else if (StringUtils.equals(key, ORD_KEY_NODE_NAME)) {
-        reader.readInt32();
+        ord = reader.readInt32();
       } else {
         reader.skipValue();
       }
     }
     reader.readEndDocument();
 
-    Method fromValue = getEncoderClass().getDeclaredMethod("fromValue", String.class);
-    return (E) fromValue.invoke(null, value);
+    Method fromValue = getEncoderClass().getDeclaredMethod("fromId", int.class);
+    return (E) fromValue.invoke(null, ord);
   }
   
 }
