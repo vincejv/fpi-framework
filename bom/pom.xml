@@ -79,7 +79,7 @@
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <jandex-maven-plugin.version>3.0.5</jandex-maven-plugin.version>
     <jackson-bom.version>2.14.1</jackson-bom.version>
-    <keycloak.version>20.0.2</keycloak.version>
+    <keycloak.version>20.0.3</keycloak.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
     <abavilla.framework.version>0</abavilla.framework.version> <!-- should be managed by versioning plugin -->
   </properties>
