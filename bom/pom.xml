@@ -74,7 +74,7 @@
     <surefire-plugin.version>3.0.0-M8</surefire-plugin.version>
     <deploy-plugin.version>3.0.0</deploy-plugin.version>
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-    <org.projectlombok.version>1.18.24</org.projectlombok.version>
+    <org.projectlombok.version>1.18.26</org.projectlombok.version>
     <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <jandex-maven-plugin.version>3.0.5</jandex-maven-plugin.version>
