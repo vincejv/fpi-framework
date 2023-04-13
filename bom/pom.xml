@@ -68,7 +68,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.16.5.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.16.6.Final</quarkus.platform.version>
     <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
@@ -77,7 +77,7 @@
     <org.projectlombok.version>1.18.26</org.projectlombok.version>
     <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
-    <jandex-maven-plugin.version>3.0.5</jandex-maven-plugin.version>
+    <jandex-maven-plugin.version>3.1.0</jandex-maven-plugin.version>
     <jackson-bom.version>2.14.2</jackson-bom.version>
     <keycloak.version>21.0.2</keycloak.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
