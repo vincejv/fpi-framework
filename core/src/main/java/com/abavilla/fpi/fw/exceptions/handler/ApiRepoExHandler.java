@@ -19,15 +19,12 @@ package com.abavilla.fpi.fw.exceptions.handler;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.Priorities;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-
 import com.abavilla.fpi.fw.exceptions.ApiSvcEx;
 import com.abavilla.fpi.fw.exceptions.AuthApiSvcEx;
 import com.abavilla.fpi.fw.util.FWConst;
 import com.fasterxml.jackson.databind.JsonNode;
-import io.quarkus.arc.Priority;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
@@ -39,7 +36,6 @@ import org.jboss.resteasy.reactive.RestResponse;
  *
  * @author <a href="mailto:vincevillamora@gmail.com">Vince Villamora</a>
  */
-@Priority(Priorities.USER)
 public class ApiRepoExHandler
     implements ResponseExceptionMapper<ApiSvcEx> {
 

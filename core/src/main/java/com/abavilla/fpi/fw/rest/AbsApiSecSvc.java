@@ -16,8 +16,8 @@
 
 package com.abavilla.fpi.fw.rest;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public abstract class AbsApiSecSvc<A extends IApi,
