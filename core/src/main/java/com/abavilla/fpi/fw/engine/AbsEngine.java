@@ -18,11 +18,10 @@ package com.abavilla.fpi.fw.engine;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import com.abavilla.fpi.fw.service.IProviderSvc;
 import io.quarkus.arc.All;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * Abstract Engine

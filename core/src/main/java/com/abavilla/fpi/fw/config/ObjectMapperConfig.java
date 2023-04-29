@@ -16,12 +16,11 @@
 
 package com.abavilla.fpi.fw.config;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.jackson.ObjectMapperCustomizer;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * {@inheritDoc}

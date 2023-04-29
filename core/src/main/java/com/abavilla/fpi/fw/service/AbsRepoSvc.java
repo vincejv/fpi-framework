@@ -16,12 +16,11 @@
 
 package com.abavilla.fpi.fw.service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
 import com.abavilla.fpi.fw.repo.IMongoRepo;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * Base service layer for creating services with access to a specific repository.

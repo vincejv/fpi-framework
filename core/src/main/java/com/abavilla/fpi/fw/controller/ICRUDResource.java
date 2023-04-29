@@ -16,10 +16,9 @@
 
 package com.abavilla.fpi.fw.controller;
 
-import javax.ws.rs.PathParam;
-
 import com.abavilla.fpi.fw.dto.IDto;
 import io.smallrye.mutiny.Uni;
+import jakarta.ws.rs.PathParam;
 
 /**
  * REST API resource capable of both reading and writing.
