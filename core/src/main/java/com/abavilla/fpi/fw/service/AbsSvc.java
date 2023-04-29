@@ -18,10 +18,6 @@ package com.abavilla.fpi.fw.service;
 
 import java.util.Optional;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.NotFoundException;
-
 import com.abavilla.fpi.fw.dto.IDto;
 import com.abavilla.fpi.fw.dto.impl.PageDto;
 import com.abavilla.fpi.fw.entity.AbsItem;
@@ -30,6 +26,9 @@ import com.abavilla.fpi.fw.repo.AbsMongoRepo;
 import com.abavilla.fpi.fw.util.FWConst;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import org.apache.commons.lang3.NotImplementedException;
 import org.bson.types.ObjectId;
 

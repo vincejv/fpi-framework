@@ -16,9 +16,8 @@
 
 package com.abavilla.fpi.fw.rest;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import com.abavilla.fpi.fw.service.ISvc;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @ApplicationScoped

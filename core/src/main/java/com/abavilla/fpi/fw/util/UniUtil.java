@@ -3,11 +3,10 @@ package com.abavilla.fpi.fw.util;
 import java.time.Duration;
 import java.util.function.Predicate;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-
 import io.quarkus.runtime.StartupEvent;
 import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
