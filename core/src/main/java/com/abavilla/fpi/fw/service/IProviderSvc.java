@@ -18,7 +18,7 @@ package com.abavilla.fpi.fw.service;
 
 import com.abavilla.fpi.fw.engine.IEngine;
 import io.quarkus.arc.All;
-import io.quarkus.arc.Priority;
+import jakarta.annotation.Priority;
 
 /**
  * Interface for upstream provider services, to be used together with {@link IEngine}, implementing classes should
