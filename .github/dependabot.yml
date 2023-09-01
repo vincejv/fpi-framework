@@ -9,6 +9,7 @@ updates:
       - "vincejv"
     labels:
       - "dependencies"
+    open-pull-requests-limit: 20
 
   - package-ecosystem: "github-actions"
     # Workflow files stored in the
@@ -16,9 +17,10 @@ updates:
     directory: "/"
     target-branch: "development"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     assignees:
       - "vincejv"
     labels:
       - "dependencies"
       - "ci-cd"
+    open-pull-requests-limit: 20
