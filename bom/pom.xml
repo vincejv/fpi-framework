@@ -79,7 +79,7 @@
     <apache.commons-lang3.version>3.13.0</apache.commons-lang3.version>
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <jandex-maven-plugin.version>3.1.5</jandex-maven-plugin.version>
-    <jackson-bom.version>2.15.2</jackson-bom.version>
+    <jackson-bom.version>2.15.3</jackson-bom.version>
     <abavilla.framework.group-id>com.abavilla</abavilla.framework.group-id>
     <abavilla.framework.version>0</abavilla.framework.version> <!-- should be managed by versioning plugin -->
   </properties>
