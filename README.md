@@ -1,7 +1,7 @@
 <img src="banner.png" alt="FPI Framework" width="500"/>
 
 [![Maven Central version](https://img.shields.io/maven-central/v/com.abavilla/fpi-framework?logo=apache-maven)](https://search.maven.org/artifact/com.abavilla/fpi-framework-core)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vincejv/fpi-framework/Maven%20Central%20deployment?label=CI/CD&logo=github)](https://github.com/vincejv/fpi-framework/actions?query=workflow%3A%22Maven+Central+deployment%22)
+[![Maven Central deployment](https://github.com/vincejv/fpi-framework/actions/workflows/release-main.yml/badge.svg)](https://github.com/vincejv/fpi-framework/actions/workflows/release-main.yml)
 [![License](https://img.shields.io/github/license/vincejv/fpi-framework?logo=apache)](https://github.com/vincejv/fpi-framework/blob/main/LICENSE)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vincejv/fpi-framework?label=commits&logo=git)](https://github.com/vincejv/fpi-framework/pulse)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=vincejv_fpi-framework&metric=alert_status)](https://sonarcloud.io/dashboard?id=vincejv_fpi-framework)
